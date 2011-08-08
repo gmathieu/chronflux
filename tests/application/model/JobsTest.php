@@ -33,13 +33,13 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testCreateJob()
     {
-        $this->jobs->addTime(self::TASK_ID, 19.5, 20);
+        $this->jobs->add(self::TASK_ID, 19.5, 20);
         $this->assertEquals(self::TOTAL_JOBS + 1, count($this->jobs->fetchAll()));
     }
 
     public function testAppendingTimeToJob()
     {
-        $this->jobs->addTime(self::TASK_ID, 17, 17.5);
+        $this->jobs->add(self::TASK_ID, 17, 17.5);
 
         // find job affect
         $job = $this->jobs->findByStartTime(16.5);
@@ -50,7 +50,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testPrependingTimeToJob()
     {
-        $this->jobs->addTime(self::TASK_ID, 12, 13);
+        $this->jobs->add(self::TASK_ID, 12, 13);
 
         // find job affect
         $job = $this->jobs->findByStartTime(12);
@@ -61,7 +61,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testPrependOverlappingTimeToJob()
     {
-        $this->jobs->addTime(self::TASK_ID, 12, 13.25);
+        $this->jobs->add(self::TASK_ID, 12, 13.25);
 
         // find job affect
         $job = $this->jobs->findByStartTime(12);
@@ -72,7 +72,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testCombineJobs()
     {
-        $this->jobs->addTime(self::TASK_ID, 17, 18);
+        $this->jobs->add(self::TASK_ID, 17, 18);
 
         // find job affect
         $job = $this->jobs->findByStartTime(16.5);
@@ -83,7 +83,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testEngulfJobs()
     {
-        $this->jobs->addTime(self::TASK_ID, 12, 20);
+        $this->jobs->add(self::TASK_ID, 12, 20);
 
         // find job affect
         $job = $this->jobs->findByStartTime(12);
@@ -94,7 +94,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testAppendingOtherTask()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 17, 17.5);
+        $this->jobs->add(self::ALT_TASK_ID, 17, 17.5);
 
         // find job affect
         $job = $this->jobs->findByStartTime(16.5);
@@ -105,7 +105,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testPrependingOtherTask()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 12, 13);
+        $this->jobs->add(self::ALT_TASK_ID, 12, 13);
 
         // find job affect
         $job = $this->jobs->findByStartTime(13);
@@ -116,7 +116,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testPrependingOtherTaskOverlapping()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 12, 13.25);
+        $this->jobs->add(self::ALT_TASK_ID, 12, 13.25);
 
         // find job affect
         $job = $this->jobs->findByStartTime(13.25);
@@ -127,7 +127,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testAppendingOtherTaskOverlapping()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 16.75, 17.5);
+        $this->jobs->add(self::ALT_TASK_ID, 16.75, 17.5);
 
         // find job affect
         $job = $this->jobs->findByStartTime(16.5);
@@ -138,7 +138,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testSeparateExistingJob()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 15.25, 15.75);
+        $this->jobs->add(self::ALT_TASK_ID, 15.25, 15.75);
 
         $oldJobPart1 = $this->jobs->findByStartTime(13);
         $this->assertEquals($oldJobPart1->stop_time, 15.25);
@@ -155,7 +155,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testOtherTaskOverwritingJob()
     {
-         $this->jobs->addTime(self::ALT_TASK_ID, 18, 19);
+         $this->jobs->add(self::ALT_TASK_ID, 18, 19);
 
         // find job affect
         $job = $this->jobs->findByStartTime(18);
@@ -167,7 +167,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testOtherOverwritesMultipleJobs()
     {
-         $this->jobs->addTime(self::ALT_TASK_ID, 14.5, 18.75);
+         $this->jobs->add(self::ALT_TASK_ID, 14.5, 18.75);
 
         $oldJob1 = $this->jobs->findByStartTime(13);
         $this->assertEquals($oldJob1->stop_time, 14.5);
@@ -186,7 +186,7 @@ class JobsTest extends AbstractDatabaseTestCase
 
     public function testOtherJobOverwriteAndCombine()
     {
-        $this->jobs->addTime(self::ALT_TASK_ID, 16.50, 18.50);
+        $this->jobs->add(self::ALT_TASK_ID, 16.50, 18.50);
 
         $oldJob1 = $this->jobs->findByStartTime(13);
         $this->assertEquals($oldJob1->stop_time, 16.25);

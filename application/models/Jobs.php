@@ -31,7 +31,7 @@ class App_Model_Jobs extends Mg_Data_Service
         $this->select->where('project_id = ?', $projectId);
     }
 
-    public function addTime($taskId, $startTime, $stopTime)
+    public function add($taskId, $startTime, $stopTime)
     {
         // insert new time
         $this->insert(new App_Model_Job(array(
@@ -43,49 +43,28 @@ class App_Model_Jobs extends Mg_Data_Service
             'stop_time'  => $stopTime
         )));
 
-        // get list of affected jobs to resolve conflicts
-        $list = $this->_findAffected($taskId, $startTime, $stopTime);
+        // resolve conflicts
+        $this->_resolveAddTimeConflicts($taskId, $startTime, $stopTime);
+    }
+
+    private function _resolveAddTimeConflicts($taskId, $startTime, $stopTime)
+    {
+        $list = $this->_findAffected($startTime, $stopTime);
 
         // a minimum of 2 jobs is required for a conflict
         if (count($list) > 1) {
-            $prevJob = null;
-            foreach ($list as $job) {
+            $olderJob = null;
+            foreach ($list as $newerJob) {
                 // store a reference of the previous job
-                if (is_null($prevJob)) {
-                    $prevJob = $job;
+                if (is_null($olderJob)) {
+                    $olderJob = $newerJob;
                 } else {
                     // same task ID: merge
-                    if ($job->task_id == $prevJob->task_id) {
-
-                        // append to previous job
-                        if ($prevJob->stop_time < $job->stop_time) {
-                            $prevJob->stop_time = $job->stop_time;
-                            $this->update($prevJob);
-                        }
-                        // delete current job
-                        $this->delete($job);
-
-                    // new task ID: break apart
+                    if ($newerJob->task_id == $olderJob->task_id) {
+                        $jobToProcess = $this->_merge($olderJob, $newerJob);
                     } else {
-                        // previous job has new task ID
-                        if ($prevJob->task_id == $taskId) {
-                            // update start time
-                            $job->start_time = $prevJob->stop_time;
-
-                            $jobToProcess = $job;
-                        } else {
-                            // new task splits old job in two
-                            if ($prevJob->stop_time > $job->stop_time) {
-                                // create new job
-                                $newJob             = new App_Model_Job($prevJob->getRawData());
-                                $newJob->id         = null;
-                                $newJob->start_time = $job->stop_time;
-                                $this->insert($newJob);
-                            }
-                            $prevJob->stop_time = $job->start_time;
-
-                            $jobToProcess = $prevJob;
-                        }
+                        // new task ID: break apart
+                        $jobToProcess = $this->_break($olderJob, $newerJob, $taskId);
 
                         // delete jobs with negative time
                         if ($jobToProcess->start_time >= $jobToProcess->stop_time) {
@@ -93,8 +72,8 @@ class App_Model_Jobs extends Mg_Data_Service
                         } else {
                             $this->update($jobToProcess);
 
-                            // update previous job
-                            $prevJob = $job;
+                            // update older job
+                            $olderJob = $newerJob;
                         }
                     }
                 }
@@ -102,7 +81,7 @@ class App_Model_Jobs extends Mg_Data_Service
         }
     }
 
-    protected function _findAffected($taskId, $startTime, $stopTime)
+    private function _findAffected($startTime, $stopTime)
     {
         $startOverlap = array();
         $stopOverlap  = array();
@@ -123,5 +102,45 @@ class App_Model_Jobs extends Mg_Data_Service
         $this->select->where("({$startOverlap}) OR ({$stopOverlap}) OR ({$engulf})");
 
         return $this->fetchAll();
+    }
+
+    private function _merge(App_Model_Job $olderJob, App_Model_Job $newerJob)
+    {
+        // check to see that older job doesn't engulf newer job
+        if ($olderJob->stop_time < $newerJob->stop_time) {
+            // append newer job's stop time to older job
+            $olderJob->stop_time = $newerJob->stop_time;
+            $this->update($olderJob);
+        }
+
+        // delete newer job
+        $this->delete($newerJob);
+    }
+
+    private function _break(App_Model_Job $olderJob, App_Model_Job $newerJob, $newJobTaskId)
+    {
+        // older job has new task ID therefor has priority
+        if ($olderJob->task_id == $newJobTaskId) {
+            // update start time
+            $newerJob->start_time = $olderJob->stop_time;
+            $jobToProcess         = $newerJob;
+        } else {
+            // if old job's stop time goes past new job's stop time, split old job in two
+            if ($olderJob->stop_time > $newerJob->stop_time) {
+                // create new job
+                $job             = new App_Model_Job($olderJob->getRawData());
+                $job->id         = null;
+                $job->start_time = $newerJob->stop_time;
+                $this->insert($job);
+            }
+    
+            // update old job's stop time to new job's start time
+            $olderJob->stop_time = $newerJob->start_time;
+    
+            // return old job for processing
+            $jobToProcess = $olderJob;
+        }
+
+        return $jobToProcess;
     }
 }
