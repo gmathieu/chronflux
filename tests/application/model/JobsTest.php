@@ -202,4 +202,49 @@ class JobsTest extends AbstractDatabaseTestCase
 
         $this->assertEquals(self::TOTAL_JOBS - 1, count($this->jobs->fetchAll()));
     }
+
+    public function testDeleteMultipleJobs()
+    {
+        $this->jobs->remove(13, 17.25);
+
+        // get remaining jobs
+        $jobs = $this->jobs->fetchAll();
+
+        $this->assertEquals(self::TOTAL_JOBS - 3, count($jobs));
+        $this->assertEquals($jobs->current()->start_time, 18.00);
+    }
+
+    public function testDeleteBeginningOfJob()
+    {
+        $this->jobs->remove(12.75, 13.5);
+
+        // get remaining jobs
+        $job = $this->jobs->findByStartTime(13.5);
+
+        $this->assertEquals(self::TOTAL_JOBS, count($this->jobs->fetchAll()));
+        $this->assertEquals($job->stop_time, 16.25);
+    }
+
+    public function testDeleteEndOfJob()
+    {
+        $this->jobs->remove(15.75, 16.25);
+
+        // get remaining jobs
+        $job = $this->jobs->findByStartTime(13);
+
+        $this->assertEquals(self::TOTAL_JOBS, count($this->jobs->fetchAll()));
+        $this->assertEquals($job->stop_time, 15.75);
+    }
+
+    public function testDeleteAndSplitJob()
+    {
+        $this->jobs->remove(14, 15);
+
+        $jobPart1 = $this->jobs->findByStartTime(13);
+        $jobPart2 = $this->jobs->findByStartTime(15);
+
+        $this->assertEquals(self::TOTAL_JOBS + 1, count($this->jobs->fetchAll()));
+        $this->assertEquals($jobPart1->stop_time, 14);
+        $this->assertEquals($jobPart2->stop_time, 16.25);
+    }
 }

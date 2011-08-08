@@ -47,6 +47,35 @@ class App_Model_Jobs extends Mg_Data_Service
         $this->_resolveAddTimeConflicts($taskId, $startTime, $stopTime);
     }
 
+    public function remove($startTime, $stopTime)
+    {
+        $list = $this->_findAffected($startTime, $stopTime);
+
+        foreach ($list as $job) {
+            // new times surround job
+            if ($startTime <= $job->start_time  && $job->stop_time <= $stopTime) {
+                $this->delete($job);
+                continue;
+
+            // new times overlap job's start time
+            } else if ($startTime <= $job->start_time && $job->start_time <= $stopTime) {
+                $job->start_time = $stopTime;
+
+            // new times overlap job's stop time
+            } else if ($startTime <= $job->stop_time && $job->stop_time <= $stopTime) {
+                $job->stop_time = $startTime;
+
+            // new times inside job
+            } else if ($job->start_time < $startTime && $stopTime < $job->stop_time) {
+                $this->_cloneWithNewStartTime($job, $stopTime);
+                $job->stop_time = $startTime;
+            }
+
+            // save changes
+            $this->update($job);
+        }
+    }
+
     private function _resolveAddTimeConflicts($taskId, $startTime, $stopTime)
     {
         $list = $this->_findAffected($startTime, $stopTime);
@@ -127,20 +156,24 @@ class App_Model_Jobs extends Mg_Data_Service
         } else {
             // if old job's stop time goes past new job's stop time, split old job in two
             if ($olderJob->stop_time > $newerJob->stop_time) {
-                // create new job
-                $job             = new App_Model_Job($olderJob->getRawData());
-                $job->id         = null;
-                $job->start_time = $newerJob->stop_time;
-                $this->insert($job);
+                $this->_cloneWithNewStartTime($olderJob, $newerJob->stop_time);
             }
     
             // update old job's stop time to new job's start time
             $olderJob->stop_time = $newerJob->start_time;
-    
+
             // return old job for processing
             $jobToProcess = $olderJob;
         }
 
         return $jobToProcess;
+    }
+
+    private function _cloneWithNewStartTime(App_Model_Job $clonable, $startTime)
+    {
+        $job             = new App_Model_Job($clonable->getRawData());
+        $job->id         = null;
+        $job->start_time = $startTime;
+        $this->insert($job);
     }
 }
