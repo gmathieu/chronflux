@@ -1,6 +1,7 @@
 <?php
 abstract class AbstractDatabaseTestCase extends Zend_Test_PHPUnit_DatabaseTestCase
 {
+    protected $_fixtureDataSet;
     private $_connectionMock;
  
     /**
@@ -28,7 +29,7 @@ abstract class AbstractDatabaseTestCase extends Zend_Test_PHPUnit_DatabaseTestCa
      */
     protected function getDataSet()
     {
-        $ds  = $this->createFlatXmlDataSet(TEST_ROOT . '/fixtures/globalDataSet.xml');
+        $ds  = $this->createFlatXmlDataSet(TEST_ROOT . '/fixtures/' . $this->_fixtureDataSet);
         $rds = new PHPUnit_Extensions_Database_DataSet_ReplacementDataSet($ds);
         $rds->addFullReplacement('##NULL##', null);
 

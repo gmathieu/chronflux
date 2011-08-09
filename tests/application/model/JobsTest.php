@@ -10,6 +10,8 @@ class JobsTest extends AbstractDatabaseTestCase
 
     const TOTAL_JOBS = 4;
 
+    protected $_fixtureDataSet = 'jobsDataSet.xml';
+
     public $jobs;
 
     public function setUp()
