@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <user
+        id       = "1"
+        username = "gmathieu"
+     />
+    <user
+        id       = "2"
+        username = "testuser"
+     />
+
+    <projects
+        id     = "1"
+        name   = "Tracker" />
+    <projects
+        id     = "2"
+        name   = "Expo" />
+    <projects
+        id     = "3"
+        name   = "Test project 1" />
+    <projects
+        id     = "4"
+        name   = "Test project 2" />
+
+    <user_projects
+        user_id    = "1"
+        project_id = "1"
+        active     = "1" />
+    <user_projects
+        user_id    = "1"
+        project_id = "2"
+        active     = "0" />
+    <user_projects
+        user_id    = "2"
+        project_id = "3"
+        active     = "1" />
+    <user_projects
+        user_id    = "2"
+        project_id = "4"
+        active     = "0" />
+
+    <jobs
+        user_id    = "1"
+        project_id = "1"
+        task_id    = "1"
+        start_time = "9.00"
+        stop_time  = "12.00"
+        date       = "1982-03-18" />
+    <jobs
+        user_id    = "1"
+        project_id = "1"
+        task_id    = "1"
+        start_time = "13.00"
+        stop_time  = "18.00"
+        date       = "1982-03-18" />
+    <jobs
+        user_id    = "1"
+        project_id = "2"
+        task_id    = "1"
+        start_time = "10.00"
+        stop_time  = "18.00"
+        date       = "1982-03-17" />
+    <jobs
+        user_id    = "2"
+        project_id = "1"
+        task_id    = "1"
+        start_time = "9.00"
+        stop_time  = "12.00"
+        date       = "1982-03-17" />
+    <jobs
+        user_id    = "2"
+        project_id = "1"
+        task_id    = "1"
+        start_time = "13.00"
+        stop_time  = "18.00"
+        date       = "1982-03-17" />
+
+</dataset>
