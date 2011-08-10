@@ -38,10 +38,6 @@
         user_id    = "2"
         project_id = "3"
         active     = "1" />
-    <user_projects
-        user_id    = "2"
-        project_id = "4"
-        active     = "0" />
 
     <jobs
         user_id    = "1"
