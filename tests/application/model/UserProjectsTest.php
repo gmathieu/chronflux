@@ -23,6 +23,15 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->projects->setUserId(self::TEST_USER_ID);
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testFetchByDateOrActiveException()
+    {
+        $this->projects->setUserId(null);
+        $this->projects->fetchByDateOrActive(self::DATE_1);
+    }
+
     public function testFetchByDateOrActiveOnDate1()
     {
         $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
@@ -47,5 +56,46 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
         $this->assertEquals(self::TOTAL_PROJECTS_ON_DATE_1, count($projectSet));
         $this->assertInstanceOf('User_Model_Project', $projectSet->current());
+    }
+
+    public function testProjectActivation()
+    {
+        $firstInactive = $this->projects->findByActive(0);
+        $firstInactive->activate();
+        $this->assertTrue((boolean)$firstInactive->active);
+
+        $firstActive = $this->projects->findByActive(1);
+        $firstActive->deactivate();
+        $this->assertFalse((boolean)$firstActive->active);
+    }
+
+    public function testProjectFetchJobs()
+    {
+        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
+        $project = $projectSet->current();
+
+        $jobs = $project->fetchJobs(self::DATE_1);
+
+        $this->assertEquals(2, count($jobs));
+    }
+
+    public function testProjectCreation()
+    {
+        $data = array(
+            'user_id'     => 1,
+            'name'        => 'New Project creation',
+            'description' => 'This the new project description',
+            'note'        => 'This is my personal project note',
+        );
+
+        $userProject = User_Model_Project::create($data);
+        $project     = App_Model_Projects::getInstance()->findByName($data['name']);
+
+        $this->assertInstanceOf('App_Model_Project', $project);
+        $this->assertFalse(is_null($userProject->project_id));
+        $this->assertEquals($userProject->user_id, $data['user_id']);
+        $this->assertEquals($userProject->name, $data['name']);
+        $this->assertEquals($userProject->description, $data['description']);
+        $this->assertEquals($userProject->note, $data['note']);
     }
 }
