@@ -6,6 +6,7 @@ class UserProjectsTest extends AbstractDatabaseTestCase
     const DATE_2         = '1982-03-17';
 
     const TEST_USER_ID     = 1;
+    const TEST_USER_2_ID   = 2; 
     const TEST_PROJECT_ID  = 1;
     const EMPTY_PROJECT_ID = 3;
 
@@ -75,17 +76,19 @@ class UserProjectsTest extends AbstractDatabaseTestCase
 
     public function testTotalHours()
     {
-        $project = $this->projects->find(self::TEST_USER_ID, self::TEST_PROJECT_ID);
+        $project = $this->projects->findByProjectId(self::TEST_PROJECT_ID);
         $this->assertEquals(self::TOTAL_USER_1_PROJECT_HOURS, $project->user_project_total_hours);
     }
 
     public function testCanDelete()
     {
-        $project = $this->projects->find(self::TEST_USER_ID, self::TEST_PROJECT_ID);
+        $project = $this->projects->findByProjectId(self::TEST_PROJECT_ID);
         $this->assertFalse($project->canDelete());
 
-        $project = $this->projects->find(self::TEST_USER_ID, self::EMPTY_PROJECT_ID);
-        $this->assertTrue($project->canDelete());
+        $emptyProject = $this->projects->findByProjectId(self::EMPTY_PROJECT_ID);
+        $this->assertTrue($emptyProject->canDelete());
+
+        return $emptyProject;
     }
 
     public function testProjectFetchJobs()
@@ -116,5 +119,29 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->assertEquals($userProject->name, $data['name']);
         $this->assertEquals($userProject->description, $data['description']);
         $this->assertEquals($userProject->note, $data['note']);
+    }
+
+    /**
+     * @depends testCanDelete
+     */
+    public function testDelete($userProject)
+    {
+        $projects = App_Model_Projects::getInstance();
+
+        $userProject->delete();
+
+        // user project is deleted
+        $this->assertTrue(is_null($this->projects->findByProjectId(self::EMPTY_PROJECT_ID)));
+
+        // project should still exist
+        $this->assertInstanceOf('App_Model_Project', $projects->find(self::EMPTY_PROJECT_ID));
+
+        // delete other user project
+        $this->projects->setUserId(self::TEST_USER_2_ID);
+        $userProject = $this->projects->findByProjectId(self::EMPTY_PROJECT_ID);
+        $userProject->delete();
+
+        // project should be deleted
+        $this->assertNull($projects->find(self::EMPTY_PROJECT_ID));
     }
 }

@@ -31,6 +31,21 @@ class User_Model_Project extends App_Model_Project
         return User_Model_Projects::getInstance()->update($this);
     }
 
+    public function delete()
+    {
+        $userProjects = User_Model_Projects::getInstance();
+        $userProjects->delete($this);
+
+        // get parent project
+        $projects = App_Model_Projects::getInstance();
+        $project  = $projects->find($this->project_id);
+
+        // delete parent project if un-used
+        if ($project->canDelete()) {
+            $projects->delete($project);
+        }
+    }
+
     public static function create($data)
     {
         // create new project
