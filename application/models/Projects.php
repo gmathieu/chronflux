@@ -6,7 +6,7 @@ class App_Model_Projects extends Mg_Data_Service
         parent::init();
 
         // get total hours associated with project
-        $this->select->joinLeft('projects_total_hours',
-                        'projects.id = projects_total_hours.project_id');
+        $this->select->joinLeft('projects_total_users',
+                        'projects.id = projects_total_users.project_id');
     }
 }
