@@ -4,6 +4,11 @@ class User_Model_Project extends App_Model_Project
     const ACTIVE   = 1;
     const INACTIVE = 0;
 
+    public function canDelete()
+    {
+        return $this->user_project_total_hours == 0;
+    }
+
     public function fetchJobs($date)
     {
         $jobs = App_Model_Jobs::getInstance();

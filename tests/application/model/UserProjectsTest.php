@@ -5,11 +5,15 @@ class UserProjectsTest extends AbstractDatabaseTestCase
     const DATE_1         = '1982-03-18';
     const DATE_2         = '1982-03-17';
 
-    const TEST_USER_ID   = 1;
+    const TEST_USER_ID     = 1;
+    const TEST_PROJECT_ID  = 1;
+    const EMPTY_PROJECT_ID = 3;
 
     const TOTAL_PROJECTS           = 2;
     const TOTAL_PROJECTS_ON_DATE_1 = 1;
     const TOTAL_PROJECTS_ON_DATE_2 = 1;
+
+    const TOTAL_USER_1_PROJECT_HOURS = 8;
 
     public $projects;
 
@@ -67,6 +71,21 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $firstActive = $this->projects->findByActive(1);
         $firstActive->deactivate();
         $this->assertFalse((boolean)$firstActive->active);
+    }
+
+    public function testTotalHours()
+    {
+        $project = $this->projects->find(self::TEST_USER_ID, self::TEST_PROJECT_ID);
+        $this->assertEquals(self::TOTAL_USER_1_PROJECT_HOURS, $project->user_project_total_hours);
+    }
+
+    public function testCanDelete()
+    {
+        $project = $this->projects->find(self::TEST_USER_ID, self::TEST_PROJECT_ID);
+        $this->assertFalse($project->canDelete());
+
+        $project = $this->projects->find(self::TEST_USER_ID, self::EMPTY_PROJECT_ID);
+        $this->assertTrue($project->canDelete());
     }
 
     public function testProjectFetchJobs()
