@@ -14,10 +14,6 @@ class User_Model_Projects extends Mg_Data_Service
         $this->select->joinLeft('projects',
                                 'projects.id = user_projects.project_id');
 
-        // get total hours associated with user projects
-        $this->select->joinLeft('projects_total_hours',
-                        'user_projects.project_id = projects_total_hours.project_id');
-
         // default order
         $this->select->order('projects.name');
     }
