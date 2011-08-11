@@ -5,6 +5,8 @@ class App_Model_Jobs extends Mg_Data_Service
     private $_projectId;
     private $_userId;
 
+    private $_ignoreProjectId = false;
+
     public function init()
     {
         parent::init();
@@ -16,19 +18,16 @@ class App_Model_Jobs extends Mg_Data_Service
     public function setDate($date)
     {
         $this->_date = $date;
-        $this->select->where('date = ?', $date);
     }
 
     public function setUserId($userId)
     {
         $this->_userId = $userId;
-        $this->select->where('user_id = ?', $userId);
     }
 
     public function setProjectId($projectId)
     {
         $this->_projectId = $projectId;
-        $this->select->where('project_id = ?', $projectId);
     }
 
     public function add($taskId, $startTime, $stopTime)
@@ -76,9 +75,29 @@ class App_Model_Jobs extends Mg_Data_Service
         }
     }
 
+    public function fetchAll()
+    {
+        // filter date
+        if ($this->_date) {
+            $this->select->where('date = ?', $this->_date);
+        }
+
+        // filter user ID
+        if ($this->_userId) {
+            $this->select->where('user_id = ?', $this->_userId);
+        }
+
+        // filter project ID unless ignored
+        if (false === $this->_ignoreProjectId && $this->_projectId) {
+            $this->select->where('project_id = ?', $this->_projectId);
+        }
+
+        return parent::fetchAll();
+    }
+
     private function _resolveAddTimeConflicts($taskId, $startTime, $stopTime)
     {
-        $list = $this->_findAffected($startTime, $stopTime);
+        $list = $this->_findAffected($startTime, $stopTime, true);
 
         // a minimum of 2 jobs is required for a conflict
         if (count($list) > 1) {
@@ -110,7 +129,7 @@ class App_Model_Jobs extends Mg_Data_Service
         }
     }
 
-    private function _findAffected($startTime, $stopTime)
+    private function _findAffected($startTime, $stopTime, $ignoreProjectId = false)
     {
         $startOverlap = array();
         $stopOverlap  = array();
@@ -130,7 +149,15 @@ class App_Model_Jobs extends Mg_Data_Service
         $engulf       = implode(' AND ', $engulf);
         $this->select->where("({$startOverlap}) OR ({$stopOverlap}) OR ({$engulf})");
 
-        return $this->fetchAll();
+        // overide find affected across all projects
+        $this->_ignoreProjectId = $ignoreProjectId;
+
+        $rowSet = $this->fetchAll();
+
+        // restore project ID
+        $this->_ignoreProjectId = false;
+
+        return $rowSet;
     }
 
     private function _merge(App_Model_Job $olderJob, App_Model_Job $newerJob)

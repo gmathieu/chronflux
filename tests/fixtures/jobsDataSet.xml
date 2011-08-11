@@ -23,7 +23,7 @@
         task_id    = "1"
         date       = "2011-01-01"
         start_time = "18.00"
-        stop_time  = "19.00" />
+        stop_time  = "18.50" />
     <jobs
         id         = "4"
         user_id    = "1"
@@ -32,4 +32,12 @@
         date       = "2011-01-01"
         start_time = "16.25"
         stop_time  = "16.50" />
+    <jobs
+        id         = "5"
+        user_id    = "1"
+        project_id = "2"
+        task_id    = "1"
+        date       = "2011-01-01"
+        start_time = "18.50"
+        stop_time  = "19.00" />
 </dataset>
