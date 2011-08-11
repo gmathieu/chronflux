@@ -6,7 +6,7 @@ class User_Model_Project extends App_Model_Project
 
     public function canDelete()
     {
-        return $this->user_project_total_hours == 0;
+        return $this->total_hours == 0;
     }
 
     public function fetchJobs($date)

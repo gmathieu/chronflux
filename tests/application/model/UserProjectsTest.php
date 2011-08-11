@@ -77,7 +77,7 @@ class UserProjectsTest extends AbstractDatabaseTestCase
     public function testTotalHours()
     {
         $project = $this->projects->findByProjectId(self::TEST_PROJECT_ID);
-        $this->assertEquals(self::TOTAL_USER_1_PROJECT_HOURS, $project->user_project_total_hours);
+        $this->assertEquals(self::TOTAL_USER_1_PROJECT_HOURS, $project->total_hours);
     }
 
     public function testCanDelete()
