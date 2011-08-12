@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <user_tasks
+        user_id = "1"
+        task_id = "1"
+        color   = "F6F4G3"
+        order   = "1" />
+    <user_tasks
+        user_id = "1"
+        task_id = "2"
+        color   = "F0F4B3"
+        order   = "2" />
+    <user_tasks
+        user_id = "1"
+        task_id = "3"
+        color   = "F9F4A3"
+        order   = "3" />
+    <user_tasks
+        user_id = "4"
+        task_id = "1"
+        color   = "F6F4G3"
+        order   = "1" />
+    <user_tasks
+        user_id = "4"
+        task_id = "3"
+        color   = "F6F4G3"
+        order   = "2" />
+</dataset>

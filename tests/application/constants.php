@@ -11,6 +11,8 @@ const USER_MATT = 5;
 const PROJECT_WEBSITE   = 1;
 const PROJECT_ECOMMERCE = 2;
 const PROJECT_SERVICES  = 3;
+const PROJECT_UNUSED    = 4;
+const PROJECT_USED      = 1;
 
 // tasks
 const TASK_FRONT_END      = 1;

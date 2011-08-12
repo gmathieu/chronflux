@@ -1,3 +1,7 @@
+USER TASKS TEST CASES
+John: Back end, Front end, Client meeting
+Jen: Back end, Client meeting
+
 USER PROJECTS TEST CASES
 ========================
 John has 2 active projects and 1 inactive:
