@@ -4,8 +4,6 @@ class ProjectsTest extends AbstractDatabaseTestCase
 {
     public $projects;
 
-    protected $_fixtureDataset = 'users,projects,user_projects';
-
     public function setUp()
     {
         parent::setUp();

@@ -1,7 +1,9 @@
 <?php
 abstract class AbstractDatabaseTestCase extends Zend_Test_PHPUnit_DatabaseTestCase
 {
-    protected $_fixtureDataSet;
+    // by default load entire DB
+    protected $_fixtureDataset = 'projects,users,tasks,user_tasks,user_projects,jobs';
+
     private $_connectionMock;
  
     /**

@@ -2,8 +2,6 @@
 require_once('AbstractDatabaseTestCase.php');
 class JobsTest extends AbstractDatabaseTestCase
 {
-    protected $_fixtureDataset = 'users,user_projects,jobs';
-
     public $jobs;
 
     public function setUp()
