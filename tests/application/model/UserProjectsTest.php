@@ -100,7 +100,7 @@ class UserProjectsTest extends AbstractDatabaseTestCase
     public function testProjectCreation()
     {
         $data = array(
-            'user_id'     => 1,
+            'user_id'     => USER_JOHN,
             'name'        => 'New Project creation',
             'description' => 'This the new project description',
             'note'        => 'This is my personal project note',
@@ -110,11 +110,12 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $project     = App_Model_Projects::getInstance()->findByName($data['name']);
 
         $this->assertInstanceOf('App_Model_Project', $project);
-        $this->assertFalse(is_null($userProject->project_id));
-        $this->assertEquals($userProject->user_id, $data['user_id']);
-        $this->assertEquals($userProject->name, $data['name']);
-        $this->assertEquals($userProject->description, $data['description']);
-        $this->assertEquals($userProject->note, $data['note']);
+        $this->assertEquals($data['name'], $project->name);
+        $this->assertEquals($data['description'], $project->description);
+
+        $this->assertEquals($project->id, $userProject->project_id);
+        $this->assertEquals($data['user_id'], $userProject->user_id);
+        $this->assertEquals($data['note'], $userProject->note);
     }
 
     public function testCanDelete()
