@@ -2,30 +2,15 @@
 require_once('AbstractDatabaseTestCase.php');
 class UserProjectsTest extends AbstractDatabaseTestCase
 {
-    const DATE_1         = '1982-03-18';
-    const DATE_2         = '1982-03-17';
-
-    const TEST_USER_ID     = 1;
-    const TEST_USER_2_ID   = 2; 
-    const TEST_PROJECT_ID  = 1;
-    const EMPTY_PROJECT_ID = 3;
-
-    const TOTAL_PROJECTS           = 2;
-    const TOTAL_PROJECTS_ON_DATE_1 = 1;
-    const TOTAL_PROJECTS_ON_DATE_2 = 1;
-
-    const TOTAL_USER_1_PROJECT_HOURS = 8;
-
     public $projects;
 
-    protected $_fixtureDataSet = 'userProjectsTest.xml';
+    protected $_fixtureDataset = 'users,projects,user_rojects,jobs';
 
     public function setUp()
     {
         parent::setUp();
 
         $this->projects = User_Model_Projects::getInstance();
-        $this->projects->setUserId(self::TEST_USER_ID);
     }
 
     /**
@@ -33,34 +18,56 @@ class UserProjectsTest extends AbstractDatabaseTestCase
      */
     public function testFetchByDateOrActiveException()
     {
-        $this->projects->setUserId(null);
-        $this->projects->fetchByDateOrActive(self::DATE_1);
+        // no user ID is set
+        $this->projects->fetchByDateOrActive(DATE_1);
     }
 
-    public function testFetchByDateOrActiveOnDate1()
+    public function testFetchByDateOrActiveOnDate1_activeWithJobs()
     {
-        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
-        $this->assertEquals(self::TOTAL_PROJECTS_ON_DATE_1, count($projectSet));
+        $this->projects->setUserId(USER_JOHN);
+        $projectSet = $this->projects->fetchByDateOrActive(DATE_1);
+
+        // expecting results
+        $this->assertTrue(count($projectSet) > 0);
+
+        $expectedProjects = array(PROJECT_WEBSITE, PROJECT_ECOMMERCE);
+        foreach ($projectSet as $project) {
+            $this->assertTrue(in_array($project->id, $expectedProjects));
+        }
     }
 
-    public function testFetchByDateOrActiveOnDate2()
+    public function testFetchByDateOrActive_inactiveWithJobs()
     {
-        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_2);
-        $this->assertEquals(self::TOTAL_PROJECTS, count($projectSet));
+        $this->projects->setUserId(USER_JEN);
+        $projectSet = $this->projects->fetchByDateOrActive(DATE_1);
+
+        // expecting results
+        $this->assertEquals(1, count($projectSet));
+
+        $this->assertEquals($projectSet->current()->id, PROJECT_WEBSITE);
     }
 
-    public function testFetchByDateOrActiveWithNoActive()
+    public function testFetchByDateOrActive_activeWithNoJobs()
     {
-        // update all projects to inactive
-        $this->projects->adapter->query("update user_projects set `active` = 0");
+        $this->projects->setUserId(USER_JOHN);
+        $projectSet = $this->projects->fetchByDateOrActive(DATE_2);
 
-        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_2);
-        $this->assertEquals(self::TOTAL_PROJECTS_ON_DATE_2, count($projectSet));
-        $this->assertInstanceOf('User_Model_Project', $projectSet->current());
+        // expecting results
+        $this->assertTrue(count($projectSet) > 0);
 
-        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
-        $this->assertEquals(self::TOTAL_PROJECTS_ON_DATE_1, count($projectSet));
-        $this->assertInstanceOf('User_Model_Project', $projectSet->current());
+        $expectedProjects = array(PROJECT_WEBSITE, PROJECT_ECOMMERCE);
+        foreach ($projectSet as $project) {
+            $this->assertTrue(in_array($project->id, $expectedProjects));
+        }
+    }
+
+    public function testFetchByDateOrActive_inactiveWithNoJobs()
+    {
+        $this->projects->setUserId(USER_JEN);
+        $projectSet = $this->projects->fetchByDateOrActive(DATE_2);
+
+        // expecting results
+        $this->assertEquals(0, count($projectSet));
     }
 
     public function testProjectActivation()
@@ -74,31 +81,22 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->assertFalse((boolean)$firstActive->active);
     }
 
-    public function testTotalHours()
-    {
-        $project = $this->projects->findByProjectId(self::TEST_PROJECT_ID);
-        $this->assertEquals(self::TOTAL_USER_1_PROJECT_HOURS, $project->total_hours);
-    }
-
-    public function testCanDelete()
-    {
-        $project = $this->projects->findByProjectId(self::TEST_PROJECT_ID);
-        $this->assertFalse($project->canDelete());
-
-        $emptyProject = $this->projects->findByProjectId(self::EMPTY_PROJECT_ID);
-        $this->assertTrue($emptyProject->canDelete());
-
-        return $emptyProject;
-    }
-
     public function testProjectFetchJobs()
     {
-        $projectSet = $this->projects->fetchByDateOrActive(self::DATE_1);
-        $project = $projectSet->current();
+        $this->projects->setUserId(USER_JOHN);
+        $project = $this->projects->findByProjectId(PROJECT_WEBSITE);
+        $jobs    = $project->fetchJobs(DATE_1);
 
-        $jobs = $project->fetchJobs(self::DATE_1);
+        $this->assertTrue(count($jobs) > 0);
+        foreach ($jobs as $job) {
+            // make sure job belongs to user and project and date
+            $this->assertEquals(USER_JOHN, $job->user_id);
+            $this->assertEquals(PROJECT_WEBSITE, $job->project_id);
+            $this->assertEquals(DATE_1, $job->date);
+        }
 
-        $this->assertEquals(2, count($jobs));
+        $noJobs = $project->fetchJobs(DATE_2);
+        $this->assertEquals(0, count($noJobs));
     }
 
     public function testProjectCreation()
@@ -121,27 +119,41 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->assertEquals($userProject->note, $data['note']);
     }
 
-    /**
-     * @depends testCanDelete
-     */
-    public function testDelete($userProject)
+    public function testCanDelete()
+    {
+        $this->projects->setUserId(USER_JOHN);
+        $projectWithJobs = $this->projects->findByProjectId(PROJECT_WEBSITE);
+        $this->assertFalse($projectWithJobs->canDelete());
+
+        $userProjectNoJobs = $this->projects->findByProjectId(PROJECT_SERVICES);
+        $this->assertTrue($userProjectNoJobs->canDelete());
+
+        $this->projects->setUserId(USER_JACK);
+        $userInactiveProjectNoJobs = $this->projects->findByProjectId(PROJECT_SERVICES);
+        $this->assertTrue($userInactiveProjectNoJobs->canDelete());
+    }
+
+    public function testDelete()
     {
         $projects = App_Model_Projects::getInstance();
 
-        $userProject->delete();
+        // Delete USER_JOHN's PROJECT_SERVICES
+        $this->projects->setUserId(USER_JOHN);
+        $project = $this->projects->findByProjectId(PROJECT_SERVICES);
+        $project->delete();
 
-        // user project is deleted
-        $this->assertTrue(is_null($this->projects->findByProjectId(self::EMPTY_PROJECT_ID)));
+        // check that USER_JOHN's PROJECT_SERVICES is deleted
+        $this->assertTrue(is_null($this->projects->findByProjectId(PROJECT_SERVICES)));
 
-        // project should still exist
-        $this->assertInstanceOf('App_Model_Project', $projects->find(self::EMPTY_PROJECT_ID));
+        // PROJECT_SERVICES should still exist
+        $this->assertInstanceOf('App_Model_Project', $projects->find(PROJECT_SERVICES));
 
-        // delete other user project
-        $this->projects->setUserId(self::TEST_USER_2_ID);
-        $userProject = $this->projects->findByProjectId(self::EMPTY_PROJECT_ID);
-        $userProject->delete();
+        // Delete USER_JACK's PROJECT_SERVICES
+        $this->projects->setUserId(USER_JACK);
+        $project = $this->projects->findByProjectId(PROJECT_SERVICES);
+        $project->delete();
 
-        // project should be deleted
-        $this->assertNull($projects->find(self::EMPTY_PROJECT_ID));
+        // PROJECT_SERVICES be deleted
+        $this->assertNull($projects->find(PROJECT_SERVICES));
     }
 }

@@ -1,11 +1,22 @@
+USER PROJECTS TEST CASES
+========================
+John has 2 active projects and 1 inactive:
+    - Website has jobs associated on 2011-01-01
+    - E-commerce has jobs associated on 2011-01-01
+    - Services (inactive) has no jobs
+Jen has 1 inactive Website with jobs associated on 2011-01-01
+Jack has 1 active Services with no jobs
+
 JOBS TEST CASES
-==============
+===============
+
+All data below is tested on John's Website and E-Commerce projects on 2011-01-01
 
 Legend:
--: project 1, task ID 1
-x: project 1, task ID 2
-_: project 2, task ID 1
-*: deletion
+- : Website project - Front end task
+x : Website project - Back end task
+_ : E-Commerce project - Front end task
+* : deletion
 
 hours                       12    1    2    3    4    5    6    7    8
 ======================================================================

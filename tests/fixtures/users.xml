@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <users
+        id       = "1"
+        username = "john"
+     />
+    <users
+        id       = "2"
+        username = "jack"
+     />
+    <users
+        id       = "3"
+        username = "jill"
+     />
+    <users
+        id       = "4"
+        username = "jen"
+     />
+    <users
+        id       = "5"
+        username = "matt"
+     />
+</dataset>

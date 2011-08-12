@@ -29,10 +29,28 @@ abstract class AbstractDatabaseTestCase extends Zend_Test_PHPUnit_DatabaseTestCa
      */
     protected function getDataSet()
     {
-        $ds  = $this->createFlatXmlDataSet(TEST_ROOT . '/fixtures/' . $this->_fixtureDataSet);
-        $rds = new PHPUnit_Extensions_Database_DataSet_ReplacementDataSet($ds);
-        $rds->addFullReplacement('##NULL##', null);
+        $explodedDataSet = explode(',', $this->_fixtureDataset);
 
-        return $rds;
+        if (count($explodedDataSet) == 0) {
+            $ds = $this->createFlatXmlDataSet($this->_getDatasetPath($this->_fixtureDataset));
+        } else {
+            $ds = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet(array());
+            foreach ($explodedDataSet as $dataSet) {
+                $flatDs = $this->createFlatXmlDataSet($this->_getDatasetPath($dataSet));
+                $ds->addDataSet($flatDs);
+            }
+        }
+
+        return $ds;
+    }
+
+    private function _getDatasetPath($name)
+    {
+        $path = TEST_ROOT . '/fixtures/' . $name . '.xml';
+        if (file_exists($path)) {
+            return $path;
+        } else {
+            throw new Exception("{$path} not found");
+        }
     }
 }

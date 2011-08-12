@@ -40,4 +40,12 @@
         date       = "2011-01-01"
         start_time = "18.50"
         stop_time  = "19.00" />
+    <jobs
+        id         = "6"
+        user_id    = "4"
+        project_id = "1"
+        task_id    = "1"
+        date       = "2011-01-01"
+        start_time = "9"
+        stop_time  = "12.00" />
 </dataset>

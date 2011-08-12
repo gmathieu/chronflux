@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <user_projects
+        user_id    = "1"
+        project_id = "1"
+        active     = "1" />
+    <user_projects
+        user_id    = "1"
+        project_id = "2"
+        active     = "1" />
+    <user_projects
+        user_id    = "1"
+        project_id = "3"
+        active     = "0" />
+    <user_projects
+        user_id    = "2"
+        project_id = "3"
+        active     = "1" />
+    <user_projects
+        user_id    = "4"
+        project_id = "1"
+        active     = "0" />
+</dataset>
