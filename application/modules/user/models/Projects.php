@@ -1,11 +1,7 @@
 <?php
 
-class User_Model_Projects extends Mg_Data_Service
+class User_Model_Projects extends User_Model_Data_Service
 {
-    protected $_dbTableRowClass = false;
-
-    private $_userId;
-
     public function init()
     {
         parent::init();
@@ -18,11 +14,6 @@ class User_Model_Projects extends Mg_Data_Service
         $this->select->order('projects.name');
     }
 
-    public function setUserId($userId)
-    {
-        $this->_userId = $userId;
-    }
-
     public function fetchByDateOrActive($date)
     {
         $this->_requireUserId();
@@ -32,7 +23,8 @@ class User_Model_Projects extends Mg_Data_Service
                                           ' and jobs_total_hours_by_date.user_id = ?', $this->_userId);
         // get total hours by date
         $this->select->joinLeft('jobs_total_hours_by_date',
-                                $join, array('total_hours_by_date'))
+                                $join,
+                                array('total_hours' => new Zend_Db_Expr('ifnull(total_hours_by_date,0)')))
                      ->where("`date` = ? AND `total_hours_by_date` > 0 OR `active` = 1", $date);
 
         return $this->fetchAll();
@@ -55,13 +47,5 @@ class User_Model_Projects extends Mg_Data_Service
         }
 
         return parent::fetchAll();
-    }
-
-    private function _requireUserId()
-    {
-        // chekc that user ID is set
-        if (!$this->_userId) {
-            throw new Exception("setUserId() must be called before using this function.");
-        }
     }
 }
