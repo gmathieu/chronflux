@@ -4,7 +4,7 @@ class UserProjectsTest extends AbstractDatabaseTestCase
 {
     public $projects;
 
-    protected $_fixtureDataset = 'users,projects,user_rojects,jobs';
+    protected $_fixtureDataset = 'users,projects,user_projects,jobs';
 
     public function setUp()
     {
