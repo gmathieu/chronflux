@@ -35,4 +35,21 @@ class User_Model_Task extends Mg_Data_Object
 
         return $userTask;
     }
+
+    public function setColor($newColor)
+    {
+        $tasks = User_Model_Tasks::getInstance();
+        $tasks->setUserId($this->user_id);
+
+        // find user task with same color
+        $conflictingTask = $tasks->findByColor($newColor);
+        if ($conflictingTask) {
+            // swap colors
+            $conflictingTask->color = $this->color;
+            $tasks->update($conflictingTask);
+        }
+
+        // update task
+        $this->color = $newColor;
+    }
 }

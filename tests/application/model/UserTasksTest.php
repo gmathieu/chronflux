@@ -119,4 +119,32 @@ class UserTasksTest extends AbstractDatabaseTestCase
         // TASK_CLIENT_MEETING be deleted
         $this->assertNull($tasks->find(TASK_CLIENT_MEETING));
     }
+
+    public function testSetColor()
+    {
+        // USER_JOHN's TASK_FRONT_END has TASK_COLOR_1
+        // USER_JOHN's TASK_BACK_END has TASK_COLOR_2
+        $this->tasks->setUserId(USER_JOHN);
+        $frontEndTask = $this->tasks->findByTaskId(TASK_FRONT_END);
+
+        // test that color was set
+        $frontEndTask->setColor(TASK_COLOR_2);
+        $this->assertEquals(TASK_COLOR_2, $frontEndTask->color);
+
+        // test conflict that conflict was resolved
+        $backEndTask = $this->tasks->findByTaskId(TASK_BACK_END);
+        $this->assertEquals(TASK_COLOR_1, $backEndTask->color);
+
+        // USER_JEN has two tasks with TASK_COLOR_1 and TASK_COLOR_2
+        $this->tasks->setUserId(USER_JEN);
+        $frontEndTask = $this->tasks->findByTaskId(TASK_FRONT_END);
+        $frontEndTask->setColor(TASK_COLOR_3);
+        $this->tasks->update($frontEndTask);
+
+        // test no conflict
+        $jenTasks = $this->tasks->fetchAll();
+        foreach ($jenTasks as $task) {
+            $this->assertFalse($task->color == TASK_COLOR_1);
+        }
+    }
 }
