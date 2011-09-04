@@ -1,0 +1,92 @@
+/*
+ * themes:
+ * - http://www.colourlovers.com/palette/38793/creative_cream
+ * - http://www.colourlovers.com/palette/1890/fall_ingto_winter
+ * - http://www.colourlovers.com/palette/92095/Giant_Goldfish
+ * - http://www.colourlovers.com/palette/36998/french_roast
+ *
+ * color palette ideas:
+ * - http://www.colourlovers.com/palette/1419154/CENSORED.
+ *      - 020001
+ *      - 343335
+ *      - 7e7c7d
+ *      - bdbdbd
+ *      - f6f6f6
+ *      - ffffff
+ */
+html {
+    background-color: #ffffff;
+}
+body {
+    color: #020001;
+}
+
+/* HELPER CLASSES */
+.clear {
+    clear: both;
+    display: block;
+    height: 0;
+}
+.last {
+    margin-bottom: 0;
+    margin-right: 0;
+}
+
+/* HEADER */
+#main-header {
+    background-color: #020001;
+    border-bottom: 1px solid #020001;
+}
+#main-header .button {
+    height: 25px;
+    padding-bottom: 0 !important;
+    line-height: 1;
+}
+
+/* HEADER - MENU */
+#main-menu {
+    float: left;
+}
+#main-menu .button {
+    padding: 10px;
+    padding-right: 31px; /* icon with + margin */
+}
+#main-menu .button label {
+    letter-spacing: 1px;
+    font-size: 108%;
+    text-align: center;
+    text-transform: uppercase;
+}
+#main-menu .button .loader {
+    visibility: hidden;
+}
+#main-menu .inline-buttons li {
+    position: relative;
+}
+#main-menu .inline-buttons li .arrow {
+    background: transparent url(../images/icons/main-menu-arrow.png) center center no-repeat;
+    bottom: -5px;
+    display: none;
+    left: 0;
+    height: 5px;
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+}
+#main-menu .inline-buttons li.selected .arrow {
+    display: block;
+}
+
+/* HEADER - USER */
+#header-user-auth {
+    float: right;
+}
+#header-user-auth .button {
+    padding: 10px;
+}
+#header-user-auth .thumb {
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 16px;
+}

@@ -1,13 +1,58 @@
+<?
+$menuItems = array(
+    'Timesheets' => '#',
+    'Reports'   => '#',
+    'Settings'  => '#'
+);
+?>
 <?= $this->doctype() ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<?= $this->headTitle() ?>
-		<?= $this->headMeta() ?>
+    <head>
+        <?= $this->headTitle() ?>
+        <?= $this->headMeta() ?>
         <?= $this->headLink() ?>
         <?= $this->headStyle() ?>
-	</head>
-	<body>
-        <?php echo $this->layout()->content; ?>
+    </head>
+    <body>
+        <header id="main-header">
+            <nav id="main-menu">
+                <ul class="inline-buttons">
+                    <? foreach ($menuItems as $label => $url) : ?>
+                        <li>
+                            <a href="<?= $url ?>" class="button">
+                                <span class="icon">
+                                    <img class="loader" src="<?= $this->baseUrl('images/icons/loader.gif') ?>" title="Loader" />
+                                </span>
+                                <label><?= $label ?></label>
+                            </a>
+                            <span class="arrow"></span>
+                        </li>
+                    <? endforeach ?>
+                </ul>
+            </nav>
+
+            <section id="header-user-auth">
+                <ul class="inline-buttons">
+                   <li>
+                       <a href="#" class="button">
+                           <div class="icon">
+                               <img class="thumb" src="" />
+                           </div>
+                           <label>gmathieu</label>
+                       </a>
+                   </li>
+                   <li>
+                       <a href="#" id="logout" title="Log out" class="button">
+                           <label>X</label>
+                       </a>
+                   </li>
+                </ul>
+            </section>
+
+           <?= $this->clear() ?>
+        </header>
+
+        <?= $this->layout()->content; ?>
     </body>
     <?= $this->headScript() ?>
     <?= $this->inlineScript() ?>

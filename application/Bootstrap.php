@@ -26,6 +26,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $view = $this->getResource('view');
 
+        // CSS
+        $view->headLink()->appendStylesheet($view->baseUrl('css/yui-reset-fonts-3.3.0.css'));
+        $view->headLink()->appendStylesheet($view->baseUrl('fonts/play-fontfacekit/stylesheet.css'));
+        $view->headLink()->appendStylesheet($view->baseUrl('css/global.css'));
+        $view->headLink()->appendStylesheet($view->baseUrl('css/buttons.css'));
+
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'View_Helper');
 
         return $view;
