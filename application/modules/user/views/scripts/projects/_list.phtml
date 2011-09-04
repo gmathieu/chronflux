@@ -1,0 +1,24 @@
+<?
+foreach ($this->projectSet as $project) {
+    $leftIcon = array(
+        'src'   => $this->baseUrl('images/icons/reorder.png'),
+        'title' => 'Reorder',
+    );
+    $rightIcon = array(
+        'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+        'title' => 'Edit',
+    );
+    $params = array(
+        'url'        => $this->baseUrl("user/{$this->user->username}/projects/edit/project_id/{$project->id}"),
+        'left-icon'  => $leftIcon,
+        'right-icon' => $rightIcon,
+    );
+
+    if (!$project->isActive()) {
+        $params['alt'] = true;
+    }
+
+    echo $this->sideColumnItem($project->title, $params);
+}
+?>
+<?= $this->button("+ Add a New Task", $this->baseUrl("{$this->user->username}/projects/new"), array('class' => 'new')) ?>
