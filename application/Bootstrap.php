@@ -12,5 +12,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         return $db;
     }
+
+    protected function _initCustomView()
+    {
+        $this->bootstrap('view');
+        $view = $this->getResource('view');
+
+        $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'View_Helper');
+
+        return $view;
+    }
 }
 
