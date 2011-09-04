@@ -19,6 +19,11 @@ class User_Model_Project extends App_Model_Project
         return $jobs->fetchAll();
     }
 
+    public function isActive()
+    {
+        return self::ACTIVE == $this->active;
+    }
+
     public function activate()
     {
         $this->active = self::ACTIVE;
