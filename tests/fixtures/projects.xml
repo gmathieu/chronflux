@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
     <projects
-        id     = "1"
-        name   = "Website" />
+        id       = "1"
+        title    = "Website"
+        subtitle = "Client A" />
     <projects
-        id     = "2"
-        name   = "E-Commerce" />
+        id       = "2"
+        title    = "E-Commerce"
+        subtitle = "Client B" />
     <projects
-        id     = "3"
-        name   = "Services" />
+        id    = "3"
+        title = "Services" />
     <projects
-        id     = "4"
-        name   = "Unused" />
+        id    = "4"
+        title = "Unused" />
 </dataset>

@@ -11,7 +11,7 @@ class User_Model_Projects extends User_Model_Data_Service
                                 'projects.id = user_projects.project_id');
 
         // default order
-        $this->select->order('projects.name');
+        $this->select->order('projects.title');
     }
 
     public function fetchByDateOrActive($date)

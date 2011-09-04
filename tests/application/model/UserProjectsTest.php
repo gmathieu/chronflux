@@ -101,16 +101,16 @@ class UserProjectsTest extends AbstractDatabaseTestCase
     {
         $data = array(
             'user_id'     => USER_JOHN,
-            'name'        => 'New Project creation',
+            'title'       => 'New Project creation',
             'description' => 'This the new project description',
             'note'        => 'This is my personal project note',
         );
 
         $userProject = User_Model_Project::create($data);
-        $project     = App_Model_Projects::getInstance()->findByName($data['name']);
+        $project     = App_Model_Projects::getInstance()->findByTitle($data['title']);
 
         $this->assertInstanceOf('App_Model_Project', $project);
-        $this->assertEquals($data['name'], $project->name);
+        $this->assertEquals($data['title'], $project->title);
         $this->assertEquals($data['description'], $project->description);
 
         $this->assertEquals($project->id, $userProject->project_id);
