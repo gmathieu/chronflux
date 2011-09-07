@@ -10,10 +10,14 @@ class App_User_Controller_Action extends App_Controller_Action
         $this->user = $this->_requireUser();
     }
 
-    public function postDispatch()
+    public function preDispatch()
     {
-        parent::postDispatch();
+        parent::preDispatch();
 
+        // use user layout
+        $this->getHelper('layout')->setLayout('users');
+
+        // assign current username to view
         $this->view->username = $this->user->username;
     }
 
