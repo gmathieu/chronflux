@@ -7,8 +7,8 @@ class User_Model_Projects extends User_Model_Data_Service
         parent::init();
 
         // get actual project
-        $this->select->joinLeft('projects',
-                                'projects.id = user_projects.project_id');
+        $this->select->joinLeft('projects', 'projects.id = user_projects.project_id')
+                     ->joinLeft('users', 'users.id = user_projects.user_id', array('username'));
 
         // default order
         $this->select->order('projects.title');
