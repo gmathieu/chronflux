@@ -12,7 +12,9 @@ class App_User_Controller_Action extends App_Controller_Action
 
     public function postDispatch()
     {
-        $this->view->user = $this->user;
+        parent::postDispatch();
+
+        $this->view->username = $this->user->username;
     }
 
     protected function _requireUser()
