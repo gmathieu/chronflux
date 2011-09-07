@@ -1,0 +1,23 @@
+<section id="settings-menu-options" class="side-column-with-border layout-column-static-1">
+    <?= $this->sideColumnItem('My Projects', array(
+        'url'        => $this->baseUrl("user/{$this->username}/projects/list"),
+        'selected'   => ($this->selected == 'projects'),
+        'right-icon' => array(
+                              'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+                              'title' => 'View'),
+    )) ?>
+    <?= $this->sideColumnItem('My Tasks', array(
+        'url'        => $this->baseUrl("user/{$this->username}/tasks/list"),
+        'selected'   => ($this->selected == 'tasks'),
+        'right-icon' => array(
+                              'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+                              'title' => 'View'),
+    )) ?>
+    <?= $this->sideColumnItem('My Profile', array(
+        'url'        => '#',
+        'selected'   => ($this->selected == 'users'),
+        'right-icon' => array(
+                              'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+                              'title' => 'View'),
+    )) ?>
+</section>
