@@ -13,9 +13,12 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     {
         parent::preDispatch();
 
+        // disable automatic render to wrap content in settings layout
         if (!$this->isAjax()) {
             $this->getHelper('viewRenderer')->setNoRender();
         }
+
+        $this->view->selectedMenuItem = 'settings';
     }
 
     public function postDispatch()

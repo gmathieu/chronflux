@@ -1,8 +1,8 @@
 <?
 $menuItems = array(
     'Timesheets' => '#',
-    'Reports'   => '#',
-    'Settings'  => '#'
+    'Reports'    => '#',
+    'Settings'   => $this->baseUrl("users/{$this->username}/settings"),
 );
 ?>
 <?= $this->doctype() ?>
@@ -18,8 +18,9 @@ $menuItems = array(
             <nav id="main-menu">
                 <ul class="inline-buttons">
                     <? foreach ($menuItems as $label => $url) : ?>
-                        <li>
-                            <a href="<?= $url ?>" class="button">
+                        <? $selected = ($this->selectedMenuItem == strtolower($label)) ?>
+                        <li <?= ($selected) ? 'class="selected"' : '' ?>">
+                            <a href="<?= $url ?>" class="button <?= ($selected) ? 'selected' : '' ?>">
                                 <span class="icon">
                                     <img class="loader" src="<?= $this->baseUrl('images/icons/loader.gif') ?>" title="Loader" />
                                 </span>
