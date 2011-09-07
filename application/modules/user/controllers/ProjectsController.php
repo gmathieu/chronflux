@@ -1,7 +1,10 @@
 <?php
 
-class User_ProjectsController extends App_User_Controller_Action
+class User_ProjectsController extends App_User_Controller_Settings
 {
+    public $userProjects;
+    public $userProjectSet;
+
     public function init()
     {
         parent::init();
@@ -12,16 +15,41 @@ class User_ProjectsController extends App_User_Controller_Action
                       ->initContext();
 
         // init projects service
-        $this->projects = User_Model_Projects::getInstance();
-        $this->projects->setUserId($this->user->id);
+        $this->userProjects = User_Model_Projects::getInstance();
+        $this->userProjects->setUserId($this->user->id);
+
+        // get a list of projects
+        $this->userProjectSet = $this->userProjects->fetchAll();
+    }
+
+    public function preDispatch()
+    {
+        parent::preDispatch();
+
+        // always show list of user projects
+        $this->view->userProjectSet = $this->userProjectSet;
     }
 
     public function listAction()
     {
-        // get a list of projects
-        $projectSet = $this->projects->fetchAll();
+    }
 
-        // assign to view variables
-        $this->view->projectSet = $projectSet;
+    public function editAction()
+    {
+        $project = $this->_requireProject();
+
+        $this->view->project = $project;
+    }
+
+    private function _requireProject()
+    {
+        $projectId = $this->_getParam('project_id');
+        $project   = $this->userProjects->findByProjectId($projectId);
+
+        if ($project) {
+            return $project;
+        } else {
+            throw new Exception("Project {$projectId} not found.");
+        }
     }
 }

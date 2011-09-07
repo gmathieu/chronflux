@@ -1,5 +1,5 @@
 <?
-foreach ($this->projectSet as $project) {
+foreach ($this->userProjectSet as $userProject) {
     $leftIcon = array(
         'src'   => $this->baseUrl('images/icons/reorder.png'),
         'title' => 'Reorder',
@@ -9,16 +9,17 @@ foreach ($this->projectSet as $project) {
         'title' => 'Edit',
     );
     $params = array(
-        'url'        => $this->baseUrl("user/{$this->user->username}/projects/edit/project_id/{$project->id}"),
+        'url'        => $this->baseUrl("user/{$userProject->username}/projects/edit/project_id/{$userProject->id}"),
+        'selected'   => ($userProject->project_id == $this->selected),
         'left-icon'  => $leftIcon,
         'right-icon' => $rightIcon,
     );
 
-    if (!$project->isActive()) {
+    if (!$userProject->isActive()) {
         $params['alt'] = true;
     }
 
-    echo $this->sideColumnItem($project->title, $params);
+    echo $this->sideColumnItem($userProject->title, $params);
 }
 ?>
-<?= $this->button("+ Add a New Task", $this->baseUrl("{$this->user->username}/projects/new"), array('class' => 'new')) ?>
+<?= $this->button("+ Add a New Task", $this->baseUrl("{$userProject->username}/projects/new"), array('class' => 'new')) ?>
