@@ -1,0 +1,11 @@
+<?= $this->partial('projects/list.phtml', array(
+    'selected'       => 'new',
+    'username'       => $this->username,
+    'userProjectSet' => $this->userProjectSet,
+)) ?>
+<section id="settings-main-content" class="layout-column-fluid">
+    <div class="section">
+        <h1>Project Details</h1>
+        <?= $this->form ?>
+    </div>
+</section>

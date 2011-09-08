@@ -34,22 +34,44 @@ class User_ProjectsController extends App_User_Controller_Settings
     {
     }
 
+    public function newAction()
+    {
+        $form = $this->_initForm();
+
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            $userProject = User_Model_Project::create($this->_request->getPost());
+            return $this->_redirect("user/{$this->user->username}/projects/edit/project_id/{$userProject->project_id}");
+        }
+    }
+
     public function editAction()
     {
-        $project = $this->_requireProject();
+        $userProject = $this->_requireProject();
 
-        $this->view->project = $project;
+        $this->view->userProject = $userProject;
     }
 
     private function _requireProject()
     {
-        $projectId = $this->_getParam('project_id');
-        $project   = $this->userProjects->findByProjectId($projectId);
+        $projectId   = $this->_getParam('project_id');
+        $userProject = $this->userProjects->findByProjectId($projectId);
 
-        if ($project) {
-            return $project;
+        if ($userProject) {
+            return $userProject;
         } else {
             throw new Exception("Project {$projectId} not found.");
         }
+    }
+
+    private function _initForm()
+    {
+        $form = new User_Form_Project();
+
+        // force user_id
+        $form->user_id->setValue($this->user->id);
+
+        $this->view->form = $form;
+
+        return $form;
     }
 }
