@@ -1,3 +1,7 @@
 <section class="side-column-with-border layout-column-static-2">
-    <?= $this->partial('projects/_list.phtml', array('userProjectSet' => $this->userProjectSet, 'selected' => $this->selected)) ?>
+    <?= $this->partial('projects/_list.phtml', array(
+        'selected'       => $this->selected,
+        'username'       => $this->username,
+        'userProjectSet' => $this->userProjectSet,
+    )) ?>
 </section>

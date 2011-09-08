@@ -1,25 +1,32 @@
-<?
-foreach ($this->userProjectSet as $userProject) {
-    $leftIcon = array(
-        'src'   => $this->baseUrl('images/icons/reorder.png'),
-        'title' => 'Reorder',
-    );
-    $rightIcon = array(
-        'src'   => $this->baseUrl('images/icons/right-arrow.png'),
-        'title' => 'Edit',
-    );
-    $params = array(
-        'url'        => $this->baseUrl("user/{$userProject->username}/projects/edit/project_id/{$userProject->id}"),
-        'selected'   => ($userProject->project_id == $this->selected),
-        'left-icon'  => $leftIcon,
-        'right-icon' => $rightIcon,
-    );
+<div class="side-column-reorderable" data-reoder-url="user/<?= $this->username ?>/projects/reorder">
+    <?
+        $leftIcon = array(
+            'src'   => $this->baseUrl('images/icons/reorder.png'),
+            'title' => 'Reorder',
+        );
+        $rightIcon = array(
+            'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+            'title' => 'Edit',
+        );
+        $params = array(
+            'left-icon'  => $leftIcon,
+            'right-icon' => $rightIcon,
+        );
+        foreach ($this->userProjectSet as $userProject) {
+            $params['alt']      = !$userProject->isActive();
+            $params['attr']     = array('data-id' => $userProject->project_id);
+            $params['selected'] = ($this->selected == $userProject->project_id);
+            $params['url']      = $this->baseUrl("user/{$userProject->username}/projects/edit/project_id/{$userProject->id}");
 
-    if (!$userProject->isActive()) {
-        $params['alt'] = true;
-    }
+            echo $this->sideColumnItem($userProject->title, $params);
+        }
+    ?>
+</div>
 
-    echo $this->sideColumnItem($userProject->title, $params);
-}
+<?= $this->sideColumnItem('+ Add a New Project', array(
+    'new'        => true,
+    'right-icon' => $rightIcon,
+    'selected'   => ('new' == $this->selected),
+    'url'        => $this->baseUrl("user/{$this->username}/projects/new"),
+));
 ?>
-<?= $this->button("+ Add a New Task", $this->baseUrl("{$userProject->username}/projects/new"), array('class' => 'new')) ?>
