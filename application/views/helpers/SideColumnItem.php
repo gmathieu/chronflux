@@ -29,10 +29,21 @@ class View_Helper_SideColumnItem extends Mg_View_Helper_AbstractHelper
             $this->addClass('side-column-item-alt');
         }
 
+        // new look
+        if ($this->getOption('new', false)) {
+            $this->addClass('side-column-item-new');
+        }
+
         // icons
         $leftIcon  = $this->renderIcon('left');
         $rightIcon = $this->renderIcon('right');
 
+        // attributes
+        if (is_array($this->getOption('attr'))) {
+            foreach ($this->getOption('attr') as $key => $value) {
+                $this->addAttribute($key, $value);
+            }
+        }
         $this->addAttribute('class', $this->getClasses());
 
         return <<<HTML
