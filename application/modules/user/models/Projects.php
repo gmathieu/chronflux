@@ -42,7 +42,7 @@ class User_Model_Projects extends User_Model_Data_Service
             // get total hours associated
             $join = $this->adapter->quoteInto('user_projects.project_id = user_projects_total_hours.project_id ' .
                                      'and user_projects_total_hours.user_id = ?', $this->_userId);
-            $this->select->joinLeft('user_projects_total_hours', $join);
+            $this->select->joinLeft('user_projects_total_hours', $join, array('total_hours'));
             $this->select->where('user_projects.user_id = ?', $this->_userId);
         }
 
