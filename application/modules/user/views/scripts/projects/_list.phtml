@@ -14,8 +14,8 @@
         );
         foreach ($this->userProjectSet as $userProject) {
             $params['alt']      = !$userProject->isActive();
-            $params['attr']     = array('data-id' => $userProject->project_id);
-            $params['selected'] = ($this->selected == $userProject->project_id);
+            $params['attr']     = array('data-id' => $userProject->id);
+            $params['selected'] = ($this->selected == $userProject->id);
             $params['url']      = $this->baseUrl("user/{$userProject->username}/projects/edit/project_id/{$userProject->id}");
 
             echo $this->sideColumnItem($userProject->title, $params);
