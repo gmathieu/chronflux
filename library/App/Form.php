@@ -55,7 +55,7 @@ class App_Form extends Zend_Form
             'Errors',
             array('Description', array('class' => 'description')),
             array(array('form-element-wrapper' => 'HtmlTag'), array('tag' => 'div', 'class' => 'form-element-wrapper')),
-            array('label'),
+            array('label', array('class' => 'form-row-label')),
             array(array('form-row' => 'HtmlTag'), array('tag' => 'div', 'class' => "form-row {$rowWrapperClass}")),
         );
     }
