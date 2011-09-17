@@ -19,4 +19,12 @@ class ProjectsTest extends AbstractDatabaseTestCase
         $project = $this->projects->find(PROJECT_UNUSED);
         $this->assertTrue($project->canDelete());
     }
+
+    public function testAbstractMethods()
+    {
+        $project = $this->projects->find(PROJECT_USED);
+
+        $this->assertEquals($project->id, $project->getId());
+        $this->assertEquals($project->title, $project->getName());
+    }
 }

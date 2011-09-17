@@ -18,4 +18,12 @@ class TasksTest extends AbstractDatabaseTestCase
         $unusedTask = $this->tasks->find(TASK_UNUSED);
         $this->assertTrue($unusedTask->canDelete());
     }
+
+    public function testAbstractMethods()
+    {
+        $task = $this->tasks->find(TASK_USED);
+
+        $this->assertEquals($task->id, $task->getId());
+        $this->assertEquals($task->name, $task->getName());
+    }
 }

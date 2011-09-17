@@ -4,6 +4,11 @@ class User_Model_Project extends App_Model_Project
     const ACTIVE   = 1;
     const INACTIVE = 0;
 
+    public function getId()
+    {
+        return $this->project_id;
+    }
+
     public function canDelete()
     {
         return $this->total_hours == 0;
@@ -47,11 +52,11 @@ class User_Model_Project extends App_Model_Project
 
         // delete parent project if un-used
         if ($project->canDelete()) {
-            $projects->delete($project);
+            $project->delete();
         }
     }
 
-    public static function create($data)
+    public static function create(array $data)
     {
         // create new project
         $project = parent::create($data);

@@ -1,7 +1,12 @@
 <?php
 
-class User_Model_Task extends Mg_Data_Object
+class User_Model_Task extends App_Model_Task
 {
+    public function getId()
+    {
+        return $this->task_id;
+    }
+
     public function canDelete()
     {
         return $this->total_hours == 0;
@@ -18,15 +23,14 @@ class User_Model_Task extends Mg_Data_Object
 
         // delete parent task if un-used
         if ($task->canDelete()) {
-            $tasks->delete($task);
+            $task->delete();
         }
     }
 
-    public static function create($data)
+    public static function create(array $data)
     {
         // create and save new task
-        $task = new App_Model_Task($data);
-        App_Model_Tasks::getInstance()->insert($task);
+        $task = parent::create($data);
 
         // create and save user task
         $userTaskData = array_merge($data, array('task_id' => $task->id));

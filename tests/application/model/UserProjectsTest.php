@@ -11,12 +11,22 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->projects = User_Model_Projects::getInstance();
     }
 
+    public function testAbstractMethods()
+    {
+        $this->projects->setUserId(USER_JOHN);
+        $project = $this->projects->findByProjectId(PROJECT_WEBSITE);
+
+        $this->assertEquals(PROJECT_WEBSITE, $project->getId());
+        $this->assertEquals($project->title, $project->getName());
+    }
+
     /**
      * @expectedException Exception
      */
     public function testFetchByDateOrActiveException()
     {
         // no user ID is set
+        $this->projects->setUserId(null);
         $this->projects->fetchByDateOrActive(DATE_1);
     }
 

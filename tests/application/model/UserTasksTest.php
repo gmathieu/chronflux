@@ -28,6 +28,15 @@ class UserTasksTest extends AbstractDatabaseTestCase
         }
     }
 
+    public function testAbstractMethods()
+    {
+        $this->tasks->setUserId(USER_JOHN);
+        $task = $this->tasks->findByTaskId(TASK_FRONT_END);
+
+        $this->assertEquals(TASK_FRONT_END, $task->getId());
+        $this->assertEquals($task->name, $task->getName());
+    }
+
     public function testCreate()
     {
         $data = array(
