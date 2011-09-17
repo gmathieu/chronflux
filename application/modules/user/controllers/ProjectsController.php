@@ -61,6 +61,14 @@ class User_ProjectsController extends App_User_Controller_Settings
         $this->view->userProject = $userProject;
     }
 
+    public function deleteAction()
+    {
+        $userProject = $this->_requireProject();
+        $userProject->delete();
+
+        return $this->_redirect("user/{$this->user->username}/projects");
+    }
+
     public function activateAction()
     {
         $userProject = $this->_requireProject();
