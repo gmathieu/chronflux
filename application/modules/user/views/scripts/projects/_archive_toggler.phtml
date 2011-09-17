@@ -1,0 +1,27 @@
+<?
+    $onSelected    = '';
+    $offSelected   = '';
+    $activateUrl   = "user/{$this->userProject->username}"
+                     . '/projects/activate/project_id/'
+                     . $this->userProject->id;
+    $deactivateUrl = "user/{$this->userProject->username}"
+                     . '/projects/deactivate/project_id/'
+                     . $this->userProject->id;
+
+    if ($this->userProject->isActive()) {
+        $onLabel     = 'active';
+        $offLabel    = 'archive';
+        $onSelected  = 'selected';
+    } else {
+        $onLabel     = 'activate';
+        $offLabel    = 'archived';
+        $offSelected = 'selected';
+    }
+?>
+<div class="inline-row-editing" id="project-archive-toggler-wrapper">
+    <span id="project-archive-toggler">
+        <a class="on <?= $onSelected ?>" href="<?= $this->baseUrl($activateUrl) ?>"><?= $onLabel ?></a>
+        <a class="off <?= $offSelected ?>" href="<?= $this->baseUrl($deactivateUrl) ?>"><?= $offLabel ?></a>
+    </span>
+    <?= $this->clear() ?>
+</div>

@@ -40,15 +40,41 @@ class User_ProjectsController extends App_User_Controller_Settings
 
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             $userProject = User_Model_Project::create($this->_request->getPost());
-            return $this->_redirect("user/{$this->user->username}/projects/edit/project_id/{$userProject->project_id}");
+            return $this->_redirectToEditAction($userProject);
         }
     }
 
     public function editAction()
     {
         $userProject = $this->_requireProject();
+        $form        = $this->_initForm();
+
+        // pre-populate form with user project's data
+        $form->populate($userProject->getRawData());
+
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            // update user project with POST data
+            $userProject->setFromArray($this->_request->getPost());
+            $this->userProjects->update($userProject);
+        }
 
         $this->view->userProject = $userProject;
+    }
+
+    public function activateAction()
+    {
+        $userProject = $this->_requireProject();
+        $userProject->activate();
+
+        return $this->_redirectToEditAction($userProject);
+    }
+
+    public function deactivateAction()
+    {
+        $userProject = $this->_requireProject();
+        $userProject->deactivate();
+
+        return $this->_redirectToEditAction($userProject);
     }
 
     private function _requireProject()
@@ -73,5 +99,10 @@ class User_ProjectsController extends App_User_Controller_Settings
         $this->view->form = $form;
 
         return $form;
+    }
+
+    private function _redirectToEditAction($userProject)
+    {
+        return $this->_redirect("user/{$this->user->username}/projects/edit/project_id/{$userProject->project_id}");
     }
 }

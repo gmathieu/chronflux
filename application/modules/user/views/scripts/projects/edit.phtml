@@ -1,3 +1,7 @@
+<?
+    $this->inlineEditing()->setForm($this->form)
+                          ->setDataObject($this->userProject);
+?>
 <?= $this->partial('projects/list.phtml', array(
     'selected'       => $this->userProject->project_id,
     'username'       => $this->username,
@@ -5,6 +9,12 @@
 )) ?>
 <section id="settings-main-content" class="layout-column-fluid">
     <div class="section">
-        <h2>Edit details</h2>    
+        <h2>Edit details</h2>
+        <form action="" method="post">
+            <?= $this->partial('projects/_archive_toggler.phtml', array('userProject' => $this->userProject)) ?>
+            <?= $this->inlineEditing('title') ?>
+            <?= $this->inlineEditing('subtitle') ?>
+            <?= $this->inlineEditing('description') ?>
+        </form>
     </div>
 </section>
