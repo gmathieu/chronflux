@@ -1,0 +1,32 @@
+<div class="side-column-reorderable" data-reoder-url="user/<?= $this->username ?>/tasks/reorder">
+    <?
+        $leftIcon = array(
+            'src'   => $this->baseUrl('images/icons/reorder.png'),
+            'title' => 'Reorder',
+        );
+        $rightIcon = array(
+            'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+            'title' => 'Edit',
+        );
+        $params = array(
+            'left-icon'  => $leftIcon,
+            'right-icon' => $rightIcon,
+        );
+
+        foreach ($this->userTaskSet as $userTask) {
+            $params['attr']     = array('data-id' => $userTask->id);
+            $params['selected'] = ($this->selected == $userTask->id);
+            $params['url']      = $this->baseUrl("user/{$userTask->username}/tasks/edit/task_id/{$userTask->id}");
+
+            echo $this->sideColumnItem($userTask->name, $params);
+        }
+    ?>
+</div>
+
+<?= $this->sideColumnItem('+ Add a New Task', array(
+    'new'        => true,
+    'right-icon' => $rightIcon,
+    'selected'   => ('new' == $this->selected),
+    'url'        => $this->baseUrl("user/{$this->username}/tasks/new"),
+));
+?>
