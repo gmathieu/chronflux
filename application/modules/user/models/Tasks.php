@@ -8,6 +8,7 @@ class User_Model_Tasks extends User_Model_Data_Service
 
         // get actual task
         $this->select->joinLeft('tasks', 'tasks.id = user_tasks.task_id')
+                     ->joinLeft('users', 'users.id = user_tasks.user_id', array('username'))
                      ->order('user_tasks.order');
     }
 
