@@ -123,7 +123,14 @@ class App_User_Controller_Settings extends App_User_Controller_Action
                . "/id/{$dataObj->getId()}";
     }
 
-    private function _initForm()
+    protected function _getDeleteUrl($userDataObj)
+    {
+        return "user/{$this->user->username}"
+               . "/{$this->controllerName}/delete"
+               . "/id/{$userDataObj->getId()}";
+    }
+
+    protected function _initForm()
     {
         $formName = "User_Form_{$this->dataObjName}";
         $form = new $formName;
@@ -134,12 +141,5 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         $this->view->form = $form;
 
         return $form;
-    }
-
-    private function _getDeleteUrl($userDataObj)
-    {
-        return "user/{$this->user->username}"
-               . "/{$this->controllerName}/delete"
-               . "/id/{$userDataObj->getId()}";
     }
 }
