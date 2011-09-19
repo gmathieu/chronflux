@@ -6,12 +6,14 @@ class User_View_Helper_InlineEditing extends Mg_View_Helper_AbstractHelper
     private $_form;
     private $_dataObj;
 
-    public function inlineEditing($name = null)
+    public function inlineEditing($name = null, $options = array())
     {
         // access setter methods below
         if (is_null($name)) {
             return $this;
         }
+
+        $this->setOptions($options);
 
         $firstClass     = '';
         $expandedClass  = '';
@@ -29,12 +31,19 @@ class User_View_Helper_InlineEditing extends Mg_View_Helper_AbstractHelper
             $expandedClass = 'expanded';
         }
 
+        // value
+        if ($renderer = $this->getOption('value_renderer')) {
+            $renderedValue = $renderer($this->_dataObj->$getProperty());
+        } else {
+            $renderedValue = $this->_dataObj->$getProperty('--');
+        }
+
         return <<<HTML
         <div class="inline-row-editing {$firstClass} {$expandedClass}">
             <a href="javascript:void(0)" class="inline-row-editing-edit-link">
                 <span class="inline-row-editing-link-label open">Edit</span>
                 <span class="form-row-label">{$input->getLabel()}</span>
-                <span class="form-element-wrapper">{$this->_dataObj->$getProperty('--')}</span>
+                <span class="form-element-wrapper">{$renderedValue}</span>
                 {$this->view->clear()}
             </a>
             <div class="inline-row-editing-form-row">
