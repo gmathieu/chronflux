@@ -2,6 +2,8 @@
 
 class App_Model_Task extends App_Model_Abstractable
 {
+    const MAX_ABBR_CHARS = 5;
+
     public function getId()
     {
         return $this->id;
