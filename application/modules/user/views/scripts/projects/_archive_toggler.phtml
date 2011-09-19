@@ -2,10 +2,10 @@
     $onSelected    = '';
     $offSelected   = '';
     $activateUrl   = "user/{$this->userProject->username}"
-                     . '/projects/activate/project_id/'
+                     . '/projects/activate/id/'
                      . $this->userProject->id;
     $deactivateUrl = "user/{$this->userProject->username}"
-                     . '/projects/deactivate/project_id/'
+                     . '/projects/deactivate/id/'
                      . $this->userProject->id;
 
     if ($this->userProject->isActive()) {

@@ -98,7 +98,7 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         return $this->_redirect("user/{$this->user->username}/{$this->controllerName}");
     }
 
-    private function _requireDataObj()
+    protected function _requireDataObj()
     {
         $id          = $this->_getParam('id');
         $findMethod  = "findBy{$this->dataObjName}Id";
@@ -109,6 +109,18 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         } else {
             throw new Exception("{$this->dataObjName} {$id} not found.");
         }
+    }
+
+    protected function _redirectToEditAction($dataObj)
+    {
+        return $this->_redirect($this->_getRedirectUrl($dataObj));
+    }
+
+    protected function _getRedirectUrl($dataObj)
+    {
+        return "user/{$this->user->username}"
+               . "/{$this->controllerName}/edit"
+               . "/id/{$dataObj->getId()}";
     }
 
     private function _initForm()
@@ -124,22 +136,10 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         return $form;
     }
 
-    private function _getRedirectUrl()
-    {
-        return "user/{$this->user->username}"
-               . "/{$this->controllerName}/edit"
-               . "/id/{$dataObj->getId()}";
-    }
-
     private function _getDeleteUrl($userDataObj)
     {
         return "user/{$this->user->username}"
                . "{$this->controllerName}/delete"
                . "/id/{$userDataObj->getId()}";
-    }
-
-    private function _redirectToEditAction($dataObj)
-    {
-        return $this->_redirect($this->_getRedirectUrl());
     }
 }
