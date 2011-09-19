@@ -59,6 +59,7 @@ class App_Form extends Zend_Form
     {
         return array(
             'ViewHelper',
+            array(array('clear' => 'HtmlTag'), array('class' => 'clear', 'tag' => 'span', 'placement' => 'append')),
             'Errors',
             array('Description', array('class' => 'description')),
             array(array('form-element-wrapper' => 'HtmlTag'), array('tag' => 'div', 'class' => 'form-element-wrapper')),
