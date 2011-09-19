@@ -79,12 +79,15 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             // update user project with POST data
             $userDataObj->setFromArray($this->_request->getPost());
-            $this->userProjects->update($userDataObj);
+            $this->dataService->update($userDataObj);
         }
 
+        // setup inline editing helper with proper data
+        $this->view->inlineEditing()->setForm($form)->setDataObject($userDataObj);
+
+        // set view variables
         $this->view->deleteUrl   = $this->_getDeleteUrl($userDataObj);
         $this->view->userDataObj = $userDataObj;
-        $this->view->inlineEditing()->setForm($form)->setDataObject($userDataObj);
     }
 
     public function deleteAction()
