@@ -19,7 +19,7 @@
     }
 ?>
 
-<span id="project-archive-toggler">
-    <a class="on <?= $onSelected ?>" href="<?= $this->baseUrl($activateUrl) ?>"><?= $onLabel ?></a>
-    <a class="off <?= $offSelected ?>" href="<?= $this->baseUrl($deactivateUrl) ?>"><?= $offLabel ?></a>
+<span class="action-link-toggle">
+    <a class="action-link toggle-on <?= $onSelected ?>" href="<?= $this->baseUrl($activateUrl) ?>"><?= $onLabel ?></a>
+    <a class="action-link toggle-off <?= $offSelected ?>" href="<?= $this->baseUrl($deactivateUrl) ?>"><?= $offLabel ?></a>
 </span>
