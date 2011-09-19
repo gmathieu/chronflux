@@ -40,6 +40,13 @@ class App_Form extends Zend_Form
         $this->getElement($name)->addFilter('StringTrim');
     }
 
+    public function addRadioElement($name, $params = array())
+    {
+        $this->addElement('radio', $name, $params);
+        $this->getElement($name)->setDecorators($this->_rowDecorator('form-radio-row'));
+        $this->getElement($name)->addFilter('StringTrim');
+    }
+
 	public function addSubmitElement($value = 'submit')
 	{
 		$this->addElement('submit', 'submit', array(
