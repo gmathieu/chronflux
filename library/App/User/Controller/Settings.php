@@ -140,6 +140,7 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     {
         return "user/{$this->user->username}"
                . "{$this->controllerName}/delete"
+               . "/{$this->controllerName}/delete"
                . "/id/{$userDataObj->getId()}";
     }
 }
