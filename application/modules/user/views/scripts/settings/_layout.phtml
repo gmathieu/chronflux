@@ -1,4 +1,22 @@
 <section id="settings" class="layout-window-size">
     <?= $this->partial('settings/_menu.phtml', array('selected' => $this->controllerName, 'username' => $this->username)) ?>
-    <?= $this->content ?>
+
+    <? if ($this->userDataSet) : ?>
+        <section class="side-column-with-border layout-column-static-2">
+            <?= $this->partial('settings/_reorderable_list.phtml', array(
+                'controllerName' => $this->controllerName,
+                'selected'       => ($this->userDataObj) ? $this->userDataObj->getId() : $this->actionName,
+                'username'       => $this->username,
+                'userDataSet'    => $this->userDataSet,
+            )) ?>
+        </section>
+    <? endif ?>
+
+    <? if ($this->content) : ?>
+        <section id="settings-main-content" class="layout-column-fluid">
+            <div class="section">
+                <?= $this->content ?>
+            </div>
+        </section>
+    <? endif ?>
 </section>

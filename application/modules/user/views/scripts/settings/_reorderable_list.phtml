@@ -1,0 +1,35 @@
+<?
+    $singularControllerName = trim($this->controllerName, 's');
+?>
+<div class="side-column-reorderable" data-reorder-url="user/<?= $this->username ?>/<?= $this->controllerName ?>/reorder">
+    <?
+        $leftIcon = array(
+            'src'   => $this->baseUrl('images/icons/reorder.png'),
+            'title' => 'Reorder',
+        );
+        $rightIcon = array(
+            'src'   => $this->baseUrl('images/icons/right-arrow.png'),
+            'title' => 'Edit',
+        );
+        $params = array(
+            'left-icon'  => $leftIcon,
+            'right-icon' => $rightIcon,
+        );
+        foreach ($this->userDataSet as $userData) {
+            $params['alt']      = method_exists($userData, 'isActive') && $userData->isActive();
+            $params['attr']     = array('data-id' => $userData->getId());
+            $params['selected'] = ($this->selected == $userData->getId());
+            $params['url']      = $this->baseUrl("user/{$userData->username}/{$this->controllerName}/edit/id/{$userData->getId()}");
+
+            echo $this->sideColumnItem($userData->getName(), $params);
+        }
+    ?>
+</div>
+
+<?= $this->sideColumnItem("+ Add a New {$singularControllerName}", array(
+    'new'        => true,
+    'right-icon' => $rightIcon,
+    'selected'   => ('new' == $this->selected),
+    'url'        => $this->baseUrl("user/{$this->username}/{$this->controllerName}/new"),
+));
+?>
