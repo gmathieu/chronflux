@@ -139,7 +139,6 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     private function _getDeleteUrl($userDataObj)
     {
         return "user/{$this->user->username}"
-               . "{$this->controllerName}/delete"
                . "/{$this->controllerName}/delete"
                . "/id/{$userDataObj->getId()}";
     }
