@@ -13,8 +13,6 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     {
         parent::init();
 
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/settings.css'));
-
         if ('projects' === $this->controllerName || 'tasks' === $this->controllerName) {
             // init data object info
             $this->dataObjName = ucfirst(trim($this->controllerName, 's'));
@@ -39,6 +37,7 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         }
 
         // setup view variables
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('css/settings.css'));
         $this->view->dataObjName      = $this->dataObjName;
         $this->view->userDataSet      = $this->userDataSet;
         $this->view->selectedMenuItem = 'settings';
