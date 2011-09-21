@@ -1,0 +1,21 @@
+<?
+    // store view reference to pass to value renderer
+    $view = $this;
+?>
+<h2>Edit details</h2>
+
+<div class="action-links">
+    <a class="action-link delete" href="<?= $this->baseUrl($this->deleteUrl) ?>">Delete?</a>
+    <?= $this->clear() ?>
+</div>
+
+<div id="task-form-wrapper">
+    <form action="" method="post">
+        <?= $this->inlineEditing('name') ?>
+        <?= $this->inlineEditing('abbreviation') ?>
+        <?= $this->inlineEditing('color', array('value_renderer' => function($value) use($view) {
+            return $view->bubble($value, true);
+        })) ?>
+        <?= $this->inlineEditing('description') ?>
+    </form>
+</div>
