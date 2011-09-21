@@ -6,6 +6,9 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     public $dataService;
     public $userDataSet;
 
+    // hooks
+    protected $_beforeSave;
+
     public function init()
     {
         parent::init();
@@ -77,8 +80,14 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         $form->populate($userDataObj->getRawData());
 
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            // callback
+            if ($this->_beforeSave) {
+                call_user_func($this->_beforeSave, $form, $userDataObj);
+            }
+
             // update user project with POST data
             $userDataObj->setFromArray($this->_request->getPost());
+
             $this->dataService->update($userDataObj);
         }
 
