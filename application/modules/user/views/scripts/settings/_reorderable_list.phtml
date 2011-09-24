@@ -16,7 +16,7 @@
             'right-icon' => $rightIcon,
         );
         foreach ($this->userDataSet as $userData) {
-            $params['alt']      = method_exists($userData, 'isActive') && $userData->isActive();
+            $params['alt']      = method_exists($userData, 'isActive') && !$userData->isActive();
             $params['attr']     = array('data-id' => $userData->getId());
             $params['selected'] = ($this->selected == $userData->getId());
             $params['url']      = $this->baseUrl("user/{$userData->username}/{$this->controllerName}/edit/id/{$userData->getId()}");
