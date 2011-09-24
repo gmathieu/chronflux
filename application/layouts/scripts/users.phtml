@@ -1,6 +1,6 @@
 <?
 $menuItems = array(
-    'Timesheets' => '#',
+    'Timesheets' => $this->baseUrl("user/{$this->username}/timesheets/manage"),
     'Reports'    => '#',
     'Settings'   => $this->baseUrl("user/{$this->username}/settings"),
 );
@@ -11,6 +11,7 @@ $menuItems = array(
         <?= $this->headTitle() ?>
         <?= $this->headMeta() ?>
         <?= $this->headLink() ?>
+        <?= $this->headScript() ?>
         <?= $this->headStyle() ?>
     </head>
     <body>
@@ -55,6 +56,5 @@ $menuItems = array(
 
         <?= $this->layout()->content; ?>
     </body>
-    <?= $this->headScript() ?>
     <?= $this->inlineScript() ?>
 </html>

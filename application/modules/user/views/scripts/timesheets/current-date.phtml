@@ -1,0 +1,22 @@
+<h1>Loading…</h1>
+<? $this->headScript()->captureStart() ?>
+var userDate = new Date();
+var year     = userDate.getFullYear();
+var month    = padLeft(userDate.getMonth() + 1);
+var day      = padLeft(userDate.getDate());
+var formattedDate = year + '-' + month + '-' + day;
+
+function padLeft(value)
+{
+    // convert date to string
+    var value = value + '';
+
+    // pad left if length is only 1
+    if (value.length == 1) {
+        value = '0' + value;
+    }
+
+    return value;
+}
+window.location = "<?= $this->baseUrl("user/{$this->username}/timesheets/manage/date/") ?>" + formattedDate;
+<? $this->headScript()->captureEnd() ?>

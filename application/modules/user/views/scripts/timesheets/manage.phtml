@@ -1,0 +1,15 @@
+<?
+$newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
+?>
+<section id="timesheet">
+    <div class="side-column-with-border layout-fuild-left-column">
+        <?= $this->partial('timesheets/_date.phtml', array('dateObj' => $this->dateObj)) ?>
+        <?= $this->partial('timesheets/_projects.phtml', array('userProjectSet' => $this->userProjectSet, 'username' => $this->username)) ?>
+
+    </div>
+
+    <div class="side-column" id="project-actions">
+        <?= $this->button('+ Add a new project', $newProjectUrl, array('class' => 'new')) ?>
+    </div>
+
+</section>

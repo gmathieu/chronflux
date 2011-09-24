@@ -1,0 +1,17 @@
+<section id="projects">
+    <? if (count($this->userProjectSet) > 0) : ?>
+        <a title="Manage your projects" class="floating-label" href="<?= $this->baseUrl("user/{$this->username}/projects/list") ?>">Projects »</a>
+        <?
+            $params = array();
+            foreach ($this->userProjectSet as $userProject) {
+                $params['alt']      = !$userProject->isActive();
+                $params['attr']     = array('data-id' => $userProject->getId());
+                $params['class']    = 'project row';
+                $params['subtitle'] = $userProject->subtitle;
+                $params['url']      = 'javascript:void(0)';
+
+                echo $this->sideColumnItem($userProject->getName(), $params);
+            }
+        ?>
+    <? endif ?>
+</section>
