@@ -68,6 +68,9 @@ HTML;
 
     public function getClasses()
     {
+        if ($class = $this->getOption('class')) {
+            $this->addClass($class);
+        }
         return trim($this->classes, ' ');
     }
 
