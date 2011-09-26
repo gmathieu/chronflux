@@ -1,0 +1,22 @@
+<?
+$dateObj = clone($this->dateObj);
+?>
+<section id="calendar-hours">
+    <? for($i = 0; $i < 24; $i++) : ?>
+        <?
+            $evenClass = ($i % 2 == 0) ? 'even' : '';
+            $dateObj->set($i, Zend_Date::HOUR);
+        ?>
+        <div class="column <?= $evenClass ?> hour-set header-row">
+            <time datetime="<?= $dateObj->toString(Zend_Date::ISO_8601) ?>"><?= $dateObj->toString('h a') ?></time>
+            <? for ($j = 0; $j < 4; $j++) : ?>
+                <?
+                    $from = $dateObj->toString('h:mm a');
+                    $to   = $dateObj->add(15, Zend_Date::MINUTE)->toString('h:mm a');
+                ?>
+                <div title="<?= $from ?> to <?= $to ?>" class="quarter-column quarter-hour-click-area"><span class="quarter-hour"></span></div>
+            <? endfor ?>
+        </div>
+    <? endfor ?>
+    <?= $this->clear() ?>
+</section>

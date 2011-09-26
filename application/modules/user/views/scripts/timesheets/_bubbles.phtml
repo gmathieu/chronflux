@@ -1,0 +1,14 @@
+<section id="bubbles">
+    <? foreach ($this->userProjectSet as $project) : ?>
+        <div class="columns bubble-set row">
+            <? for ($i = 0; $i < 24; $i++) : ?>
+                <div class="column <?= ($i % 2 == 0) ? 'even' : '' ?> row">
+                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
+                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
+                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
+                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
+                </div>
+            <? endfor ?>
+        </div>
+    <? endforeach ?>
+</section>

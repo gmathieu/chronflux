@@ -6,10 +6,14 @@ $newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
         <?= $this->partial('timesheets/_date.phtml', array('dateObj' => $this->dateObj)) ?>
         <?= $this->partial('timesheets/_projects.phtml', array('userProjectSet' => $this->userProjectSet, 'username' => $this->username)) ?>
 
+        <div class="side-column" id="project-actions">
+            <?= $this->button('+ Add a new project', $newProjectUrl, array('class' => 'new')) ?>
+        </div>
     </div>
 
-    <div class="side-column" id="project-actions">
-        <?= $this->button('+ Add a new project', $newProjectUrl, array('class' => 'new')) ?>
+    <div class="layout-fluid-right-column">
+        <?= $this->partial('timesheets/_hours_header.phtml', array('dateObj' => $this->dateObj)) ?>
+        <?= $this->partial('timesheets/_bubbles.phtml', array('userProjectSet' => $this->userProjectSet)) ?>
     </div>
 
 </section>
