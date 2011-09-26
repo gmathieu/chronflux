@@ -2,7 +2,7 @@
 
 class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
 {
-    public function bubble($color, $selected = false)
+    public function bubble($color = '', $selected = false)
     {
         $this->setAttributes(array(
             'class'      => 'bubble',
