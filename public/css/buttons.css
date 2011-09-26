@@ -1,0 +1,49 @@
+/* BUTTONS - DEFAULTS */
+.button {
+    background-color: #020001;
+    box-shadow: inset 0px 5px 5px #353334;
+    cursor: pointer;
+    display: block;
+    color: #ffffff;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+.button:hover {
+    background-color: #7E7C7D;
+    box-shadow: inset 0px 5px 5px #353334;
+}
+.button:active {
+    box-shadow: inset 0px 5px 5px #020001;
+}
+.button.selected {
+    background-color: #ffffff !important;
+    box-shadow: inset 0px 5px 5px #bdbdbd !important;
+    color: #020001;
+    cursor: default !important;
+}
+.button.selected label {
+    cursor: default;
+}
+.button .icon {
+    float: left;
+    margin-right: 5px;
+}
+.button label {
+    cursor: pointer;
+    font-family: "PlayBold";
+    font-size: 85%;
+}
+
+/* BUTTON - NEW CTA */
+.button.new label {
+    text-transform: uppercase;
+}
+
+/* INLINE BUTTONS */
+ul.inline-buttons {
+    float: left;
+}
+ul.inline-buttons li {
+    float: left;
+    margin-right: 1px;
+}

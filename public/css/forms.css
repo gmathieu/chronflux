@@ -1,0 +1,63 @@
+.form-row {
+    margin-bottom: 10px;
+}
+.form-row-label {
+    color: #7c7d7e;
+    font-family: "PlayRegular";
+    float: left;
+    width: 150px;
+}
+.form-row-label.required {
+    color: #020001;
+    font-family: "PlayBold";
+}
+.form-element-wrapper {
+    font-family: "PlayRegular";
+    line-height: 1;
+    margin-left: 160px;
+    width: 230px;
+}
+.form-element-wrapper .description {
+    color: #7C7D7E;
+    font-size: 85%;
+    margin: 0 5px 5px;
+}
+.form-element-wrapper .errors {
+    color: red;
+    font-size: 85%;
+    margin: 0 5px 5px;
+}
+.form-text-row input,
+.form-text-row textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    font-family: "PlayRegular";
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 100%;
+}
+.form-text-row input:focus,
+.form-text-row textarea:focus {
+    border-color: #7e7c7d;
+}
+.form-text-row textarea {
+    height: 100px;
+    overflow-y: auto;
+    resize: none;
+    padding-right: 0;
+}
+.form-radio-row input {
+    margin-right: 5px;
+}
+.form-submit-wrapper input {
+    font-family: "PlayBold";
+}
+.form-submit-wrapper {
+    border-top: 1px solid #f6f6f6;
+    margin-top: 20px;
+    padding: 10px 0 50px;
+}

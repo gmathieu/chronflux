@@ -1,0 +1,44 @@
+/* LAYOUT */
+.clear {
+    clear: both;
+    display: block;
+    height: 0;
+}
+
+/* COLUMNS */
+.layout-fuild-left-column {
+    float: left;
+}
+.layout-fluid-right-column {
+    overflow-x: auto;
+}
+.layout-window-size {
+    bottom: 0;
+    left: 0;
+    overflow-x: auto;
+    position: absolute;
+    right: 0;
+    top: 36px;
+}
+.layout-column-static,
+.layout-column-static-1,
+.layout-column-static-2,
+.layout-column-fluid {
+    background-color: #ffffff;
+    bottom: 0;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+}
+.layout-column-static-1 {
+    left: 0;
+}
+.layout-column-static-2 {
+    left: 230px;
+}
+.layout-column-fluid {
+    background: none;
+    left: 460px;
+    min-width: 500px;
+    right: 0;
+}

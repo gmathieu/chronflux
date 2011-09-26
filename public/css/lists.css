@@ -1,0 +1,73 @@
+/* LISTS */
+.side-column {
+    width: 230px;
+}
+.side-column-with-border {
+    border-right: 1px solid #bdbdbd;
+    width: 229px;
+}
+.side-column-item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+.side-column-item-alt {
+    font-style: italic;
+}
+.side-column-item-title {
+    font-family: 'PlayBold';
+    line-height: 1;
+}
+.side-column-item-subtitle {
+    font-family: 'PlayRegular';
+    line-height: 1;
+    font-size: 93%;
+}
+.side-column-item-title,
+.side-column-item-subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
+}
+.side-column-item-new .side-column-item-title {
+    text-transform: uppercase;
+}
+.side-column-item .icon {
+    margin-right: 5px;
+    vertical-align: top;
+}
+.side-column-item-with-right-icon .right-icon {
+    float: right;
+}
+.side-column-item-with-right-icon .side-column-item-title,
+.side-column-item-with-right-icon .side-column-item-subtitle,
+.side-column-item-with-right-icon hgroup {
+    float: left;
+    width: 85%;
+}
+
+/* LISTS - SELECTABLE */
+.side-column-item-selectable {
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #bdbdbd;
+    border-top: 1px solid #ffffff;
+    color: #020001;
+    display: block;
+    text-decoration: none;
+}
+.side-column-item-selectable:hover {
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.side-column-item-selectable:active {
+    color: #7e7c7d;
+}
+.side-column-item-selectable.selected {
+    border-bottom-color: #020001 !important;
+    border-top-color: #353334 !important;
+    background-color: #353334 !important;
+    color: #ffffff !important;
+}

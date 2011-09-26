@@ -1,0 +1,151 @@
+/* SETTINGS */
+#settings .side-column-item {
+    padding: 15px 10px 0 10px;
+    height: 50px;
+}
+#settings-menu-options .side-column-item-title {
+    text-transform: uppercase;
+}
+
+#settings-main-content {
+    color: #020001;
+}
+#settings-main-content h1 {
+    color: #020001;
+    font-family: "PlayBold";
+    font-size: 131%;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+#settings-main-content h2 {
+    color; #353334;
+    font-family: "PlayBold";
+    font-size: 116%;
+    margin-bottom: 20px;
+}
+#settings-main-content .section {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* SETTINGS - ACTION LINKS */
+#settings .action-links {
+    padding: 10px;
+}
+#settings .action-link {
+    background-color: #ffffff;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    color: #020001;
+    float: left;
+    font-family: "PlayBold";
+    font-size: 85%;
+    padding: 2px 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+#settings .action-link:hover {
+    background-color: #353334;
+    color: #ffffff;
+}
+#settings .action-link.selected {
+    background-color: #bdbdbd !important;
+    color: #ffffff;
+    cursor: default;
+}
+/* toggle link */
+#settings .action-link-toggle {
+    float: left;
+    margin-right: 10px;
+}
+#settings .action-link.toggle-on {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+#settings .action-link.toggle-off {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+}
+/* delete link */
+#settings .action-link.delete {
+    color: red;
+}
+#settings .action-link.delete:hover {
+    background-color: red;
+    border-color: red;
+    color: #ffffff;
+}
+
+/* SETTINGS - INLINE EDITING */
+#settings .inline-row-editing {
+    border-top: 1px solid #bdbdbd;
+}
+#settings .inline-row-editing.first {
+    border-color: #7E7C7D;
+}
+#settings .inline-row-editing span.form-element-wrapper {
+    display: block;
+}
+#settings .inline-row-editing-link-label {
+    color: #7C7D7E;
+    float: right;
+    font-family: "PlayRegular";
+    font-size: 93%;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+#settings .inline-row-editing-link-label:hover {
+    color: #020001;
+}
+#settings .inline-row-editing-edit-link {
+    color: #020001;
+    display: block;
+    line-height: 1;
+    padding: 10px;
+    text-decoration: none;
+}
+#settings .inline-row-editing-edit-link:hover {
+    background-color: #f6f6f6;
+}
+#settings .inline-row-editing-edit-link:hover .inline-row-editing-link-label {
+    color: #020001;
+}
+#settings .inline-row-editing-form-row {
+    background-color: #f6f6f6;
+    padding: 10px;
+}
+
+/* default states */
+#settings .inline-row-editing .inline-row-editing-form-row {
+    display: none;
+}
+
+/* expanded states */
+#settings .inline-row-editing.expanded .inline-row-editing-form-row {
+    display: block;
+}
+#settings .inline-row-editing.expanded .inline-row-editing-edit-link {
+    display: none;
+}
+#inline-row-editing-delete-wrapper {
+    padding: 10px;
+}
+
+/* SETTINGS - TASKS */
+#task-form-wrapper .form-element-wrapper label {
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+    width: 30px;
+}
+#task-form-wrapper .form-element-wrapper input {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+#task-form-wrapper .form-element-wrapper .bubble {
+    display: inline-block;
+    vertical-align: top;
+}

@@ -1,0 +1,217 @@
+/* TIMESHEET */
+#timesheet {
+    padding-bottom: 100px;
+}
+#timesheet .side-column-item {
+    background-image: url(../images/icons/tooltip-preview.png);
+    background-position:  right center;
+    background-repeat: no-repeat;
+}
+#timesheet .column {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    float: left;
+    padding: 0 5px;
+    width: 70px;
+}
+#timesheet .column.even {
+    background-color: #f6f6f6;
+}
+#timesheet .quarter-column {
+    float: left;
+    width: 15px;
+}
+#timesheet .row {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 55px;
+}
+#timesheet .header-row {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 60px;
+}
+
+/* TIMESHEET - FLOATING-LABEL */
+.floating-label {
+    color: #ffffff;
+    background-color: #bdbdbd;
+    font-family: 'PlayRegular';
+    font-size: 77%;
+    min-width: 60px;
+    padding: 0 5px 2px;
+    position: absolute;
+    text-transform: uppercase;
+    text-align: center;
+}
+a.floating-label {
+    text-decoration: none;
+}
+a.floating-label:hover {
+    background-color: #353334;
+}
+
+/* TIMESHEET - CALENDAR DATE */
+#calendar-date {
+    padding-top: 5px;
+}
+#calendar-date time {
+    display: block;
+}
+#calendar-date-day-month-year-wrapper {
+    float: left;
+    margin: 5px 5px 0 0;
+}
+#calendar-date-day {
+    font-family: "PlayBold";
+    font-size: 167%;
+    line-height: 1;
+}
+#calendar-date-month-year {
+    font-family: 'PlayRegular';
+    font-size: 93%;
+}
+#calendar-date-date {
+    font-family: "PlayBold";
+    font-size: 310%;
+}
+
+/* TIMESHEET - CALENDAR HOURS */
+#calendar-hours {
+    width: 1680px;
+}
+#calendar-hours .hour-set {
+    padding-top: 30px;
+}
+#calendar-hours time {
+    color: #7e7c7d;
+    display: block;
+    font-family: "PlayRegular";
+    text-transform: lowercase;
+}
+#calendar-hours time.current {
+    color: #020001;
+}
+#calendar-hours .quarter-hour-click-area {
+    height: 10px;
+    padding-top: 5px;
+}
+#calendar-hours .quarter-hour {
+    background-color: #7e7c7d;
+    display: block;
+    height: 5px;
+    margin: 0 auto;
+    width: 5px;
+}
+#calendar-hours .quarter-hour.current {
+    background-color: #020001;
+}
+
+/* TIMESHEET - BUBBLES */
+#bubbles {
+    width: 1680px;
+}
+#bubbles .column {
+    border-bottom: 1px solid #bdbdbd;
+}
+#bubbles .quarter-column.current {
+    background: transparent url('../images/current-hour.gif') center top repeat-y;
+}
+#bubbles .bubble-click-area {
+    outline: none;
+    text-decoration: none;
+}
+#bubbles .bubble-click-area .bubble {
+    background-color: #ffffff;
+    border-color: #bdbdbd;
+    margin: 20px auto 0 auto;
+}
+#bubbles .bubble-click-area:hover .bubble {
+    border-color: #020001 !important;
+}
+#bubbles .bubble-click-area .bubble.selected {
+    border-color: #020001 !important;
+}
+#bubbles .bubble-click-area .bubble.deleting {
+    opacity: 0.3;
+}
+
+/* TIMESHEET - PROJECTS */
+#projects {
+    position: relative;
+}
+#projects .project {
+    padding-top: 15px;
+}
+#projects .floating-label {
+    border-bottom-left-radius: 4px;
+    right: 0px;
+    top: -1px;
+}
+#project-actions {
+    position: absolute;
+}
+#project-actions .button {
+    border-bottom-right-radius: 5px;
+}
+
+/* TIMESHEET - TASKS */
+#tasks-wrapper .floating-label {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    right: 10px;
+    top: 0;
+}
+#tasks-wrapper .key {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    display: none;
+    float: left;
+    font-family: "PlayBold";
+    font-size: 77%;
+    height: 12px;
+    line-height: 1;
+    margin-right: 5px;
+    padding: 0 3px;
+}
+#tasks-wrapper.show-keys .key {
+    display: block;
+}
+#tasks {
+    margin-bottom: 10px;
+}
+#tasks .task {
+    margin-bottom: 5px;
+    min-width: 20px;
+}
+#tasks .task .bubble {
+    float: left;
+}
+#tasks-keys-toggle-link {
+    color: #7e7c7d;
+    float: left;
+}
+#tasks-keys-toggle-link:hover {
+    color: #ffffff;
+}
+#tasks-keys-toggle-link label {
+    cursor: pointer;
+    font-family: "PlayRegular";
+    font-size: 77%;
+}
+#tasks-keys-toggle-link .key {
+    display: block !important; /* never hide legend */
+}
+
+/* TOOLTIP */
+#tasks-tooltip {
+    display: none;
+}
