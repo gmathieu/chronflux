@@ -16,4 +16,6 @@ $newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
         <?= $this->partial('timesheets/_bubbles.phtml', array('userProjectSet' => $this->userProjectSet)) ?>
     </div>
 
+    <?= $this->partial('timesheets/_tasks.phtml', array('userTaskSet' => $this->userTaskSet, 'username' => $this->username)) ?>
+
 </section>

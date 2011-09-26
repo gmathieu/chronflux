@@ -15,6 +15,7 @@ class User_TimesheetsController extends App_User_Controller_Action
     {
         $date         = $this->_getParam('date');
         $userProjects = User_Model_Projects::getInstance();
+        $userTasks    = User_Model_Tasks::getInstance();
 
         // make sure date is valid
         if (!$date) {
@@ -25,18 +26,23 @@ class User_TimesheetsController extends App_User_Controller_Action
             } catch(Exception $e) {
                 return $this->_forward('current-date');
             }
-        }        
+        }
 
         // set proper user
+        $userTasks->setUserId($this->user->id);
         $userProjects->setUserId($this->user->id);
 
         // get all user projects
         $userProjectSet = $userProjects->fetchByDateOrActive($date);
 
+        // get all user tasks
+        $userTaskSet = $userTasks->fetchAll();
+
         // assign to view
         $this->view->date           = $date;
         $this->view->dateObj        = $dateObj;
         $this->view->userProjectSet = $userProjectSet;
+        $this->view->userTaskSet    = $userTaskSet;
     }
 
     public function currentDateAction()

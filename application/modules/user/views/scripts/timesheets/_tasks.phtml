@@ -1,0 +1,48 @@
+<?
+$i           = 0;
+$newTaskUrl  = $this->baseUrl("user/{$this->username}/tasks/new");
+$taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
+?>
+<section id="tasks-tooltip" class="tooltip">
+    <article class="content">
+        <h1>What were you doing?</h1>
+
+        <div id="tasks-wrapper" class="show-keys">
+            <a href="<?= $taskListUrl ?>" class="floating-label" title="Manage your tasks">Tasks &raquo;</a>
+            <ul id="tasks" class="inline-buttons">
+                <!-- delete button -->
+                <li>
+                    <?= $this->button('Nothing', 'javascript:void(0)', array(
+                        'class' => 'task',
+                        'icon' => '<span class="key">del</span>' . $this->bubble(),
+                    )) ?>
+                </li>
+
+                <!-- user tasks -->
+                <? foreach ($this->userTaskSet as $userTask) : ?>
+                    <li>
+                        <?= $this->button($userTask->abbreviation, 'javascript:void(0)', array(
+                            'class' => 'task',
+                            'icon' => '<span class="key">' . ++$i . '</span>' . $this->bubble($userTask->color, true),
+                        )) ?>
+                    </li>
+                <? endforeach ?>
+
+                <!-- new task button -->
+                <li>
+                    <?= $this->button('+ Add a new task', $newTaskUrl, array('class' => 'task')) ?>
+                </li>
+            </ul>
+            <?= $this->clear() ?>
+
+            <a href="javascript:void(0)" id="tasks-keys-toggle-link">
+                <span class="key">#</span>
+                <label>Toggle keyboard shortcuts</label>
+            </a>
+
+            <?= $this->clear() ?>
+        </div>
+
+    </article>
+    <div class="arrow"></div>
+</section>
