@@ -10,7 +10,7 @@ class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
         ));
 
         if ($selected) {
-            $this->addAttribute('style', "background-color: #{$color}; color: #{$color}");
+            $this->addAttribute('style', "background-color: #{$color};");
         }
 
         return <<<HTML
