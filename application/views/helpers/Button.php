@@ -14,8 +14,12 @@ class View_Helper_Button extends Mg_View_Helper_AbstractHelper
         // icon
         $icon = $this->renderIcon();
 
+        // attributes
+        $attr = $this->getOption('attr', array());
+        $this->setAttributes($attr);
+
         return <<<HTML
-        <a href="{$url}" class="button {$this->getOption('class', '')}">
+        <a href="{$url}" class="button {$this->getOption('class', '')}" {$this->renderAttributes()}>
             {$icon}
             <label>{$this->view->escape($name)}</label>
         </a>
