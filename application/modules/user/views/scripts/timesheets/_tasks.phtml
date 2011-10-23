@@ -7,14 +7,14 @@ $taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
     <article class="content">
         <h1>What were you doing?</h1>
 
-        <div id="tasks-wrapper" class="show-keys">
+        <div id="tasks-wrapper">
             <a href="<?= $taskListUrl ?>" class="floating-label" title="Manage your tasks">Tasks &raquo;</a>
             <ul id="tasks" class="inline-buttons">
                 <!-- delete button -->
                 <li>
                     <?= $this->button('Nothing', 'javascript:void(0)', array(
-                        'class' => 'task',
-                        'icon' => '<span class="key">del</span>' . $this->bubble(),
+                        'class' => 'task new task-btn',
+                        'icon'  => '<span class="key">0</span>' . $this->bubble(),
                     )) ?>
                 </li>
 
@@ -22,8 +22,9 @@ $taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
                 <? foreach ($this->userTaskSet as $userTask) : ?>
                     <li>
                         <?= $this->button($userTask->abbreviation, 'javascript:void(0)', array(
-                            'class' => 'task',
-                            'icon' => '<span class="key">' . ++$i . '</span>' . $this->bubble($userTask->color, true),
+                            'attr'  => array('data-id' => $userTask->task_id, 'data-color' => $userTask->color),
+                            'class' => 'task task-btn',
+                            'icon'  => '<span class="key">' . ++$i . '</span>' . $this->bubble($userTask->color, true),
                         )) ?>
                     </li>
                 <? endforeach ?>
