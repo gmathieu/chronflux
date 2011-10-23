@@ -114,32 +114,32 @@ a.floating-label:hover {
     background-color: #020001;
 }
 
-/* TIMESHEET - BUBBLES */
-#bubbles {
+/* TIMESHEET - JOBS */
+#jobs {
     width: 1680px;
 }
-#bubbles .column {
+#jobs .column {
     border-bottom: 1px solid #bdbdbd;
 }
-#bubbles .quarter-column.current {
+#jobs .quarter-column.current {
     background: transparent url('../images/current-hour.gif') center top repeat-y;
 }
-#bubbles .bubble-click-area {
+#jobs .bubble-click-area {
     outline: none;
     text-decoration: none;
 }
-#bubbles .bubble-click-area .bubble {
+#jobs .bubble-click-area .bubble {
     background-color: #ffffff;
     border-color: #bdbdbd;
     margin: 20px auto 0 auto;
 }
-#bubbles .bubble-click-area:hover .bubble {
+#jobs .bubble-click-area:hover .bubble {
     border-color: #020001 !important;
 }
-#bubbles .bubble-click-area .bubble.selected {
+#jobs .bubble-click-area .bubble.selected {
     border-color: #020001 !important;
 }
-#bubbles .bubble-click-area .bubble.deleting {
+#jobs .bubble-click-area .bubble.deleting {
     opacity: 0.3;
 }
 

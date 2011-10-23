@@ -14,7 +14,7 @@ $newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
     <? if (count($this->userProjectSet) > 0) : ?>
         <div class="layout-fluid-right-column">
             <?= $this->partial('timesheets/_hours_header.phtml', array('dateObj' => $this->dateObj)) ?>
-            <?= $this->partial('timesheets/_bubbles.phtml', array('userProjectSet' => $this->userProjectSet)) ?>
+            <?= $this->partial('timesheets/_jobs.phtml', array('userProjectSet' => $this->userProjectSet)) ?>
         </div>
     <? endif ?>
 
