@@ -3,26 +3,26 @@
     <user_tasks
         user_id = "1"
         task_id = "1"
-        color   = "F6F4G3"
+        color   = "A7321C"
         order   = "1" />
     <user_tasks
         user_id = "1"
         task_id = "2"
-        color   = "F0F4B3"
+        color   = "FFDC68"
         order   = "2" />
     <user_tasks
         user_id = "1"
         task_id = "3"
-        color   = "F9F4A3"
+        color   = "CC982A"
         order   = "3" />
     <user_tasks
         user_id = "4"
         task_id = "1"
-        color   = "F6F4G3"
+        color   = "A7321C"
         order   = "1" />
     <user_tasks
         user_id = "4"
         task_id = "3"
-        color   = "F0F4B3"
+        color   = "CC982A"
         order   = "2" />
 </dataset>
