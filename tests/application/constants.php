@@ -20,9 +20,9 @@ const TASK_BACK_END       = 2;
 const TASK_CLIENT_MEETING = 3;
 const TASK_UNUSED         = 4;
 const TASK_USED           = 1;
-const TASK_COLOR_1        = 'F6F4G3';
-const TASK_COLOR_2        = 'F0F4B3';
-const TASK_COLOR_3        = 'F9F4A3';
+const TASK_COLOR_1        = 'A7321C';
+const TASK_COLOR_2        = 'FFDC68';
+const TASK_COLOR_3        = 'CC982A';
 
 // user projects & jobs
 const DATE_1 = '2011-01-01';
