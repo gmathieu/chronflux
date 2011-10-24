@@ -11,6 +11,8 @@ class App_Model_Jobs extends Mg_Data_Service
     {
         parent::init();
 
+        $userTaskJoin = "user_tasks.user_id = jobs.user_id AND user_tasks.task_id = jobs.task_id";
+        $this->select->joinLeft('user_tasks', $userTaskJoin, array('task_color' => 'color'));
         $this->select->order('start_time ASC');
         $this->select->order('created_on DESC');
     }
@@ -84,7 +86,7 @@ class App_Model_Jobs extends Mg_Data_Service
 
         // filter user ID
         if ($this->_userId) {
-            $this->select->where('user_id = ?', $this->_userId);
+            $this->select->where('jobs.user_id = ?', $this->_userId);
         }
 
         // filter project ID unless ignored
