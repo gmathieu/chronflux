@@ -255,6 +255,33 @@ class JobsTest extends AbstractDatabaseTestCase
         $this->assertEquals(1, count($this->jobs->fetchAll()));
     }
 
+    public function testAddAndGetJobsFromProject1()
+    {
+        $projects  = App_Model_Projects::getInstance();
+        $website   = $projects->find(PROJECT_WEBSITE);
+        $eCommerce = $projects->find(PROJECT_ECOMMERCE);
+        $projects  = array(
+            PROJECT_WEBSITE   => $website,
+            PROJECT_ECOMMERCE => $eCommerce,
+        );
+
+        // assign jobs to each project
+        foreach ($this->_fetchFromAllProjects() as $job) {
+            $projects[$job->project_id]->addJob($job);
+        }
+
+        $this->assertEquals(4, count($website->getJobs()));
+        $this->assertEquals(1, count($eCommerce->getJobs()));
+
+        // test conversations
+        $this->assertInstanceof('App_Model_Job', $website->getJob(13));
+        $this->assertInstanceof('App_Model_Job', $website->getJob(13.0));
+        $this->assertInstanceof('App_Model_Job', $website->getJob('13.0'));
+        $this->assertInstanceof('App_Model_Job', $website->getJob(16.5));
+        $this->assertInstanceof('App_Model_Job', $website->getJob('16.50'));
+        $this->assertFalse($website->getJob('1.00'));
+    }
+
     private function _fetchFromAllProjects()
     {
         // search through entire all project jobs
