@@ -39,11 +39,7 @@ class View_Helper_SideColumnItem extends Mg_View_Helper_AbstractHelper
         $rightIcon = $this->renderIcon('right');
 
         // attributes
-        if (is_array($this->getOption('attr'))) {
-            foreach ($this->getOption('attr') as $key => $value) {
-                $this->addAttribute($key, $value);
-            }
-        }
+        $this->addAttributes($this->getOption('attr'));
         $this->addAttribute('class', $this->getClasses());
 
         return <<<HTML
