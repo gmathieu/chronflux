@@ -1,12 +1,36 @@
 <section id="jobs">
     <? foreach ($this->userProjectSet as $project) : ?>
-        <div class="columns bubble-set row">
-            <? for ($i = 0; $i < 24; $i++) : ?>
-                <div class="column <?= ($i % 2 == 0) ? 'even' : '' ?> row">
-                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
-                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
-                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
-                    <a class="quarter-column bubble-click-area row" href="javascript:void(0)"><?= $this->bubble() ?></a>
+
+        <? $previousJob = false; ?>
+
+        <div class="columns bubble-set row" id="project_jobs_<?= $project->id ?>">
+            <? for ($hour = 0; $hour < 24; $hour++) : ?>
+                <div class="column <?= ($hour % 2 == 0) ? 'even' : '' ?> row">
+                    <? for ($minutes = 0; $minutes < 1; $minutes += 0.25) : ?>
+                        <a class="quarter-column bubble-click-area row" href="javascript:void(0)">
+                            <?
+                                $time         = $hour + $minutes;
+                                $bubbleParams = array('attr' => array('data-time' => $time));
+
+                                // check to see if previous job is still valid
+                                $job = ($previousJob && $time < $previousJob->stop_time)
+                                     ? $previousJob : $job = $project->getJob($time);
+
+
+                                if ($job) {
+                                    // update params
+                                    $bubbleParams['attr']['data-task-id'] = $job->task_id;
+                                    $bubbleParams['color']                = $job->task_color;
+
+                                    // save job
+                                    $previousJob = $job;
+                                }
+
+                                // render bubble
+                                echo $this->bubble($bubbleParams);
+                            ?>
+                        </a>
+                    <? endfor ?>
                 </div>
             <? endfor ?>
         </div>
