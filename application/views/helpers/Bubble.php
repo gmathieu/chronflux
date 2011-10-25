@@ -2,15 +2,24 @@
 
 class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
 {
-    public function bubble($color = '', $filled = false)
+    public function bubble($options = array())
     {
+        $this->setOptions($options);
+
+        $color = $this->getOption('color');
+
+        // defined attributes
         $this->setAttributes(array(
             'class'      => 'bubble',
             'data-color' => $color,
         ));
 
-        if ($filled) {
-            $this->addAttribute('style', "background-color: #{$color};");
+        // optional attributes
+        $this->addAttributes($this->getOption('attr'));
+
+        // automatically fill button when color is set
+        if ($color) {
+            $this->addAttribute('style', "background-color: #{$color}; color: #{$color}");
         }
 
         return <<<HTML

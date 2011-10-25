@@ -22,9 +22,9 @@ $taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
                 <? foreach ($this->userTaskSet as $userTask) : ?>
                     <li>
                         <?= $this->button($userTask->abbreviation, 'javascript:void(0)', array(
-                            'attr'  => array('data-id' => $userTask->task_id, 'data-color' => $userTask->color),
+                            'attr'  => array('data-id' => $userTask->task_id, 'data-color' => '#' . $userTask->color),
                             'class' => 'task task-btn',
-                            'icon'  => '<span class="key">' . ++$i . '</span>' . $this->bubble($userTask->color, true),
+                            'icon'  => '<span class="key">' . ++$i . '</span>' . $this->bubble(array('color' => $userTask->color)),
                         )) ?>
                     </li>
                 <? endforeach ?>

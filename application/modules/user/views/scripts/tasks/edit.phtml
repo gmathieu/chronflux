@@ -14,7 +14,7 @@
         <?= $this->inlineEditing('name') ?>
         <?= $this->inlineEditing('abbreviation') ?>
         <?= $this->inlineEditing('color', array('value_renderer' => function($value) use($view) {
-            return $view->bubble($value, true);
+            return $view->bubble(array('color' => $value));
         })) ?>
         <?= $this->inlineEditing('description') ?>
     </form>
