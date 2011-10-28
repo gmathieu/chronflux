@@ -1,10 +1,13 @@
 Chronflux.ButtonSet = function($elements, options)
 {
+    // public variables
     this.list = [];
 
-    var self         = this;
-    var _options     = options || {};
-    var _selectedBtn = false;
+    // private varaiables
+    var self           = this;
+    var _options       = options || {};
+    var _selectedBtn   = false;
+    var _onDidDeselect;
 
     this.init = function()
     {
@@ -34,21 +37,37 @@ Chronflux.ButtonSet = function($elements, options)
         return output;
     }
 
+    this.deselect = function()
+    {
+        if (_selectedBtn) {
+            _selectedBtn.deselect();
+
+            if ($.isFunction(_onDidDeselect)) {
+                _onDidDeselect(_selectedBtn);
+            }
+        }
+    }
+
+    this.onDidDeselect = function(func)
+    {
+        _onDidDeselect = func;
+    }
+
     function initBtn()
     {
         var btn  = new Chronflux.Button($(this));
 
         // init button selection
-        btn.onSelect(onBtnSelect);
+        btn.onDidSelect(onDidSelectBtn);
 
         // add custom handlers
-        btn.onSelect(_options.onSelect);
-        btn.onDeselect(_options.onDeselect);
+        btn.onDidSelect(_options.onDidSelect);
+        btn.onDidDeselect(_options.onDidDeselect);
 
         self.list.push(btn)
     }
 
-    function onBtnSelect(event, btn)
+    function onDidSelectBtn(event, btn)
     {
         // check that selected button exists and is different
         if (_selectedBtn && _selectedBtn != btn) {
@@ -84,7 +103,7 @@ Chronflux.Button = function($elt)
         }
 
         this.$.addClass('selected');
-        this.$.trigger('btnSelected', [self]);
+        this.$.trigger('btnDidSelect', [self]);
     }
 
     this.deselect = function()
@@ -94,7 +113,7 @@ Chronflux.Button = function($elt)
         }
 
         this.$.removeClass('selected');
-        this.$.trigger('btnDeselected', [self]);
+        this.$.trigger('btnDidDeselect', [self]);
     }
 
     this.enable = function()
@@ -109,16 +128,16 @@ Chronflux.Button = function($elt)
         this.$.addClass('disabled');
     }
 
-    this.onSelect = function(func)
+    this.onDidSelect = function(func)
     {
-        this.$.bind('btnSelected', func);
+        this.$.bind('btnDidSelect', func);
 
         return this;
     }
 
-    this.onDeselect = function(func)
+    this.onDidDeselect = function(func)
     {
-        this.$.bind('btnDeselect', func);
+        this.$.bind('btnDidDeselect', func);
 
         return this;
     }
