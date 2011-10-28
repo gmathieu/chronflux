@@ -20,7 +20,7 @@ $menuItems = array(
                 <ul class="inline-buttons">
                     <? foreach ($menuItems as $label => $url) : ?>
                         <? $selected = ($this->selectedMenuItem == strtolower($label)) ?>
-                        <li <?= ($selected) ? 'class="selected"' : '' ?>">
+                        <li <?= ($selected) ? 'class="selected"' : '' ?>>
                             <a href="<?= $url ?>" class="button <?= ($selected) ? 'selected' : '' ?>">
                                 <span class="icon">
                                     <img class="loader" src="<?= $this->baseUrl('images/icons/loader.gif') ?>" title="Loader" />
