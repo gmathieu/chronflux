@@ -9,13 +9,12 @@
                     <? for ($minutes = 0; $minutes < 1; $minutes += 0.25) : ?>
                         <a class="quarter-column bubble-click-area row" href="javascript:void(0)">
                             <?
-                                $time         = $hour + $minutes;
+                                $time         = number_format($hour + $minutes, 2);
                                 $bubbleParams = array('attr' => array('data-time' => $time));
 
                                 // check to see if previous job is still valid
                                 $job = ($previousJob && $time < $previousJob->stop_time)
                                      ? $previousJob : $job = $project->getJob($time);
-
 
                                 if ($job) {
                                     // update params
