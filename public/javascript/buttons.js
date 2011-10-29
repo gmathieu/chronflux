@@ -108,10 +108,6 @@ Chronflux.Button = function($elt)
 
     this.deselect = function()
     {
-        if (false == this.enabled) {
-            return false;
-        }
-
         this.$.removeClass('selected');
         this.$.trigger('btnDidDeselect', [self]);
     }
