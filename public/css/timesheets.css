@@ -130,17 +130,14 @@ a.floating-label:hover {
 }
 #jobs .bubble-click-area .bubble {
     background-color: #ffffff;
-    border-color: #bdbdbd;
+    color: #bdbdbd;
     margin: 20px auto 0 auto;
 }
 #jobs .bubble-click-area:hover .bubble {
-    border-color: #020001 !important;
+    color: #020001 !important;
 }
 #jobs .bubble-click-area .bubble.selected {
-    border-color: #020001 !important;
-}
-#jobs .bubble-click-area .bubble.dimmed {
-    opacity: 0.3;
+    color: #020001 !important;
 }
 
 /* TIMESHEET - PROJECTS */
@@ -213,5 +210,5 @@ a.floating-label:hover {
 
 /* TOOLTIP */
 #tasks-tooltip {
-    display: none;
+/*     display: none; */
 }
