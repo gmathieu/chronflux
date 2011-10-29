@@ -21,3 +21,5 @@ $newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
     <?= $this->partial('timesheets/_tasks.phtml', array('userTaskSet' => $this->userTaskSet, 'username' => $this->username)) ?>
 
 </section>
+
+<? $this->inlineScript()->appendScript('$(Chronflux.Timesheets);') ?>
