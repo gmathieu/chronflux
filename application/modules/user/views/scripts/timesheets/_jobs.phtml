@@ -18,8 +18,7 @@
 
                                 if ($job) {
                                     // update params
-                                    $bubbleParams['attr']['data-task-id'] = $job->task_id;
-                                    $bubbleParams['color']                = $job->task_color;
+                                    $bubbleParams['color'] = $job->task_color;
 
                                     // save job
                                     $previousJob = $job;
