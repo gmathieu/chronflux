@@ -15,14 +15,24 @@ Chronflux.BubbleSet = function($elements)
         return this;
     }
 
-    this.select = function(color)
+    this.select = function()
     {
-        return callFunctionOnList('select', color);
+        return callFunctionOnList('select');
     }
 
     this.deselect = function()
     {
         return callFunctionOnList('deselect');
+    }
+
+    this.dim = function()
+    {
+        return callFunctionOnList('dim');
+    }
+
+    this.undim = function()
+    {
+        return callFunctionOnList('undim');
     }
 
     this.setColor = function(color)
@@ -74,6 +84,7 @@ Chronflux.Bubble = function($wrapper)
 {
     // public variables
     this.$ = $wrapper;
+    this.$inner;
 
     // private variables
     var self = this;
@@ -86,6 +97,9 @@ Chronflux.Bubble = function($wrapper)
             self[key] = data[key];
         }
 
+        // find inner bubble
+        this.$inner = this.$.children();
+
         return this;
     }
 
@@ -94,10 +108,8 @@ Chronflux.Bubble = function($wrapper)
         return this.color.length > 0;
     }
 
-    this.select = function(color)
+    this.select = function()
     {
-        var color = color || '#ffffff';
-        this.$.css('backgroundColor', color);
         this.$.addClass('selected');
 
         return this;
@@ -105,9 +117,21 @@ Chronflux.Bubble = function($wrapper)
 
     this.deselect = function()
     {
-        // restore color
-        self.setColor(self.color);
         this.$.removeClass('selected');
+
+        return this;
+    }
+
+    this.dim = function()
+    {
+        this.$.addClass('dimmed');
+
+        return this;
+    }
+
+    this.undim = function()
+    {
+        this.$.removeClass('dimmed');
 
         return this;
     }
@@ -121,18 +145,12 @@ Chronflux.Bubble = function($wrapper)
     {
         this.color = color || '';
 
-        if (color === '') {
-            this.$.removeClass('filled');
-            this.$.css({
-                'backgroundColor': '',
-                'color'          : ''
-            });
+        if (this.color === '') {
+            this.$.css('color', '').removeClass('filled');
+            this.$inner.css('backgroundColor', '');
         } else {
-            this.$.addClass('filled');
-            this.$.css({
-                'backgroundColor': color,
-                'color'          : color
-            });
+            this.$.css('color', color).addClass('filled');
+            this.$inner.css('backgroundColor', color);
         }
 
         return this;
