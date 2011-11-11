@@ -42,11 +42,6 @@ Chronflux.BubbleSet = function($elements)
 
     this.clear = function()
     {
-        return callFunctionOnList('clear');
-    }
-
-    this.clear = function()
-    {
         delete(this.list);
         this.list = [];
 
@@ -60,6 +55,11 @@ Chronflux.BubbleSet = function($elements)
         }
 
         return this;
+    }
+
+    this.length = function()
+    {
+        return this.list.length;
     }
 
     function initBubble()
