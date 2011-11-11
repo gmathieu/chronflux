@@ -3,7 +3,7 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
     // public variables
     this.$                           = $wrapper;
     this.selectedBubbleSet           = new Chronflux.BubbleSet;
-    this.conflictingBubbleSet  = new Chronflux.BubbleSet;
+    this.conflictingBubbleSet        = new Chronflux.BubbleSet;
     this.projectConflictingBubbleSet = new Chronflux.BubbleSet;
     this.allJobs                     = {};
     this.timeColumns                 = {};
@@ -14,7 +14,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
     var _startTime       = false;
     var _stopTime        = false;
     var _selectedProject = false;
-    var _color           = false;
 
     // custom events
     var _onWillSelect;
@@ -48,28 +47,50 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         return time + 0.25;
     }
 
+    this.getSelectedProject = function()
+    {
+        return _selectedProject;
+    }
+
+    this.getLastSelectedBubble = function()
+    {
+        // the time determines the order in which bubbles were selected
+        if (_stopTime > _startTime) {
+            var lastItemIndex = this.selectedBubbleSet.length() - 1;
+            return this.selectedBubbleSet.list[lastItemIndex];
+        } else {
+            return this.selectedBubbleSet.list[0];
+        }
+    }
+
     this.setSelectedColor = function(color)
     {
-        // save color
-        _color = color;
-
         // re-select items with new color
-        this.selectedBubbleSet.select(color);
+        this.selectedBubbleSet.setColor(color);
     }
 
     this.save = function()
     {
-        // remove filling from conflicting bubbles
-        this.conflictingBubbleSet.setColor('');
+        // delete conflicting jobs
+        this.conflictingBubbleSet.each(deleteJob);
 
         // save all selected jobs
-        this.selectedBubbleSet.each(function(i, bubble) {
-            // update all jobs with new bubble
-            self.allJobs[bubble.time] = bubble;
+        this.selectedBubbleSet.each(function(i, job) {
+            // update all jobs with new job
+            self.allJobs[job.time] = job;
 
-            // update bubble with new color
-            bubble.setColor(_color);
+            // associate new job with project
+            projects.get(job.projectId).jobs[job.time] = job;
         });
+
+        // reset everything
+        this.reset();
+    }
+
+    this.delete = function()
+    {
+        // delete all selected jobs
+        this.selectedBubbleSet.each(deleteJob);
 
         // reset everything
         this.reset();
@@ -83,7 +104,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         _startTime       = false;
         _stopTime        = false;
         _selectedProject = false;
-        _color           = false;
     }
 
     this.onWillSelect = function(func)
@@ -160,14 +180,16 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         // select all bubbles between startTime and stopTime
         while (startTime <= stopTime) {
             // select bubble
-            var bubble = _selectedProject.bubbles[startTime].select(_color);
+            var bubble = _selectedProject.bubbles[startTime].select();
 
             // save selected bubble
             self.selectedBubbleSet.list.push(bubble);
 
             // check for conflicting jobs
-            var conflictingBubble = self.allJobs[startTime];
-            if (conflictingBubble) {
+            if (conflictingBubble = self.allJobs[startTime]) {
+                // dim conflicting bubble
+                conflictingBubble.dim();
+
                 // current project job conflicts
                 if (conflictingBubble.projectId == _selectedProject.id) {
                     self.projectConflictingBubbleSet.list.push(conflictingBubble);
@@ -188,8 +210,23 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         self.selectedBubbleSet.deselect().clear();
 
         // clear conflicting bubble sets
-        self.conflictingBubbleSet.clear();
-        self.projectConflictingBubbleSet.clear();
+        self.conflictingBubbleSet.undim().clear();
+        self.projectConflictingBubbleSet.undim().clear();
+    }
+
+    function deleteJob(i, job) {
+        // reset color
+        job.setColor('');
+
+        // delete job from project
+        delete(projects.get(job.projectId).jobs[job.time]);
+
+        // delete job from all jobs lookup only they have the same project ID
+        if (self.allJobs[job.time] && 
+            self.allJobs[job.time].projectId == job.projectId
+        ) {
+            delete(self.allJobs[job.time]);
+        }
     }
 
     function onColumnMouseDown(e)
