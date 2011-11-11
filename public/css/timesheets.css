@@ -139,6 +139,18 @@ a.floating-label:hover {
 #jobs .bubble-click-area .bubble.selected {
     color: #020001 !important;
 }
+/* dim both the outer and inner bubble */
+#jobs .bubble-click-area .bubble.dimmed {
+    opacity: 0.6;
+}
+/* only dim inner bubble when selected */
+#jobs .bubble-click-area .bubble.selected.dimmed {
+    opacity: 1;
+}
+#jobs .bubble-click-area .bubble.selected.dimmed .inner-bubble {
+    opacity: 0.6;
+}
+
 
 /* TIMESHEET - PROJECTS */
 #projects {
@@ -160,6 +172,12 @@ a.floating-label:hover {
 }
 
 /* TIMESHEET - TASKS */
+#tasks-tooltip {
+    display: none;
+}
+#tasks-tooltip.show-keys .key {
+    display: block;
+}
 #tasks-wrapper .floating-label {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -178,9 +196,6 @@ a.floating-label:hover {
     line-height: 1;
     margin-right: 5px;
     padding: 0 3px;
-}
-#tasks-wrapper.show-keys .key {
-    display: block;
 }
 #tasks {
     margin-bottom: 10px;
@@ -206,9 +221,4 @@ a.floating-label:hover {
 }
 #tasks-keys-toggle-link .key {
     display: block !important; /* never hide legend */
-}
-
-/* TOOLTIP */
-#tasks-tooltip {
-/*     display: none; */
 }

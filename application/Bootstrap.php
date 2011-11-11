@@ -44,6 +44,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
 
         $view->inlineScript()->appendFile($view->baseUrl('javascript/jquery-1.6.4.min.js'));
+        $view->inlineScript()->appendFile($view->baseUrl('javascript/tooltip.js'));
         $view->inlineScript()->appendFile($view->baseUrl('javascript/buttons.js'));
         $view->inlineScript()->appendFile($view->baseUrl('javascript/bubbles.js'));
         $view->inlineScript()->appendFile($view->baseUrl('javascript/timesheets.js'));

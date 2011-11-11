@@ -9,12 +9,13 @@ Chronflux.Timesheets = function()
     var self = this;
 
     this.init = function() {
-        this.tasks    = new Chronflux.Timesheets.Tasks($('#tasks-wrapper'));
+        this.tasks    = new Chronflux.Timesheets.Tasks($('#tasks-tooltip'));
         this.projects = new Chronflux.Timesheets.Projects($('#projects'));
         this.jobs     = new Chronflux.Timesheets.Jobs($('#jobs'), this.projects);
 
         // init task events
         this.tasks.onDidSelectTask(onDidSelectTask);
+        this.tasks.onTooltipDidHide(onTasksTooltipDidHide);
 
         // init job events
         this.jobs.onWillSelect(onWillSelectJobs);
@@ -33,17 +34,27 @@ Chronflux.Timesheets = function()
 
     function onDidSelectTask(task)
     {
-        // update selected jobs' colors
+        // update selected jobs' color
         self.jobs.setSelectedColor(task.color);
 
-        // close tasks
-        self.tasks.hide();
+        if (task.color) {
+            // save jobs visual changes
+            self.jobs.save();
+        } else {
+            self.jobs.delete();
+        }
 
         // deselect current buttons
         self.tasks.deselect();
 
-        // save jobs visual changes
-        self.jobs.save();
+        // close tasks
+        self.tasks.hide();
+    }
+
+    function onTasksTooltipDidHide()
+    {
+        // reset selected jobs
+        self.jobs.reset();
     }
 
     /* JOBS EVENT HANDLERS */
@@ -61,8 +72,11 @@ Chronflux.Timesheets = function()
             self.tasks.enableDeleteBtn();
         }
 
+        // get last selected item
+        var bubble = self.jobs.getLastSelectedBubble();
+
         // show tasks
-        self.tasks.show();
+        self.tasks.showRelativeTo(bubble.$);
     }
 
     return this.init();
