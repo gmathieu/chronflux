@@ -6,6 +6,7 @@ class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
     {
         $this->setOptions($options);
 
+        $innerStyle = '';
         $classes = 'bubble';
         $color = $this->getOption('color');
 
@@ -25,14 +26,17 @@ class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
         // automatically fill button when color is set
         if ($color) {
             $classes .= ' filled';
-            $this->addAttribute('style', "background-color: {$color}; color: {$color}");
+            $this->addAttribute('style', "color: {$color}");
+            $innerStyle = "style=\"background-color: {$color};\"";
         }
 
         // add class attributes
         $this->addAttribute('class', $classes);
 
         return <<<HTML
-        <span {$this->renderAttributes()}><span class="inner-bubble">&nbsp;</span></span>
+        <span {$this->renderAttributes()}>
+            <span class="inner-bubble" {$innerStyle}>&nbsp;</span>
+        </span>
 HTML;
     }
 }
