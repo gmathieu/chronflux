@@ -1,8 +1,9 @@
 Chronflux.Timesheets.Projects = function($wrapper)
 {
     // public variables
-    this.$       = $wrapper;
-    this.list    = [];
+    this.$           = $wrapper;
+    this.list        = [];
+    this.indexLookup = {};
 
     // private variables
     var self = this;
@@ -13,6 +14,11 @@ Chronflux.Timesheets.Projects = function($wrapper)
         this.$.find('.project').each(initProject);
 
         return this;
+    }
+
+    this.get = function(id)
+    {
+        return this.list[this.indexLookup[id]];
     }
 
     this.each = function(callback)
@@ -28,6 +34,10 @@ Chronflux.Timesheets.Projects = function($wrapper)
     {
         var project = new Chronflux.Timesheets.Project($(this));
 
+        // update lookup
+        self.indexLookup[project.id] = self.list.length;
+
+        // add project to list
         self.list.push(project);
     }
 
