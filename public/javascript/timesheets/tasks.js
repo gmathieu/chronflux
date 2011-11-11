@@ -1,9 +1,10 @@
 Chronflux.Timesheets.Tasks = function($wrapper, options)
 {
     // public vars
-    this.$    = $wrapper;
-    this.btns = false;
-    this.list = {};
+    this.$       = $wrapper;
+    this.btns    = false;
+    this.tooltip = false;
+    this.list    = {};
 
     // private vars
     var self             = this;
@@ -23,25 +24,26 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
         // init shortcuts
         initShortcuts();
 
-        // default selected task
-        //initDefaultSelectedTask();
-
         // hide and disable delete button
         this.disableDeleteBtn();
+
+        // init tooltip
+        this.tooltip = new Chronflux.Tooltip({
+            wrapper: this.$
+        });
 
         return this;
     }
 
-    this.show = function()
+    this.showRelativeTo = function($elt)
     {
-        // TODO: implement tooltip
-        self.$.show();
+        self.tooltip.setPositionRelativeTo($elt);
+        self.tooltip.show();
     }
 
     this.hide = function()
     {
-        // TODO: implement tooltip
-        self.$.hide();
+        self.tooltip.hide();
 
         // disable delete button
         self.disableDeleteBtn();
@@ -98,6 +100,11 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
         this.btns.onDidDeselect(func);
     }
 
+    this.onTooltipDidHide = function(func)
+    {
+        this.tooltip.onDidHide(func);
+    }
+
     function initBtns()
     {
         var btnList = self.btns.list;
@@ -127,12 +134,6 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
 
         // legend
         $('#tasks-keys-toggle-link').click(onLegendClick);
-    }
-
-    function initDefaultSelectedTask()
-    {
-        // TODO: store last used task
-        self.selectFirstTask();
     }
 
     function onTaskBtnDidSelect(event, btn)

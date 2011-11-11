@@ -1,13 +1,24 @@
+#tooltip-overlay {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
 .tooltip {
+    padding: 10px;
+    position: absolute;
+    z-index: 1001;
+}
+.tooltip .content {
     background-color: #020001;
     border-radius: 5px;
     box-shadow: 2px 2px 5px #7E7C7D;
     color: #f6f6f6;
     min-width: 140px;
-    position: absolute;
-}
-.tooltip .content {
     padding: 15px;
+    position: relative;
 }
 .tooltip  h1 {
     font-family: "PlayBold";
@@ -38,11 +49,11 @@
     background-image: url(../images/tooltip/arrow-right.png);
     right: -5px;
 }
-.tooltip .arrow-top {
+.tooltip .arrow-up {
     background-image: url(../images/tooltip/arrow-top.png);
     top: -5px;
 }
-.tooltip .arrow-bottom {
+.tooltip .arrow-down {
     background-image: url(../images/tooltip/arrow-bottom.png);
     bottom: -5px;
 }
