@@ -3,17 +3,22 @@ Chronflux.Tooltip = function(options)
     // public variables
     this.$;
     this.$document;
+    this.$window;
     this.$arrow;
     this.$overlay;
+    this.$relativePositionElt;
 
     // private variables
-    var self            = this;
-    var _opts           = options || {};
-    var _arrowDirection = options.arrowDirection || 'up';
+    var self              = this;
+    var _opts             = options || {};
+    var _arrowDirection   = options.arrowDirection || 'up';
+    var _offset           = options.offset || 15;
+    var _arrowCenterPoint = {};
 
     this.init = function()
     {
         self.$document = $(document);
+        self.$window   = $(window);
 
         // init wrapper
         initWrapper();
@@ -27,20 +32,57 @@ Chronflux.Tooltip = function(options)
         return this;
     }
 
-    this.setPositionRelativeTo = function($target)
+    this.rePosition = function()
     {
-        var offset = $target.offset();
-        var width  = $target.outerWidth();
-        var height = $target.outerHeight();
+        if (this.$relativePositionElt) {
+            this.setPositionRelativeTo(this.$relativePositionElt);
+        }
+    }
+
+    this.setPositionRelativeTo = function($elt)
+    {
+        var offset = $elt.offset();
+        var width  = $elt.outerWidth();
+        var height = $elt.outerHeight();
 
         // left: target offset left + target's center point
-        var targetLeft = offset.left + (width / 2);
+        var left = offset.left + (width / 2);
 
         // top: target offset top + target's height
-        var targetTop = offset.top + height;
+        var top = offset.top + height;
+
+        // store current target
+        this.$relativePositionElt = $elt;
+
+        this.setPosition(left, top);
+    }
+
+    this.setPosition = function(left, top)
+    {
+        // try to position tooltip at these coordinates
+        var targetLeft = left;
+        var targetTop  = top;
+
+        // adjust for offset and arrow center point
+        targetLeft += -_offset - _arrowCenterPoint.x;
+
+        // reposition tooltip to get fully expanded width
+        this.$.css({'left': -2000, 'top': -2000});
+
+        // check if popup is cut on the right
+        var offScreenDelta = this.$window.width() - (targetLeft + this.$.outerWidth());
+        if (offScreenDelta < 0) {
+            // shit left by 1px for rounding errors
+            targetLeft += offScreenDelta - 1;
+        }
 
         // adjust position based on width
         this.$.css({'left': targetLeft, 'top': targetTop});
+
+        // position arrow
+        this.$arrow.css({
+            'left': left - targetLeft - _arrowCenterPoint.x
+        });
     }
 
     this.show = function()
@@ -86,14 +128,6 @@ Chronflux.Tooltip = function(options)
         this.$.bind('tooltipDidCancel', func);
     }
 
-    this.position = function(x, y)
-    {
-        this.$.css({
-            'left': x,
-            'top' : y
-        });
-    }
-
     this.setArrowDirection = function(direction)
     {
         _arrowDirection = direction;
@@ -127,6 +161,12 @@ Chronflux.Tooltip = function(options)
 
         // set arrow direction
         self.setArrowDirection(_arrowDirection);
+
+        // store arrow width
+        _arrowCenterPoint = {
+            x: self.$arrow.width() / 2,
+            y: self.$arrow.height() / 2
+        };
     }
 
     function initOverlay()

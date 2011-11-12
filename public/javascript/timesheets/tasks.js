@@ -170,6 +170,7 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
     function onLegendClick()
     {
         self.$.toggleClass('show-keys');
+        self.tooltip.rePosition();
     }
 
     return this.init();

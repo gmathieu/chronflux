@@ -36,7 +36,7 @@
     height: 10px;
     width: 5px;
 }
-.tooltip .arrow-top,
+.tooltip .arrow-up,
 .tooltip .arrow-bottom {
     height: 5px;
     width: 10px;
@@ -51,7 +51,7 @@
 }
 .tooltip .arrow-up {
     background-image: url(../images/tooltip/arrow-top.png);
-    top: -5px;
+    top: 5px;
 }
 .tooltip .arrow-down {
     background-image: url(../images/tooltip/arrow-bottom.png);
