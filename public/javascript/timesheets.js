@@ -68,7 +68,7 @@ Chronflux.Timesheets = function()
     function onDidSelectJobs()
     {
         // there's something to delete, show delete button
-        if (self.jobs.projectConflictingBubbleSet.list.length > 0) {
+        if (self.jobs.projectConflictingBubbleSet.length() > 0) {
             self.tasks.enableDeleteBtn();
         }
 

@@ -50,7 +50,7 @@ Chronflux.BubbleSet = function($elements)
 
     this.each = function(callback)
     {
-        for (var i = 0; i < self.list.length; i++) {
+        for (var i = 0; i < self.length(); i++) {
             callback(i, self.list[i]);
         }
 
