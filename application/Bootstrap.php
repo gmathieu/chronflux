@@ -37,10 +37,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->appendStylesheet($view->baseUrl('css/bubbles.css'));
         $view->headLink()->appendStylesheet($view->baseUrl('css/tooltip.css'));
 
+        // setup JS namespace
         $view->headScript()->setScript('var Chronflux = Chronflux || {}');
 
+        // include JS dev tools
         if ('development' == APPLICATION_ENV) {
-            $view->inlineScript()->appendFile($view->baseUrl('javascript/dev-tools.js'));    
+            $view->inlineScript()->appendFile($view->baseUrl('javascript/dev-tools.js'));
         }
 
         $view->inlineScript()->appendFile($view->baseUrl('javascript/jquery-1.6.4.min.js'));
