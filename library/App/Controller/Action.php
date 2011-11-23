@@ -5,10 +5,13 @@ class App_Controller_Action extends Zend_Controller_Action
     public $controllerName;
     public $actionName;
 
+    protected $_redirector;
+
     public function init()
     {
         $this->controllerName = $this->getRequest()->getControllerName();
         $this->actionName     = $this->getRequest()->getActionName();
+        $this->_redirector    = $this->_helper->getHelper('Redirector');
 
         if ($this->_getParam('show-grid')) {
             $url = $this->view->baseUrl('images/24_col.gif');
@@ -25,5 +28,13 @@ class App_Controller_Action extends Zend_Controller_Action
     public function isAjax()
     {
         return $this->getRequest()->isXmlHttpRequest();
+    }
+
+    public function getReturnPath($path = '/')
+    {
+        $servername = $this->_request->getServer('SERVER_NAME');
+        $baseUrl    = $this->getFrontController()->getBaseUrl();
+
+        return "http://{$servername}{$baseUrl}{$path}";
     }
 }
