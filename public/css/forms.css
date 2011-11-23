@@ -50,6 +50,10 @@
     resize: none;
     padding-right: 0;
 }
+.form-dropdown-row select {
+    margin-bottom: 5px;
+    width: 100%;
+}
 .form-radio-row input {
     margin-right: 5px;
 }

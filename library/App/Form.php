@@ -40,6 +40,13 @@ class App_Form extends Zend_Form
         $this->getElement($name)->addFilter('StringTrim');
     }
 
+    public function addDropDownElement($name, $params = array())
+    {
+        $this->addElement('select', $name, $params);
+        $this->getElement($name)->setDecorators($this->_rowDecorator('form-dropdown-row'));
+        $this->getElement($name)->addFilter('StringTrim');
+    }
+
     public function addRadioElement($name, $params = array())
     {
         $this->addElement('radio', $name, $params);
