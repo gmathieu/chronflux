@@ -2,6 +2,14 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+	protected function _initConfig()
+	{
+		$config = new Zend_Config($this->getOptions());
+		Zend_Registry::set('config', $config);
+
+		return $config;
+	}
+
     protected function _initStoreDbAdpater()
     {
         $resource = $this->getPluginResource('db');
@@ -38,7 +46,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->appendStylesheet($view->baseUrl('css/tooltip.css'));
 
         // setup JS namespace
-        $view->headScript()->setScript('var Chronflux = Chronflux || {}');
+        $headScript = $this->_renderHeaderScript($view);
+        $view->headScript()->setScript($headScript);
 
         // include JS dev tools
         if ('development' == APPLICATION_ENV) {
@@ -57,5 +66,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'View_Helper');
 
         return $view;
+    }
+
+    private function _renderHeaderScript($view)
+    {
+        $baseUrl = Zend_Json::encode($view->baseUrl());
+        return <<<JS
+        var Chronflux = Chronflux || {};
+        Chronflux.BASE_URL = {$baseUrl};
+JS;
     }
 }
