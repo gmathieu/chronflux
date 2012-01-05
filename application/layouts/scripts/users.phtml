@@ -1,8 +1,8 @@
 <?
 $menuItems = array(
-    'Timesheets' => $this->baseUrl("user/{$this->username}/timesheets/manage"),
-    'Reports'    => '#',
-    'Settings'   => $this->baseUrl("user/{$this->username}/settings"),
+    'Timesheets' => $this->baseUrl("user/{$this->session->user->username}/timesheets/manage"),
+    /* 'Reports'    => '#', */
+    'Settings'   => $this->baseUrl("user/{$this->session->user->username}/settings"),
 );
 ?>
 <?= $this->doctype() ?>
@@ -38,13 +38,13 @@ $menuItems = array(
                    <li>
                        <a href="#" class="button">
                            <div class="icon">
-                               <img class="thumb" src="" />
+                               <?= $this->userThumb($this->session->user) ?>
                            </div>
-                           <label>gmathieu</label>
+                           <label><?= $this->escape($this->session->user->username) ?></label>
                        </a>
                    </li>
                    <li>
-                       <a href="#" id="logout" title="Log out" class="button">
+                       <a href="<?= $this->baseUrl('/auth/destroy') ?>" id="logout" title="Log out" class="button">
                            <label>X</label>
                        </a>
                    </li>

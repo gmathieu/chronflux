@@ -18,5 +18,5 @@ function padLeft(value)
 
     return value;
 }
-window.location = "<?= $this->baseUrl("user/{$this->username}/timesheets/manage/date/") ?>" + formattedDate;
+window.location = "<?= $this->baseUrl("user/{$this->user->username}/timesheets/manage/date/") ?>" + formattedDate;
 <? $this->headScript()->captureEnd() ?>

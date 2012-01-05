@@ -1,18 +1,14 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class IndexController extends App_Controller_Action
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
     public function indexAction()
     {
-        // action body
+        // check that a user is logged in and redirect home
+        if (isset($this->session->user)) {
+            $this->_redirector->gotoUrl("/user/{$this->session->user->username}/timesheets/manage");
+        } else {
+            $this->_forward('index', 'auth');
+        }
     }
-
-
 }
-
