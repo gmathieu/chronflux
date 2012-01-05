@@ -4,6 +4,7 @@ class App_Controller_Action extends Zend_Controller_Action
 {
     public $controllerName;
     public $actionName;
+    public $session;
 
     protected $_redirector;
 
@@ -11,6 +12,7 @@ class App_Controller_Action extends Zend_Controller_Action
     {
         $this->controllerName = $this->getRequest()->getControllerName();
         $this->actionName     = $this->getRequest()->getActionName();
+        $this->session        = new Zend_Session_Namespace('chronflux');
         $this->_redirector    = $this->_helper->getHelper('Redirector');
 
         if ($this->_getParam('show-grid')) {
@@ -23,6 +25,7 @@ class App_Controller_Action extends Zend_Controller_Action
     {
         $this->view->controllerName = $this->controllerName;
         $this->view->actionName     = $this->actionName;
+        $this->view->session        = $this->session;
     }
 
     public function isAjax()
