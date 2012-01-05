@@ -84,7 +84,7 @@ body {
 #header-user-auth .button {
     padding: 10px;
 }
-#header-user-auth .thumb {
+.user-thumb {
     height: 16px;
     margin-right: 5px;
     vertical-align: middle;
