@@ -1,10 +1,10 @@
 <?
-$newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
+$newProjectUrl = $this->baseUrl("user/{$this->user->username}/projects/new");
 ?>
 <section id="timesheet">
     <div class="side-column-with-border layout-fuild-left-column">
         <?= $this->partial('timesheets/_date.phtml', array('dateObj' => $this->dateObj)) ?>
-        <?= $this->partial('timesheets/_projects.phtml', array('userProjectSet' => $this->userProjectSet, 'username' => $this->username)) ?>
+        <?= $this->partial('timesheets/_projects.phtml', array('userProjectSet' => $this->userProjectSet, 'username' => $this->user->username)) ?>
 
         <div class="side-column" id="project-actions">
             <?= $this->button('+ Add a new project', $newProjectUrl, array('class' => 'new')) ?>
@@ -18,7 +18,7 @@ $newProjectUrl = $this->baseUrl("user/{$this->username}/projects/new");
         </div>
     <? endif ?>
 
-    <?= $this->partial('timesheets/_tasks.phtml', array('userTaskSet' => $this->userTaskSet, 'username' => $this->username)) ?>
+    <?= $this->partial('timesheets/_tasks.phtml', array('userTaskSet' => $this->userTaskSet, 'username' => $this->user->username)) ?>
 
 </section>
 
