@@ -1,4 +1,5 @@
 #tooltip-overlay {
+    display: none;
     height: 100%;
     left: 0;
     position: fixed;
@@ -7,6 +8,7 @@
     z-index: 1000;
 }
 .tooltip {
+    min-width: 230px;
     padding: 10px;
     position: absolute;
     z-index: 1001;
