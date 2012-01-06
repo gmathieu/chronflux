@@ -13,7 +13,7 @@ $taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
                 <!-- delete button -->
                 <li>
                     <?= $this->button('Nothing', 'javascript:void(0)', array(
-                        'class' => 'task new task-btn',
+                        'class' => 'task delete task-btn',
                         'icon'  => '<span class="key">0</span>' . $this->bubble(),
                     )) ?>
                 </li>
@@ -31,15 +31,17 @@ $taskListUrl = $this->baseUrl("user/{$this->username}/tasks/list");
 
                 <!-- new task button -->
                 <li>
-                    <?= $this->button('+ Add a new task', $newTaskUrl, array('class' => 'task')) ?>
+                    <?= $this->button('+ Add a new task', $newTaskUrl, array('class' => 'task-new')) ?>
                 </li>
             </ul>
             <?= $this->clear() ?>
 
-            <a href="javascript:void(0)" id="tasks-keys-toggle-link">
-                <span class="key">#</span>
-                <label>Toggle keyboard shortcuts</label>
-            </a>
+            <? if (count($this->userTaskSet) > 0) : ?>
+                <a href="javascript:void(0)" id="tasks-keys-toggle-link">
+                    <span class="key">#</span>
+                    <label>Toggle keyboard shortcuts</label>
+                </a>
+            <? endif ?>
 
             <?= $this->clear() ?>
         </div>

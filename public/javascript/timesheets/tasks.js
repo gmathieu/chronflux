@@ -2,6 +2,7 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
 {
     // public vars
     this.$       = $wrapper;
+    this.$newBtn = $wrapper.find('.task-new');
     this.btns    = false;
     this.tooltip = false;
     this.list    = {};
@@ -12,6 +13,7 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
     var _deleteTask      = false;
     var _selectedTaskId  = false;
     var _onDidSelectTask = false;
+    var _newTaskUrl      = this.$newBtn.attr('href');
 
     this.init = function()
     {
@@ -88,6 +90,18 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
     {
         _deleteTask.btn.$.hide();
         _deleteTask.btn.disable();
+    }
+
+    this.setNewBtnUrlParams = function(params)
+    {
+        var stringParams = '';
+
+        // implode param hash
+        $.each(params, function(key, value) {
+            stringParams += '/' + key + '/' + value;
+        });
+
+        this.$newBtn.attr('href', _newTaskUrl + stringParams);
     }
 
     this.onDidSelectTask = function(func)
