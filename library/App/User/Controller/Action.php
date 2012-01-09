@@ -29,7 +29,9 @@ class App_User_Controller_Action extends App_Controller_Action
     {
         if (!isset($this->session->user)) {
             if ($this->isAjax()) {
-                return $this->getResponse()->setHttpResponseCode(403);
+                $this->getResponse()->setHttpResponseCode(403);
+                $this->getResponse()->sendHeaders();
+                exit();
             } else {
                 $redirectUri = $this->getReturnPath($this->_request->getPathInfo());
                 return $this->_redirector->gotoUrl($this->_request->getBaseUrl() . '/auth?redirect_uri=' . urlencode($redirectUri));
