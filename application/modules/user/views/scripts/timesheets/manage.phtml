@@ -22,4 +22,13 @@ $newProjectUrl = $this->baseUrl("user/{$this->user->username}/projects/new");
 
 </section>
 
-<? $this->inlineScript()->appendScript('$(Chronflux.Timesheets);') ?>
+<? $this->inlineScript()->captureStart() ?>
+$(function() {
+    Chronflux.Timesheets({
+        user: {
+            username: <?= Zend_Json::encode($this->user->username) ?>,
+            id      : <?= Zend_Json::encode($this->user->id) ?>
+        }
+    });
+});
+<? $this->inlineScript()->captureEnd() ?>
