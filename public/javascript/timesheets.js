@@ -10,7 +10,8 @@ Chronflux.Timesheets = function(opts)
     // private variables
     var self = this;
 
-    this.init = function() {
+    this.init = function()
+    {
         this.user     = opts.user;
         this.tasks    = new Chronflux.Timesheets.Tasks($('#tasks-tooltip'));
         this.projects = new Chronflux.Timesheets.Projects($('#projects'));
@@ -21,7 +22,6 @@ Chronflux.Timesheets = function(opts)
         this.tasks.onTooltipDidHide(onTasksTooltipDidHide);
 
         // init job events
-        this.jobs.onWillSelect(onWillSelectJobs);
         this.jobs.onDidSelect(onDidSelectJobs);
 
         // store current date
@@ -30,10 +30,34 @@ Chronflux.Timesheets = function(opts)
         return this;
     }
 
-    this.save = function() {
-        var task      = self.tasks.getSelectedTask();
-        var startTime = self.jobs.getStartTime();
-        var stopTime  = self.jobs.getStopTime();
+    this.saveJobs = function()
+    {
+        $.ajax({
+            type: 'POST',
+            url: getJobsUrl('add'),
+            dataType: 'json'
+        });
+    }
+
+    this.deleteJobs = function()
+    {
+    
+    }
+
+    /* PRIVATE FUNCTIONS */
+
+    function getJobsUrl(action)
+    {
+        var selectedTask = self.tasks.getSelectedTask();
+
+        return Chronflux.BASE_URL
+            + '/user/' + self.user.username
+            + '/jobs/' + action
+            + '/date/' + self.date
+            + '/project_id/' + self.jobs.getSelectedProject().id
+            + '/start_time/' + self.jobs.getStartTime()
+            + '/stop_time/' + self.jobs.getStopTime()
+            + ((selectedTask) ? '/task_id/' + selectedTask.id : '');
     }
 
     /* TASKS EVENT HANDLERS */
@@ -44,9 +68,16 @@ Chronflux.Timesheets = function(opts)
         self.jobs.setSelectedColor(task.color);
 
         if (task.color) {
+            // save jobs on server
+            self.saveJobs();
+
             // save jobs visual changes
             self.jobs.save();
         } else {
+            // remove jobs from server
+            self.deleteJobs();
+
+            // remove jobs visually
             self.jobs.delete();
         }
 
@@ -65,12 +96,6 @@ Chronflux.Timesheets = function(opts)
 
     /* JOBS EVENT HANDLERS */
 
-    function onWillSelectJobs()
-    {
-        // hide tasks
-        self.tasks.hide();
-    }
-
     function onDidSelectJobs()
     {
         // there's something to delete, show delete button
@@ -79,12 +104,7 @@ Chronflux.Timesheets = function(opts)
         }
 
         // update add new task link
-        var nextUrl = Chronflux.BASE_URL
-            + '/user/' + self.user.username
-            + '/jobs/add/date/' + self.date
-            + '/project_id/' + self.jobs.getSelectedProject().id
-            + '/start_time/' + self.jobs.getStartTime()
-            + '/stop_time/' + self.jobs.getStopTime();
+        var nextUrl = getJobsUrl('add');
 
         self.tasks.setNextUrl(nextUrl);
 

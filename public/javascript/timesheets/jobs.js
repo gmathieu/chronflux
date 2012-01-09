@@ -16,7 +16,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
     var _selectedProject = false;
 
     // custom events
-    var _onWillSelect;
     var _onDidSelect;
 
     this.init = function()
@@ -104,11 +103,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         _startTime       = false;
         _stopTime        = false;
         _selectedProject = false;
-    }
-
-    this.onWillSelect = function(func)
-    {
-        _onWillSelect = func;
     }
 
     this.onDidSelect = function(func)
@@ -234,11 +228,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         // mouse can get stuck in selecting mode
         if (_selecting) {
             return onColumnMouseUp(e);
-        }
-
-        // custom callback
-        if ($.isFunction(_onWillSelect)) {
-            _onWillSelect();
         }
 
         _selectedProject = e.data.project;

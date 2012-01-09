@@ -92,16 +92,9 @@ Chronflux.Timesheets.Tasks = function($wrapper, options)
         _deleteTask.btn.disable();
     }
 
-    this.setNewBtnUrlParams = function(params)
+    this.setNextUrl = function(url)
     {
-        var stringParams = '';
-
-        // implode param hash
-        $.each(params, function(key, value) {
-            stringParams += '/' + key + '/' + value;
-        });
-
-        this.$newBtn.attr('href', _newTaskUrl + stringParams);
+        this.$newBtn.attr('href', _newTaskUrl + '?next_url=' + encodeURIComponent(url));
     }
 
     this.onDidSelectTask = function(func)
