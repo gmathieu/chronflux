@@ -21,11 +21,13 @@ class User_Model_Projects extends User_Model_Data_Service
         // total hours join statement
         $join = $this->adapter->quoteInto('user_projects.project_id = jobs_total_hours_by_date.project_id' .
                                           ' and jobs_total_hours_by_date.user_id = ?', $this->_userId);
+        $join .= $this->adapter->quoteInto(' and `date` = ?', $date);
+
         // get total hours by date
         $this->select->joinLeft('jobs_total_hours_by_date',
                                 $join,
                                 array('total_hours' => new Zend_Db_Expr('ifnull(total_hours_by_date,0)')))
-                     ->where("`date` = ? AND `total_hours_by_date` > 0 OR `active` = 1", $date);
+                     ->where("`total_hours_by_date` > 0 OR `active` = 1");
 
         return $this->fetchAll();
     }
