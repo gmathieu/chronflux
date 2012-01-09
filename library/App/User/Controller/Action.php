@@ -12,14 +12,14 @@ class App_User_Controller_Action extends App_Controller_Action
 
         // get user
         $this->user = $this->_requireUser();
+
+        // use user layout
+        $this->getHelper('layout')->setLayout('users');
     }
 
     public function preDispatch()
     {
         parent::preDispatch();
-
-        // use user layout
-        $this->getHelper('layout')->setLayout('users');
 
         // assign current user to view
         $this->view->user = $this->user;
@@ -28,8 +28,12 @@ class App_User_Controller_Action extends App_Controller_Action
     protected function _requireSessionUser()
     {
         if (!isset($this->session->user)) {
-            $redirectUri = $this->getReturnPath($this->_request->getPathInfo());
-            return $this->_redirector->gotoUrl($this->_request->getBaseUrl() . '/auth?redirect_uri=' . urlencode($redirectUri));
+            if ($this->isAjax()) {
+                return $this->getResponse()->setHttpResponseCode(403);
+            } else {
+                $redirectUri = $this->getReturnPath($this->_request->getPathInfo());
+                return $this->_redirector->gotoUrl($this->_request->getBaseUrl() . '/auth?redirect_uri=' . urlencode($redirectUri));
+            }
         }
     }
 
