@@ -1,7 +1,16 @@
 <?php
 
-class User_JobsController extends App_User_Controller_Settings
+class User_JobsController extends App_User_Controller_Action
 {
+    public function init()
+    {
+        parent::init();
+
+        $this->_helper->getHelper('AjaxContext')
+            ->addActionContext('add', 'json')
+            ->initContext();
+    }
+
     public function addAction()
     {
         $jobs = App_Model_Jobs::getInstance();
