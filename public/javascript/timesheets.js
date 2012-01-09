@@ -32,16 +32,12 @@ Chronflux.Timesheets = function(opts)
 
     this.saveJobs = function()
     {
-        $.ajax({
-            type: 'POST',
-            url: getJobsUrl('add'),
-            dataType: 'json'
-        });
+        saveJobsHelper('add');
     }
 
     this.deleteJobs = function()
     {
-    
+        saveJobsHelper('remove');
     }
 
     /* PRIVATE FUNCTIONS */
@@ -58,6 +54,15 @@ Chronflux.Timesheets = function(opts)
             + '/start_time/' + self.jobs.getStartTime()
             + '/stop_time/' + self.jobs.getStopTime()
             + ((selectedTask) ? '/task_id/' + selectedTask.id : '');
+    }
+
+    function saveJobsHelper(action)
+    {
+        $.ajax({
+            type: 'POST',
+            url: getJobsUrl(action),
+            dataType: 'json'
+        });
     }
 
     /* TASKS EVENT HANDLERS */
