@@ -7,6 +7,7 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     public $userDataSet;
 
     // hooks
+    protected $_afterSave;
     protected $_beforeSave;
 
     public function init()
@@ -65,6 +66,11 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             $userDataObjName = "User_Model_{$this->dataObjName}";
             $userDataObj     = $userDataObjName::create($this->_request->getPost());
+
+            // callback
+            if ($this->_afterSave) {
+                call_user_func($this->_afterSave, $form, $userDataObj);
+            }
 
             return $this->_redirectToEditAction($userDataObj);
         }
@@ -126,9 +132,15 @@ class App_User_Controller_Settings extends App_User_Controller_Action
 
     protected function _getRedirectUrl($dataObj)
     {
-        return "user/{$this->user->username}"
+        // redirect URL can be overwrite with the next_url param
+        if ($this->_getParam('next_url')) {
+            return $this->_getParam('next_url');
+        }
+        else {
+            return "user/{$this->user->username}"
                . "/{$this->controllerName}/edit"
                . "/id/{$dataObj->getId()}";
+        }
     }
 
     protected function _getDeleteUrl($userDataObj)
