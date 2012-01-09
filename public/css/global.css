@@ -49,7 +49,7 @@ body {
 }
 #main-menu .button {
     padding: 10px;
-    padding-right: 31px; /* icon with + margin */
+    padding-right: 31px; /* icon width + margin */
 }
 #main-menu .button label {
     letter-spacing: 1px;
