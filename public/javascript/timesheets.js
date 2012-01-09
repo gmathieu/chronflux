@@ -1,14 +1,17 @@
-Chronflux.Timesheets = function()
+Chronflux.Timesheets = function(opts)
 {
     // public variables
+    this.user;
     this.tasks;
     this.projects;
     this.jobs;
+    this.date;
 
     // private variables
     var self = this;
 
     this.init = function() {
+        this.user     = opts.user;
         this.tasks    = new Chronflux.Timesheets.Tasks($('#tasks-tooltip'));
         this.projects = new Chronflux.Timesheets.Projects($('#projects'));
         this.jobs     = new Chronflux.Timesheets.Jobs($('#jobs'), this.projects);
@@ -20,6 +23,9 @@ Chronflux.Timesheets = function()
         // init job events
         this.jobs.onWillSelect(onWillSelectJobs);
         this.jobs.onDidSelect(onDidSelectJobs);
+
+        // store current date
+        this.date = $('#calendar-date time').attr('datetime');
 
         return this;
     }
@@ -71,6 +77,16 @@ Chronflux.Timesheets = function()
         if (self.jobs.projectConflictingBubbleSet.length() > 0) {
             self.tasks.enableDeleteBtn();
         }
+
+        // update add new task link
+        var nextUrl = Chronflux.BASE_URL
+            + '/user/' + self.user.username
+            + '/jobs/add/date/' + self.date
+            + '/project_id/' + self.jobs.getSelectedProject().id
+            + '/start_time/' + self.jobs.getStartTime()
+            + '/stop_time/' + self.jobs.getStopTime();
+
+        self.tasks.setNextUrl(nextUrl);
 
         // get last selected item
         var bubble = self.jobs.getLastSelectedBubble();
