@@ -96,7 +96,7 @@ a.floating-label:hover {
     font-family: "PlayRegular";
     text-transform: lowercase;
 }
-#calendar-hours time.current {
+#calendar-hours time.active {
     color: #020001;
 }
 #calendar-hours .quarter-hour-click-area {
@@ -110,7 +110,7 @@ a.floating-label:hover {
     margin: 0 auto;
     width: 5px;
 }
-#calendar-hours .quarter-hour.current {
+#calendar-hours .quarter-hour.active {
     background-color: #020001;
 }
 
@@ -121,8 +121,8 @@ a.floating-label:hover {
 #jobs .column {
     border-bottom: 1px solid #bdbdbd;
 }
-#jobs .quarter-column.current {
-    background: transparent url('../images/timesheets/current-time-column.gif') center top repeat-y;
+#jobs .quarter-column.active {
+    background: transparent url('../images/timesheets/active-time-column.gif') center top repeat-y;
 }
 #jobs .bubble-click-area {
     outline: none;

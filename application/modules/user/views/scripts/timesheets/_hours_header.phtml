@@ -14,7 +14,7 @@ $dateObj = clone($this->dateObj);
                     $from = $dateObj->toString('h:mm a');
                     $to   = $dateObj->add(15, Zend_Date::MINUTE)->toString('h:mm a');
                 ?>
-                <div title="<?= $from ?> to <?= $to ?>" class="quarter-column quarter-hour-click-area"><span class="quarter-hour"></span></div>
+                <div title="<?= $from ?> to <?= $to ?>" class="quarter-column quarter-hour-click-area"><span class="quarter-hour" data-time="<?= $j / 4 ?>"></span></div>
             <? endfor ?>
         </div>
     <? endfor ?>

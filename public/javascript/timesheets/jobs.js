@@ -20,15 +20,19 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
 
     this.init = function()
     {
-        // init column lookups
-        initTimeColumns();
-
         // init projects jobs
         projects.each(function(i, project) {
             initProjectJobs(project);
         });
 
         return this;
+    }
+
+    this.getColumnsByTime = function(time)
+    {
+        if (this.timeColumns[time]) {
+            return this.timeColumns[time];
+        }
     }
 
     this.getStartTime = function()
@@ -110,15 +114,6 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
         _onDidSelect = func;
     }
 
-    function initTimeColumns()
-    {
-        for (i = 0; i < 24; i++) {
-            for (j = 0; j < 1; j += 0.25) {
-                self.timeColumns[i + j] = [];
-            }
-        }
-    }
-
     function initProjectJobs(project)
     {
         // add lookup tables to project
@@ -147,7 +142,11 @@ Chronflux.Timesheets.Jobs = function($wrapper, projects)
             project.bubbles[time] = bubble;
 
             // save time column
-            self.timeColumns[time].push($bubbleWrapper);
+            if (self.timeColumns[time]) {
+                self.timeColumns[time] = self.timeColumns[time].add($bubbleWrapper);
+            } else {
+                self.timeColumns[time] = $bubbleWrapper;
+            }
 
             // init events
             var eventData = {'project': project, 'bubble': bubble};

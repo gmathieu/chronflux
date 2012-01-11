@@ -5,10 +5,13 @@ Chronflux.Timesheets = function(opts)
     this.tasks;
     this.projects;
     this.jobs;
+    this.clock;
+    this.formattedDate;
     this.date;
 
     // private variables
-    var self = this;
+    var self                 = this;
+    var _$prevActiveTimeElts = false;
 
     this.init = function()
     {
@@ -16,6 +19,7 @@ Chronflux.Timesheets = function(opts)
         this.tasks    = new Chronflux.Timesheets.Tasks($('#tasks-tooltip'));
         this.projects = new Chronflux.Timesheets.Projects($('#projects'));
         this.jobs     = new Chronflux.Timesheets.Jobs($('#jobs'), this.projects);
+        this.clock    = new Chronflux.Timesheets.Clock;
 
         // init task events
         this.tasks.onDidSelectTask(onDidSelectTask);
@@ -25,11 +29,19 @@ Chronflux.Timesheets = function(opts)
         this.jobs.onDidSelect(onDidSelectJobs);
 
         // store current date
-        this.date = $('#calendar-date time').attr('datetime');
+        this.formattedDate = $('#calendar-date time').attr('datetime');
+        var explodedDate   = this.formattedDate.split('-');
+        this.date          = new Date(parseInt(explodedDate[0]),
+                                      parseInt(explodedDate[1] - 1),
+                                      parseInt(explodedDate[2]));
+
+        // init clock events
+        this.clock.setOnEveryMinute(onEveryMinute);
+        this.clock.start();
 
         // scroll to user's start time
         if (this.user.clock_in_at) {
-            // get hour column 
+            // get hour column
             var $hourCol = $('#hour-column-' + this.user.clock_in_at);
 
             // re-position scroll
@@ -61,7 +73,7 @@ Chronflux.Timesheets = function(opts)
         return Chronflux.BASE_URL
             + '/user/' + self.user.username
             + '/jobs/' + action
-            + '/date/' + self.date
+            + '/date/' + self.formattedDate
             + '/project_id/' + self.jobs.getSelectedProject().id
             + '/start_time/' + self.jobs.getStartTime()
             + '/stop_time/' + self.jobs.getStopTime()
@@ -130,6 +142,37 @@ Chronflux.Timesheets = function(opts)
 
         // show tasks
         self.tasks.showRelativeTo(bubble.$);
+    }
+
+    /* CLOCK EVENT HANDLERS */
+
+    function onEveryMinute(date)
+    {
+        // check that date is today
+        if (self.date.getDate() != date.getDate()
+            || self.date.getMonth() != date.getMonth()
+            || self.date.getFullYear() != date.getFullYear()
+        ) {
+            return false;
+        }
+
+        // deactivate previous elements
+        if (_$prevActiveTimeElts) {
+            _$prevActiveTimeElts.removeClass('active');
+        }
+
+        // convert minutes to decimal
+        var decimalMinutes = Math.floor(date.getMinutes() / 15) * 25 / 100;
+        var decimalTime    = date.getHours() + decimalMinutes;
+
+        // get time columns
+        _$prevActiveTimeElts = self.jobs.getColumnsByTime(decimalTime);
+
+        // get time and quater hour
+        var $activeElts = $('#hour-column-' + date.getHours()).find('time, .quarter-hour[data-time="' + decimalMinutes + '"]');
+
+        // activate time elements
+        _$prevActiveTimeElts.add($activeElts).addClass('active');
     }
 
     return this.init();
