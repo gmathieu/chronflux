@@ -27,6 +27,18 @@ Chronflux.Timesheets = function(opts)
         // store current date
         this.date = $('#calendar-date time').attr('datetime');
 
+        // scroll to user's start time
+        if (this.user.clock_in_at) {
+            // get hour column 
+            var $hourCol = $('#hour-column-' + this.user.clock_in_at);
+
+            // re-position scroll
+            if ($hourCol.length == 1) {
+                $('.layout-fluid-right-column').scrollLeft($hourCol.position().left);
+            }
+            
+        }
+
         return this;
     }
 

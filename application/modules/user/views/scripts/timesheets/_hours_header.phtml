@@ -7,7 +7,7 @@ $dateObj = clone($this->dateObj);
             $evenClass = ($i % 2 == 0) ? 'even' : '';
             $dateObj->set($i, Zend_Date::HOUR);
         ?>
-        <div class="column <?= $evenClass ?> hour-set header-row">
+        <div class="column <?= $evenClass ?> hour-set header-row" id="hour-column-<?= $i ?>">
             <time datetime="<?= $dateObj->toString(Zend_Date::ISO_8601) ?>"><?= $dateObj->toString('h a') ?></time>
             <? for ($j = 0; $j < 4; $j++) : ?>
                 <?
