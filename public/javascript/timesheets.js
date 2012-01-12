@@ -148,17 +148,17 @@ Chronflux.Timesheets = function(opts)
 
     function onEveryMinute(date)
     {
+        // deactivate previous elements
+        if (_$prevActiveTimeElts) {
+            _$prevActiveTimeElts.removeClass('active');
+        }
+
         // check that date is today
         if (self.date.getDate() != date.getDate()
             || self.date.getMonth() != date.getMonth()
             || self.date.getFullYear() != date.getFullYear()
         ) {
             return false;
-        }
-
-        // deactivate previous elements
-        if (_$prevActiveTimeElts) {
-            _$prevActiveTimeElts.removeClass('active');
         }
 
         // convert minutes to decimal
