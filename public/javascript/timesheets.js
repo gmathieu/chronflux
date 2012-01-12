@@ -168,11 +168,16 @@ Chronflux.Timesheets = function(opts)
         // get time columns
         _$prevActiveTimeElts = self.jobs.getColumnsByTime(decimalTime);
 
-        // get time and quater hour
-        var $activeElts = $('#hour-column-' + date.getHours()).find('time, .quarter-hour[data-time="' + decimalMinutes + '"]');
+        // get time and quarter hour
+        var $hourCol    = $('#hour-column-' + date.getHours());
+        var $quarterCol = $hourCol.find('.quarter-hour[data-time="' + decimalMinutes + '"]');
+        var $time       = $hourCol.find('time');
+
+        // update minutes
+        $time.find('.minutes').text(':' + date.getMinutes());
 
         // activate time elements
-        _$prevActiveTimeElts = _$prevActiveTimeElts.add($activeElts).addClass('active');
+        _$prevActiveTimeElts = _$prevActiveTimeElts.add($time).add($quarterCol).addClass('active');
     }
 
     return this.init();

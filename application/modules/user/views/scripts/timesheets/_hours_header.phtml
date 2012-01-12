@@ -8,7 +8,9 @@ $dateObj = clone($this->dateObj);
             $dateObj->set($i, Zend_Date::HOUR);
         ?>
         <div class="column <?= $evenClass ?> hour-set header-row" id="hour-column-<?= $i ?>">
-            <time datetime="<?= $dateObj->toString(Zend_Date::ISO_8601) ?>"><?= $dateObj->toString('h a') ?></time>
+            <time datetime="<?= $dateObj->toString(Zend_Date::ISO_8601) ?>">
+                <?= $dateObj->toString('h') ?><span class="minutes">:18</span> <?= $dateObj->toString('a') ?>
+            </time>
             <? for ($j = 0; $j < 4; $j++) : ?>
                 <?
                     $from = $dateObj->toString('h:mm a');

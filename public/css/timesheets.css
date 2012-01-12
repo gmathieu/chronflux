@@ -96,8 +96,14 @@ a.floating-label:hover {
     font-family: "PlayRegular";
     text-transform: lowercase;
 }
+#calendar-hours time .minutes {
+    display: none;
+}
 #calendar-hours time.active {
     color: #020001;
+}
+#calendar-hours time.active .minutes {
+    display: inline;
 }
 #calendar-hours .quarter-hour-click-area {
     height: 10px;
