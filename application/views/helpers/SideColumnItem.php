@@ -75,11 +75,12 @@ HTML;
         $icon = $this->getOption("{$type}-icon");
 
         if ($icon) {
+            $extraClass = (isset($icon['class'])) ? $icon['class'] : '';
             $this->addClass("side-column-item-with-{$type}-icon");
     
             if (is_array($icon)) {
                 return <<<HTML
-                <img src="{$icon['src']}" class="icon" title="{$icon['title']}" />
+                <img src="{$icon['src']}" class="icon {$extraClass}" title="{$icon['title']}" />
 HTML;
             } else {
                 return $icon;
