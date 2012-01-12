@@ -15,6 +15,11 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         parent::init();
 
         if ('projects' === $this->controllerName || 'tasks' === $this->controllerName) {
+            // setup view context
+            $this->_helper->getHelper('AjaxContext')
+                ->addActionContext('reorder', 'json')
+                ->initContext();
+
             // init data object info
             $this->dataObjName = ucfirst(trim($this->controllerName, 's'));
     
@@ -48,11 +53,14 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     {
         parent::postDispatch();
 
-        // capture current content
-        $this->view->content = $this->view->render("{$this->controllerName}/{$this->actionName}.phtml");
+        // make sure ajax context isn't active
+        if ($this->getHelper('AjaxContext')->getCurrentContext() == null) {
+            // capture current content
+            $this->view->content = $this->view->render("{$this->controllerName}/{$this->actionName}.phtml");
 
-        // render settings menu
-        $this->getHelper('viewRenderer')->renderScript('settings/_layout.phtml');
+            // render settings menu
+            $this->getHelper('viewRenderer')->renderScript('settings/_layout.phtml');
+        }
     }
 
     public function listAction()
@@ -110,6 +118,11 @@ class App_User_Controller_Settings extends App_User_Controller_Action
         $userDataObj->delete();
 
         return $this->_redirect("user/{$this->user->username}/{$this->controllerName}");
+    }
+
+    public function reorderAction()
+    {
+        $this->dataService->reorder($this->_getParam('ids'));
     }
 
     protected function _requireDataObj()

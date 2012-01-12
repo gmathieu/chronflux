@@ -71,3 +71,11 @@
     background-color: #353334 !important;
     color: #ffffff !important;
 }
+
+/* LISTS - SORTABLE */
+.side-column-reorderable .sortable-handler {
+    cursor: move;
+}
+.side-column-reorderable .ui-sortable-helper .side-column-item {
+    box-shadow: 2px 2px 5px #7E7C7D;
+}

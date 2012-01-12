@@ -20,3 +20,8 @@
         </section>
     <? endif ?>
 </section>
+<? $this->inlineScript()->captureStart() ?>
+$(function() {
+    window.settings = Chronflux.Settings();
+});
+<? $this->inlineScript()->captureEnd() ?>

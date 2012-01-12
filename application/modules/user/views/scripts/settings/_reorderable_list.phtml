@@ -1,11 +1,12 @@
 <?
     $singularControllerName = trim($this->controllerName, 's');
 ?>
-<div class="side-column-reorderable" data-reorder-url="user/<?= $this->username ?>/<?= $this->controllerName ?>/reorder">
+<div class="side-column-reorderable" data-reorder-url="/user/<?= $this->username ?>/<?= $this->controllerName ?>/reorder">
     <?
         $leftIcon = array(
             'src'   => $this->baseUrl('images/icons/reorder.png'),
             'title' => 'Reorder',
+            'class' => 'sortable-handler'
         );
         $rightIcon = array(
             'src'   => $this->baseUrl('images/icons/right-arrow.png'),
@@ -21,7 +22,9 @@
             $params['selected'] = ($this->selected == $userData->getId());
             $params['url']      = $this->baseUrl("user/{$userData->username}/{$this->controllerName}/edit/id/{$userData->getId()}");
 
+            echo '<div class="sortable-wrapper" data-id="ids_' . $userData->getId() . '">';
             echo $this->sideColumnItem($userData->getName(), $params);
+            echo '</div>';
         }
     ?>
 </div>
