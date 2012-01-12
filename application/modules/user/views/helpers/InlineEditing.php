@@ -16,7 +16,7 @@ class User_View_Helper_InlineEditing extends Mg_View_Helper_AbstractHelper
         $this->setOptions($options);
 
         $firstClass     = '';
-        $expandedClass  = '';
+        $activeClass    = '';
         $input          = $this->_form->getElement($name);
         $getProperty    = 'get' . ucfirst($name);
 
@@ -28,7 +28,7 @@ class User_View_Helper_InlineEditing extends Mg_View_Helper_AbstractHelper
 
         // form errors
         if ($input->hasErrors()) {
-            $expandedClass = 'expanded';
+            $activeClass = 'active';
         }
 
         // value
@@ -39,7 +39,7 @@ class User_View_Helper_InlineEditing extends Mg_View_Helper_AbstractHelper
         }
 
         return <<<HTML
-        <div class="inline-row-editing {$firstClass} {$expandedClass}">
+        <div class="inline-row-editing {$firstClass} {$activeClass}">
             <a href="javascript:void(0)" class="inline-row-editing-edit-link">
                 <span class="inline-row-editing-link-label open">Edit</span>
                 <span class="form-row-label">{$input->getLabel()}</span>

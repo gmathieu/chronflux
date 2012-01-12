@@ -122,11 +122,11 @@
     display: none;
 }
 
-/* expanded states */
-#settings .inline-row-editing.expanded .inline-row-editing-form-row {
+/* active states */
+#settings .inline-row-editing.active .inline-row-editing-form-row {
     display: block;
 }
-#settings .inline-row-editing.expanded .inline-row-editing-edit-link {
+#settings .inline-row-editing.active .inline-row-editing-edit-link {
     display: none;
 }
 #inline-row-editing-delete-wrapper {
