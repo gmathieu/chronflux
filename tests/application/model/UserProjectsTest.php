@@ -128,6 +128,34 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->assertEquals($data['note'], $userProject->note);
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testReorderException()
+    {
+        $this->projects->setUserId(null);
+        $this->projects->reorder(array());
+    }
+
+    public function testReorder()
+    {
+        $newOrder = array(
+            PROJECT_SERVICES,
+            PROJECT_ECOMMERCE,
+            PROJECT_WEBSITE,
+        );
+
+        $this->projects->setUserId(USER_JOHN);
+        $this->projects->reorder($newOrder);
+
+        $userSet = $this->projects->fetchAll();
+        $index   = 0;
+        foreach ($userSet as $project) {
+            $this->assertEquals($newOrder[$index], (int)$project->id);
+            $index++;
+        }
+    }
+
     public function testCanDelete()
     {
         $this->projects->setUserId(USER_JOHN);
