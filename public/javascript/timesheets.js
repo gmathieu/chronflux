@@ -172,7 +172,7 @@ Chronflux.Timesheets = function(opts)
         var $activeElts = $('#hour-column-' + date.getHours()).find('time, .quarter-hour[data-time="' + decimalMinutes + '"]');
 
         // activate time elements
-        _$prevActiveTimeElts.add($activeElts).addClass('active');
+        _$prevActiveTimeElts = _$prevActiveTimeElts.add($activeElts).addClass('active');
     }
 
     return this.init();
