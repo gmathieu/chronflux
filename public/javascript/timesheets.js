@@ -174,7 +174,7 @@ Chronflux.Timesheets = function(opts)
         var $time       = $hourCol.find('time');
 
         // update minutes
-        $time.find('.minutes').text(':' + date.getMinutes());
+        $time.find('.minutes').text(':' + (date.getMinutes() + '').lpad('0', 2));
 
         // activate time elements
         _$prevActiveTimeElts = _$prevActiveTimeElts.add($time).add($quarterCol).addClass('active');
