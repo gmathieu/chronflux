@@ -130,31 +130,8 @@ a.floating-label:hover {
 #jobs .quarter-column.active {
     background: transparent url('../images/timesheets/active-time-column.gif') center top repeat-y;
 }
-#jobs .bubble-click-area {
-    outline: none;
-    text-decoration: none;
-}
 #jobs .bubble-click-area .bubble {
-    background-color: #ffffff;
-    color: #bdbdbd;
     margin: 20px auto 0 auto;
-}
-#jobs .bubble-click-area:hover .bubble {
-    color: #020001 !important;
-}
-#jobs .bubble-click-area .bubble.selected {
-    color: #020001 !important;
-}
-/* dim both the outer and inner bubble */
-#jobs .bubble-click-area .bubble.dimmed {
-    opacity: 0.6;
-}
-/* only dim inner bubble when selected */
-#jobs .bubble-click-area .bubble.selected.dimmed {
-    opacity: 1;
-}
-#jobs .bubble-click-area .bubble.selected.dimmed .inner-bubble {
-    opacity: 0.6;
 }
 
 

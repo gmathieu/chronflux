@@ -13,3 +13,29 @@
     height: 14px;
     width: 8px;
 }
+
+.bubble-click-area {
+    outline: none;
+    text-decoration: none;
+}
+.bubble-click-area .bubble {
+    background-color: #ffffff;
+    color: #bdbdbd;
+}
+.bubble-click-area:hover .bubble {
+    color: #020001 !important;
+}
+.bubble-click-area .bubble.selected {
+    color: #020001 !important;
+}
+/* dim both the outer and inner bubble */
+.bubble-click-area .bubble.dimmed {
+    opacity: 0.6;
+}
+/* only dim inner bubble when selected */
+.bubble-click-area .bubble.selected.dimmed {
+    opacity: 1;
+}
+.bubble-click-area .bubble.selected.dimmed .inner-bubble {
+    opacity: 0.6;
+}
