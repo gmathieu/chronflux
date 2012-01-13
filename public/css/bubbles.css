@@ -20,7 +20,7 @@
 }
 .bubble-click-area .bubble {
     background-color: #ffffff;
-    color: #bdbdbd;
+    color: #bdbdbd !important;
 }
 .bubble-click-area:hover .bubble {
     color: #020001 !important;
