@@ -50,6 +50,12 @@ class App_Model_Project extends App_Model_Abstractable
         return App_Model_Projects::getInstance()->delete($this);
     }
 
+    public function update(array $data)
+    {
+        $this->setFromArray($data);
+        return App_Model_Projects::getInstance()->update($this);
+    }
+
     public static function create(array $data)
     {
         $project = new self($data);

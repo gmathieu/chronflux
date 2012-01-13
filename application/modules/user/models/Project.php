@@ -41,6 +41,17 @@ class User_Model_Project extends App_Model_Project
         return User_Model_Projects::getInstance()->update($this);
     }
 
+    public function update(array $data)
+    {
+        // update user project
+        $this->setFromArray($data);
+        $updated = User_Model_Projects::getInstance()->update($this);
+
+        // get and update original projet
+        $project = App_Model_Projects::getInstance()->find($this->project_id);
+        return $project->update($data) && $updated;
+    }
+
     public function delete()
     {
         $userProjects = User_Model_Projects::getInstance();

@@ -60,6 +60,20 @@ class UserTasksTest extends AbstractDatabaseTestCase
         $this->assertEquals($data['color'], $userTask->color);
     }
 
+    public function testUpdate()
+    {
+        $this->tasks->setUserId(USER_JOHN);
+        $userTask = $this->tasks->findByTaskId(TASK_CLIENT_MEETING);
+
+        $data = array('name' => 'test', 'color' => 'FFFFFF');
+        $userTask->update(array_merge($userTask->getRawData(), $data));
+
+        $updatedTask = $this->tasks->findByTaskId(TASK_CLIENT_MEETING);
+
+        $this->assertEquals($updatedTask->name, 'test');
+        $this->assertEquals($updatedTask->color, 'FFFFFF');
+    }
+
     /**
      * @expectedException Exception
      */

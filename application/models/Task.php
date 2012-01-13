@@ -24,6 +24,12 @@ class App_Model_Task extends App_Model_Abstractable
         App_Model_Tasks::getInstance()->delete($this);
     }
 
+    public function update(array $data)
+    {
+        $this->setFromArray($data);
+        return App_Model_Tasks::getInstance()->update($this);
+    }
+
     public static function create(array $data)
     {
         $task = new self($data);

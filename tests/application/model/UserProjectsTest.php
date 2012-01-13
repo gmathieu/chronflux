@@ -128,6 +128,20 @@ class UserProjectsTest extends AbstractDatabaseTestCase
         $this->assertEquals($data['note'], $userProject->note);
     }
 
+    public function testUpdate()
+    {
+        $this->projects->setUserId(USER_JOHN);
+        $userProject = $this->projects->findByProjectId(PROJECT_WEBSITE);
+
+        $data = array('title' => 'test', 'note' => 'test');
+        $userProject->update(array_merge($userProject->getRawData(), $data));
+
+        $updatedProject = $this->projects->findByProjectId(PROJECT_WEBSITE);
+
+        $this->assertEquals($updatedProject->title, 'test');
+        $this->assertEquals($updatedProject->note, 'test');
+    }
+
     /**
      * @expectedException Exception
      */

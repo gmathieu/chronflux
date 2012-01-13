@@ -99,9 +99,9 @@ class App_User_Controller_Settings extends App_User_Controller_Action
             }
 
             // update user project with POST data
-            $userDataObj->setFromArray($this->_request->getPost());
+            $userDataObj->update($this->_request->getPost());
 
-            $this->dataService->update($userDataObj);
+            return $this->_redirectToEditAction($userDataObj);
         }
 
         // setup inline editing helper with proper data

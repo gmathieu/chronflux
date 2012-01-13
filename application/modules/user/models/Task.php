@@ -40,6 +40,17 @@ class User_Model_Task extends App_Model_Task
         return $userTask;
     }
 
+    public function update(array $data)
+    {
+        // update user task
+        $this->setFromArray($data);
+        $updated = User_Model_Tasks::getInstance()->update($this);
+
+        // get and update original task
+        $task = App_Model_Tasks::getInstance()->find($this->task_id);
+        return $task->update($data) && $updated;
+    }
+
     public function setColor($newColor)
     {
         $tasks = User_Model_Tasks::getInstance();
