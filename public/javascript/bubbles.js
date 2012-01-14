@@ -80,10 +80,10 @@ Chronflux.BubbleSet = function($elements)
     return this.init();
 }
 
-Chronflux.Bubble = function($wrapper)
+Chronflux.Bubble = function($context)
 {
     // public variables
-    this.$ = $wrapper;
+    this.$;
     this.$inner;
 
     // private variables
@@ -91,14 +91,21 @@ Chronflux.Bubble = function($wrapper)
 
     this.init = function()
     {
-        // assign data attributes to public variables
-        var data = this.$.data()
-        for (var key in data) {
-            self[key] = data[key];
-        }
+        if ($context) {
+            this.$ = $context;
 
-        // find inner bubble
-        this.$inner = this.$.children();
+            // assign data attributes to public variables
+            var data = this.$.data()
+            for (var key in data) {
+                self[key] = data[key];
+            }
+
+            // find inner bubble
+            this.$inner = this.$.children();
+        } else {
+            // render new bubble
+            this.render();
+        }
 
         return this;
     }
@@ -154,6 +161,19 @@ Chronflux.Bubble = function($wrapper)
         }
 
         return this;
+    }
+
+    // make sure this matches views/helpers/Bubble.php
+    this.render = function()
+    {
+        this.$ = $('<span />', {
+            'class': 'bubble'
+        });
+
+        // create inner bubble
+        this.$inner = $('<span />', {
+            'class': 'inner-bubble'
+        }).appendTo(this.$);
     }
 
     return this.init();   
