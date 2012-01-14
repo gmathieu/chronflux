@@ -7,12 +7,12 @@ class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
         $this->setOptions($options);
 
         $innerStyle = '';
-        $classes = 'bubble';
-        $color = $this->getOption('color');
+        $classes    = 'bubble';
+        $color      = $this->getOption('color');
 
         // add # to color
         if ($color) {
-            $color = "#{$color}";
+            $color = '#' . $color;
         }
 
         // defined attributes
@@ -31,8 +31,13 @@ class View_Helper_Bubble extends Mg_View_Helper_AbstractHelper
         }
 
         // add class attributes
+        $classAttr = $this->getAttribute('class');
+        if ($classAttr) {
+            $classes .= ' ' . $classAttr;
+        }
         $this->addAttribute('class', $classes);
 
+        // be sure to update the render funciton in javascript/bubbles.js
         return <<<HTML
         <span {$this->renderAttributes()}>
             <span class="inner-bubble" {$innerStyle}>&nbsp;</span>
