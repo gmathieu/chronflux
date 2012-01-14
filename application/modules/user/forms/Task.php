@@ -21,7 +21,7 @@ class User_Form_Task extends App_Form
             array(0, App_Model_Task::MAX_ABBR_CHARS)
         );
         $this->addTextElement('abbreviation', array(
-            'description' => 'An abbreviated representation of the above name used across the application. '
+            'description' => 'An abbreviated representation of the above name used across the application.'
                              . 'Should be no more than '
                              . App_Model_Task::MAX_ABBR_CHARS . ' characters long.',
             'label'       => 'Abbreviation',
@@ -30,20 +30,11 @@ class User_Form_Task extends App_Form
             'validators'  => array($stringLength),
         ));
 
-        // TODO: enable personalization
-        $colors = array(
-            'A7321C' => 'A7321C',
-            'FFDC68' => 'FFDC68',
-            'CC982A' => 'CC982A',
-            '928941' => '928941',
-            '352504' => '352504',
-        );
-        $this->addRadioElement('color', array(
-            'filter'       => 'Alnum',
+        $this->addTextElement('color', array(
+            'description'  => 'Be sure to chose a color that stands out from existing tasks',
+            'filter'       => array('Alnum', 'StringToUpper'),
             'label'        => 'Color',
-            'multiOptions' => $colors,
             'required'     => true,
-            'separator'    => ' ',
         ));
 
         $this->addTextareaElement('description', array(

@@ -34,6 +34,10 @@ class User_TasksController extends App_User_Controller_Settings
             $form->color->addValidator(new User_Form_Validate_UniqueColor());
         }
 
+        // add color picker plugin
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('plugins/colorpicker/css/colorpicker.css'));
+        $this->view->inlineScript()->appendFile($this->view->baseUrl('plugins/colorpicker/js/colorpicker.js'));
+
         return $form;
     }
 }

@@ -22,8 +22,15 @@
             $params['selected'] = ($this->selected == $userData->getId());
             $params['url']      = $this->baseUrl("user/{$userData->username}/{$this->controllerName}/edit/id/{$userData->getId()}");
 
+            // task gets extra icon (bubble) before the name
+            if ($userData instanceof User_Model_Task) {
+                $name = $this->bubble(array('color' => $userData->color, 'attr' => array('class' => 'icon'))) . $this->escape($userData->abbreviation) . ' &ndash; ' . $this->escape($userData->getName());
+                $params['escape'] = false;
+            } else {
+                $name = $userData->getName();
+            }
             echo '<div class="sortable-wrapper" data-id="ids_' . $userData->getId() . '">';
-            echo $this->sideColumnItem($userData->getName(), $params);
+            echo $this->sideColumnItem($name, $params);
             echo '</div>';
         }
     ?>

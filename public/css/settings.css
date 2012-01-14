@@ -134,18 +134,13 @@
 }
 
 /* SETTINGS - TASKS */
-#task-form-wrapper .form-element-wrapper label {
-    float: left;
-    margin: 0 10px 5px 0;
-    text-align: center;
-    width: 30px;
+#task-form-wrapper .form-element-wrapper .bubble-wrapper {
+    display: block;
+    color: black;
+    padding-bottom: 5px;
 }
-#task-form-wrapper .form-element-wrapper input {
+#task-form-wrapper .form-element-wrapper .bubble-wrapper .bubble {
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle;
-}
-#task-form-wrapper .form-element-wrapper .bubble {
-    display: inline-block;
-    vertical-align: top;
 }

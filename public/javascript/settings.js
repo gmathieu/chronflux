@@ -15,8 +15,8 @@ Chronflux.Settings = function()
         // confirm delete button
         $('.delete').click(onDeleteClick);
 
-        // replace radio buttons with filled bubble
-        initBubbles();
+        // init color picker and current tasks
+        initColorPicker();
 
         return this;
     }
@@ -30,51 +30,35 @@ Chronflux.Settings = function()
         });
     }
 
-    function initBubbles()
+    function initColorPicker()
     {
-        $('input[name="color"]').each(function() {
-            var $input  = $(this).hide();
-            var $parent = $input.parent();
-            var color   = $parent.text();
+        var $input = $('#color').hide();
+        var color  = $input.val() ? '#' + $input.val() : '';
+        var bubble = new Chronflux.Bubble().setColor(color);
 
-            // clear parent content
-            $parent.empty();
+        // generate trigger
+        var $trigger = $('<a />', {
+            'class': 'bubble-wrapper',
+            'href' : 'javascript:void(0)',
+            'text' : 'Select a color'
+        }).prepend(bubble.$).insertAfter($input);
 
-            // create bubble
-            var $bubble = $('<span />', {
-                'class': 'bubble filled',
-                'css'  : { 'color': '#' + color }
-            });
-
-            // selected state
-            if ($input.prop('checked')) {
-                _selectedBubble = $bubble.addClass('selected');
+        // init color picker
+        $trigger.ColorPicker({
+            color: color,
+            onShow: function (colpkr) {
+                $(colpkr).show();
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).hide();
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                bubble.setColor('#' + hex);
+                // get rid of # and update input
+                $input.val(hex);
             }
-
-            // create inner bubble
-            var $innerBubble = $('<span />', {
-                'class': 'inner-bubble',
-                'css'  : { 'backgroundColor': '#' + color }
-            });
-
-            // add input back to parent
-            $parent.append($input).addClass('bubble-click-area');
-
-            // add bubble to parent
-            $bubble.append($innerBubble).appendTo($parent);
-
-            // assign click events
-            $parent.click(function() {
-                var $trigger = $(this);
-
-                // deselect current
-                if (_selectedBubble) {
-                    _selectedBubble.removeClass('selected');
-                }
-
-                // select new bubble
-                _selectedBubble = $trigger.find('.bubble').addClass('selected');
-            })
         });
     }
 
