@@ -42,12 +42,14 @@ class View_Helper_SideColumnItem extends Mg_View_Helper_AbstractHelper
         $this->addAttributes($this->getOption('attr'));
         $this->addAttribute('class', $this->getClasses());
 
+        $title = $this->getOption('escape', true) ? $this->view->escape($title) : $title;
+
         return <<<HTML
         <{$tag} {$this->renderAttributes()}>
             <article>
                 <hrgroup>
                     <h1 class="side-column-item-title">
-                        {$leftIcon} {$this->view->escape($title)}
+                        {$leftIcon} {$title}
                     </h1>
                     {$this->renderSubtitle()}
                 </hrgroup>
@@ -80,7 +82,7 @@ HTML;
     
             if (is_array($icon)) {
                 return <<<HTML
-                <img src="{$icon['src']}" class="icon {$extraClass}" title="{$icon['title']}" />
+                <img src="{$icon['src']}" class="icon {$type}-icon {$extraClass}" title="{$icon['title']}" />
 HTML;
             } else {
                 return $icon;

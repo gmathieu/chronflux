@@ -36,6 +36,7 @@
     text-transform: uppercase;
 }
 .side-column-item .icon {
+    float: left;
     margin-right: 5px;
     vertical-align: top;
 }
