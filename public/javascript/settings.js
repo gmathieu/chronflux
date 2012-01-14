@@ -32,34 +32,41 @@ Chronflux.Settings = function()
 
     function initColorPicker()
     {
-        var $input = $('#color').hide();
-        var color  = $input.val() ? '#' + $input.val() : '';
-        var bubble = new Chronflux.Bubble().setColor(color);
+        var $input = $('#color');
 
-        // generate trigger
-        var $trigger = $('<a />', {
-            'class': 'bubble-wrapper',
-            'href' : 'javascript:void(0)',
-            'text' : 'Select a color'
-        }).prepend(bubble.$).insertAfter($input);
+        if ($input.length == 1) {
+            // hide input
+            $input.hide();
 
-        // init color picker
-        $trigger.ColorPicker({
-            color: color,
-            onShow: function (colpkr) {
-                $(colpkr).show();
-                return false;
-            },
-            onHide: function (colpkr) {
-                $(colpkr).hide();
-                return false;
-            },
-            onChange: function (hsb, hex, rgb) {
-                bubble.setColor('#' + hex);
-                // get rid of # and update input
-                $input.val(hex);
-            }
-        });
+            // setup bubble
+            var color  = $input.val() ? '#' + $input.val() : '';
+            var bubble = new Chronflux.Bubble().setColor(color);
+
+            // generate trigger
+            var $trigger = $('<a />', {
+                'class': 'bubble-wrapper',
+                'href' : 'javascript:void(0)',
+                'text' : 'Select a color'
+            }).prepend(bubble.$).insertAfter($input);
+
+            // init color picker
+            $trigger.ColorPicker({
+                color: color,
+                onShow: function (colpkr) {
+                    $(colpkr).show();
+                    return false;
+                },
+                onHide: function (colpkr) {
+                    $(colpkr).hide();
+                    return false;
+                },
+                onChange: function (hsb, hex, rgb) {
+                    bubble.setColor('#' + hex);
+                    // get rid of # and update input
+                    $input.val(hex);
+                }
+            });
+        }
     }
 
     function onSortableUpdate(e, ui)
