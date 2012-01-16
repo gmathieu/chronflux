@@ -115,7 +115,9 @@ class App_User_Controller_Settings extends App_User_Controller_Action
     public function deleteAction()
     {
         $userDataObj = $this->_requireDataObj();
-        $userDataObj->delete();
+        if ($userDataObj->canDelete()) {
+            $userDataObj->delete();
+        }
 
         return $this->_redirect("user/{$this->user->username}/{$this->controllerName}");
     }
