@@ -160,6 +160,14 @@ a.floating-label:hover {
 #project-actions .button {
     border-bottom-right-radius: 5px;
 }
+#projects .empty {
+    background-color: #f6f6f6;
+    color: #7e7c7d;
+    font-family: "PlayBold";
+    padding: 30px;
+    text-shadow: -1px -1px 1px #ffffff;
+    text-align: center;
+}
 
 /* TIMESHEET - TASKS */
 #tasks-tooltip {

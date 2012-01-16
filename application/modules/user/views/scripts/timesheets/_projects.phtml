@@ -13,5 +13,9 @@
                 echo $this->sideColumnItem($userProject->getName(), $params);
             }
         ?>
+    <? else : ?>
+        <div class="empty">
+            Start tracking your time by adding your first project.
+        </div>
     <? endif ?>
 </section>
