@@ -4,10 +4,12 @@
 ?>
 <h2>Edit details</h2>
 
+<? if ($this->userDataObj->canDelete()) : ?>
 <div class="action-links">
     <a class="action-link delete" href="<?= $this->baseUrl($this->deleteUrl) ?>">Delete?</a>
     <?= $this->clear() ?>
 </div>
+<? endif ?>
 
 <div id="task-form-wrapper">
     <form action="" method="post">

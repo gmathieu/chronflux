@@ -2,7 +2,9 @@
 
 <div class="action-links">
     <?= $this->partial('projects/_archive_toggler.phtml', array('userProject' => $this->userDataObj)) ?>
-    <a class="action-link delete" href="<?= $this->baseUrl($this->deleteUrl) ?>">Delete?</a>
+    <? if ($this->userDataObj->canDelete()) : ?>
+    	<a class="action-link delete" href="<?= $this->baseUrl($this->deleteUrl) ?>">Delete?</a>
+    <? endif ?>
     <?= $this->clear() ?>
 </div>
 
