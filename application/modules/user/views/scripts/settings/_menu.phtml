@@ -14,8 +14,8 @@
                               'title' => 'View'),
     )) ?>
     <?= $this->sideColumnItem('My Profile', array(
-        'url'        => '#',
-        'selected'   => ($this->selected == 'users'),
+        'url'        => $this->baseUrl("user/{$this->username}/edit"),
+        'selected'   => ($this->selected == 'index'),
         'right-icon' => array(
                               'src'   => $this->baseUrl('images/icons/right-arrow.png'),
                               'title' => 'View'),

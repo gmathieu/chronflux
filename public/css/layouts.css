@@ -38,7 +38,12 @@
 }
 .layout-column-fluid {
     background: none;
-    left: 460px;
     min-width: 500px;
     right: 0;
+}
+.layout-column-fluid-offset-1 {
+    left: 230px;
+}
+.layout-column-fluid-offset-2 {
+    left: 460px;
 }

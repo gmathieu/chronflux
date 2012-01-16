@@ -1,8 +1,9 @@
+<? $offset = 1 ?>
 <section id="settings" class="layout-window-size">
     <?= $this->partial('settings/_menu.phtml', array('selected' => $this->controllerName, 'username' => $this->user->username)) ?>
 
     <? if ($this->userDataSet) : ?>
-        <section class="side-column-with-border layout-column-static-2">
+        <section class="side-column-with-border layout-column-static-<?= ++$offset ?>">
             <?= $this->partial('settings/_reorderable_list.phtml', array(
                 'controllerName' => $this->controllerName,
                 'selected'       => ($this->userDataObj) ? $this->userDataObj->getId() : $this->actionName,
@@ -13,7 +14,7 @@
     <? endif ?>
 
     <? if ($this->content) : ?>
-        <section id="settings-main-content" class="layout-column-fluid">
+        <section id="settings-main-content" class="layout-column-fluid layout-column-fluid-offset-<?= $offset ?>">
             <div class="section">
                 <?= $this->content ?>
             </div>

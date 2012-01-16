@@ -36,7 +36,7 @@ $menuItems = array(
             <section id="header-user-auth">
                 <ul class="inline-buttons">
                    <li>
-                       <a href="#" class="button">
+                       <a href="/user/<?= $this->session->user->username ?>/edit" class="button">
                            <div class="icon">
                                <?= $this->userThumb($this->session->user) ?>
                            </div>
