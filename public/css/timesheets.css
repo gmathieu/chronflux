@@ -82,6 +82,15 @@ a.floating-label:hover {
     font-family: "PlayBold";
     font-size: 310%;
 }
+#calendar-tooltip {
+    display: none;
+    padding: 0;
+}
+#calendar .ui-datepicker {
+    border: none;
+    font-family: "PlayRegular";
+    padding: 10px
+}
 
 /* TIMESHEET - CALENDAR HOURS */
 #calendar-hours {

@@ -28,12 +28,8 @@ Chronflux.Timesheets = function(opts)
         // init job events
         this.jobs.onDidSelect(onDidSelectJobs);
 
-        // store current date
-        this.formattedDate = $('#calendar-date time').attr('datetime');
-        var explodedDate   = this.formattedDate.split('-');
-        this.date          = new Date(parseInt(explodedDate[0]),
-                                      parseInt(explodedDate[1] - 1),
-                                      parseInt(explodedDate[2]));
+        // init calendar
+        initCalendar();
 
         // init clock events
         this.clock.setOnEveryMinute(onEveryMinute);
@@ -65,6 +61,46 @@ Chronflux.Timesheets = function(opts)
     }
 
     /* PRIVATE FUNCTIONS */
+
+    function initCalendar()
+    {
+        var $calendarLink = $('#calendar-date');
+
+        // store formatted date
+        self.formattedDate = $calendarLink.find('time').attr('datetime');
+
+        // create date object from displayed date
+        var explodedDate = self.formattedDate.split('-');
+        self.date        = new Date(parseInt(explodedDate[0]),
+                                      parseInt(explodedDate[1] - 1),
+                                      parseInt(explodedDate[2]));
+
+        // create calendar tooltip
+        var calendarTooltip = new Chronflux.Tooltip({
+            wrapper        : $('#calendar-tooltip'),
+            arrow_direction: 'left'
+        }).setPositionRelativeTo($calendarLink).onDidHide(function() {
+            $calendarLink.removeClass('hover');
+        });
+
+        // create calendar UI
+        $('#calendar').datepicker({
+            changeMonth     : true,
+            changeYear      : true,
+            dateFormat      : 'yy-mm-dd',
+            defaultDate     : self.formattedDate,
+            selectOtherMonth: true,
+            showOtherMonth  : true,
+            onSelect        : function(dateText) {
+                window.location.href = Chronflux.BASE_URL + '/user/' + self.user.username + '/timesheets/manage/date/' + dateText;
+            }
+        });
+
+        $calendarLink.click(function() {
+            calendarTooltip.show();
+            $calendarLink.addClass('hover');
+        });
+    }
 
     function getJobsUrl(action)
     {

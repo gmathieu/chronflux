@@ -59,7 +59,8 @@
     display: block;
     text-decoration: none;
 }
-.side-column-item-selectable:hover {
+.side-column-item-selectable:hover,
+.side-column-item-selectable.hover {
     background-color: #ffffff;
     cursor: pointer;
 }

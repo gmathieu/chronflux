@@ -1,4 +1,4 @@
-<article class="side-column-item side-column-item-with-tooltip header-row" id="calendar-date">
+<article class="side-column-item side-column-item-with-tooltip header-row side-column-item-selectable" id="calendar-date">
     <time datetime="<?= $this->dateObj->toString('YYYY-MM-dd') ?>">
         <hgroup id="calendar-date-day-month-year-wrapper">
             <h1 id="calendar-date-day"><?= $this->dateObj->toString(Zend_Date::WEEKDAY) ?></h1>
@@ -10,3 +10,7 @@
         <div id="calendar-date-date"><?= $this->dateObj->toString(Zend_Date::DAY) ?></div>
     </time>
 </article>
+<section id="calendar-tooltip" class="tooltip">
+    <div id="calendar"></div>
+    <div class="arrow"></div>
+</section>
