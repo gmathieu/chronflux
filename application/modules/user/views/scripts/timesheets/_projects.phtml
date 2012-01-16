@@ -8,7 +8,7 @@
                 $params['attr']     = array('data-id' => $userProject->getId());
                 $params['class']    = 'project row';
                 $params['subtitle'] = $userProject->subtitle;
-                $params['url']      = 'javascript:void(0)';
+                $params['url']      = $this->baseUrl("user/{$this->username}/projects/edit/id/{$userProject->id}");
 
                 echo $this->sideColumnItem($userProject->getName(), $params);
             }

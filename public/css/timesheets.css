@@ -2,11 +2,6 @@
 #timesheet {
     padding-bottom: 100px;
 }
-#timesheet .side-column-item {
-    background-image: url(../images/icons/tooltip-preview.png);
-    background-position:  right center;
-    background-repeat: no-repeat;
-}
 #timesheet .column {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -61,6 +56,9 @@ a.floating-label:hover {
 /* TIMESHEET - CALENDAR DATE */
 #calendar-date {
     padding-top: 5px;
+    background-image: url(../images/icons/tooltip-preview.png);
+    background-position:  right center;
+    background-repeat: no-repeat;
 }
 #calendar-date time {
     display: block;
