@@ -208,6 +208,7 @@ a.floating-label:hover {
 #tasks-keys-toggle-link {
     color: #7e7c7d;
     float: left;
+    text-decoration: none;
 }
 #tasks-keys-toggle-link:hover {
     color: #ffffff;
@@ -216,6 +217,7 @@ a.floating-label:hover {
     cursor: pointer;
     font-family: "PlayRegular";
     font-size: 77%;
+    text-decoration: underline;
 }
 #tasks-keys-toggle-link .key {
     display: block !important; /* never hide legend */
