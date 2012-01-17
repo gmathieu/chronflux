@@ -75,7 +75,7 @@ Chronflux.Tooltip = function(options)
         this.$.css({'left': -2000, 'top': -2000});
 
         // check if popup is cut on the right
-        if (!arrowDirectionUpDown) {
+        if (arrowDirectionUpDown) {
             var offScreenDelta = this.$window.width() - (targetLeft + this.$.outerWidth());
             if (offScreenDelta < 0) {
                 // shit left by 1px for rounding errors
