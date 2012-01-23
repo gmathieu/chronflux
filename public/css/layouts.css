@@ -5,6 +5,12 @@
     height: 0;
 }
 
+/* MAIN CONTAINER */
+.main-wrapper {
+    margin: 0 auto;
+    width: 960px;
+}
+
 /* COLUMNS */
 .layout-fuild-left-column {
     float: left;

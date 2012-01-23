@@ -1,1 +1,20 @@
-<a href="<?= $this->fbLoginUrl ?>">Log in with Facebook</a>
+<section class="main-wrapper main-content" id="home">
+    <hgroup class="section" id="home-logo">
+        <h1 class="last">Chronflux</h1>
+        <h2 class="last">Drag and drop time tracker</h2>
+    </hgroup>
+    <div class="section">
+        <div id="auth-wrapper">
+            <div id="auth-btns">
+                <a href="<?= $this->fbLoginUrl ?>" id="fb-auth-btn" class="auth-btn">
+                    <span class="icon"></span> Log in with Facebook
+                </a>
+                <span class="auth-btn" id="empty-auth-btn">
+                    <span class="icon"></span> More options to come&hellip;
+                </span>
+            </div>
+        </div>
+        <img id="overflow" src="<?= $this->baseUrl('images/home/overview.png') ?>" alt="Chronflux overview" />
+        <?= $this->clear() ?>
+    </div>
+</div>

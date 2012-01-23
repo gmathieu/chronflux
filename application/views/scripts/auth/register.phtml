@@ -1,7 +1,12 @@
-<h1>Registration</h1>
-
-<div class="section">
-    <h2><?= $this->userThumb($this->user) ?> <?= $this->user->name ?></h2>
-</div>
-
-<?= $this->form ?>
+<section class="main-wrapper main-content" id="register">
+    <div class="section last">
+        <h1>Registration</h1>
+        <div class="form-row">
+            <label class="form-row-label required">Name</label>
+            <div class="form-element-wrapper">
+                <h2><?= $this->userThumb($this->user) ?> <?= $this->user->name ?></h2>
+            </div>
+        </div>
+        <?= $this->form ?>
+    </div>
+</section>

@@ -22,14 +22,9 @@ body {
 }
 
 /* HELPER CLASSES */
-.clear {
-    clear: both;
-    display: block;
-    height: 0;
-}
 .last {
-    margin-bottom: 0;
-    margin-right: 0;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
 }
 
 /* HEADER */
@@ -89,4 +84,26 @@ body {
     margin-right: 5px;
     vertical-align: middle;
     width: 16px;
+}
+
+/* COMMON CONTENT */
+.main-content {
+    color: #020001;
+}
+.main-content h1 {
+    color: #020001;
+    font-family: "PlayBold";
+    font-size: 131%;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.main-content h2 {
+    color; #353334;
+    font-family: "PlayRegular";
+    font-size: 116%;
+    margin-bottom: 10px;
+}
+.main-content .section {
+    padding: 10px;
+    margin-bottom: 20px;
 }

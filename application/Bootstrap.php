@@ -44,6 +44,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->appendStylesheet($view->baseUrl('css/forms.css'));
         $view->headLink()->appendStylesheet($view->baseUrl('css/bubbles.css'));
         $view->headLink()->appendStylesheet($view->baseUrl('css/tooltip.css'));
+        $view->headLink()->appendStylesheet($view->baseUrl('css/home.css'));
         $view->headLink()->appendStylesheet($view->baseUrl('plugins/jquery-ui-1.8.17.custom/css/ui-darkness/jquery-ui-1.8.17.custom.css'));
 
         // setup JS namespace
