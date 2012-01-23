@@ -34,7 +34,7 @@ class App_User_Controller_Action extends App_Controller_Action
                 exit();
             } else {
                 $redirectUri = $this->getReturnPath($this->_request->getPathInfo());
-                return $this->_redirector->gotoUrl($this->_request->getBaseUrl() . '/auth?redirect_uri=' . urlencode($redirectUri));
+                return $this->_redirector->gotoUrl($this->_request->getBaseUrl() . '/auth/auto?redirect_uri=' . urlencode($redirectUri));
             }
         }
     }

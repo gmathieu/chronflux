@@ -19,11 +19,39 @@ class AuthController extends App_Controller_Action
 
     public function indexAction()
     {
-        // setup facebook login URL
-        $fbLoginParams = array('redirect_uri' => $this->getReturnPath('/auth/fb?redirect_uri=' . $this->_redirectUri));
-
         // assign URLs to view
-        $this->view->fbLoginUrl = $this->_fb->getLoginUrl($fbLoginParams);
+        $this->view->fbLoginUrl = $this->_getFbLoginUrl();
+    }
+
+    public function autoAction()
+    {
+        $serviceType = false;
+        $url         = false;
+
+        if (isset($_COOKIE['user_service_type'])) {
+            $serviceType = $_COOKIE['user_service_type'];
+        }
+
+        switch ($serviceType) {
+            // Facebook oauth logic
+            case App_Model_User::SERVICE_FB:
+                $url = $this->_getFbLoginUrl();
+            break;
+
+            // Google oauth logic
+            case App_Model_User::SERVICE_GOOGLE:
+            break;
+
+            // Twitter oauth logic
+            case App_Model_User::SERVICE_TWITTER:
+            break;
+        }
+
+        if ($url) {
+            return $this->_redirector->gotoUrl($url);
+        } else {
+            return $this->_authError();
+        }
     }
 
     public function newAction()
@@ -47,6 +75,11 @@ class AuthController extends App_Controller_Action
     {
         if (isset($this->session->user)) {
             unset($this->session->user);
+        }
+
+        // expire cookie
+        if (isset($_COOKIE['user_service_type'])) {
+            setCookie('user_service_type', '', time() - 3600, '/', $_SERVER['SERVER_NAME']);
         }
 
         $this->_redirector->gotoUrl($this->view->baseUrl('/'));
@@ -94,14 +127,18 @@ class AuthController extends App_Controller_Action
 
     private function _authError()
     {
-        // TODO: think about error fallbacks and handling return URI
-        return $this->_redirector->gotoSimple('index');
+        // TODO: think about error fallbacks
+        $encodedRedirectUri = urlencode($this->_redirectUri);
+        return $this->_redirector->gotoUrl("/?redirect_uri={$encodedRedirectUri}");
     }
 
     private function _authSuccess(App_Model_User $user)
     {
         // store user in session
         $this->session->user = $user;
+
+        // store service type in cookie for auto auth
+        setCookie('user_service_type', $user->service_type, time() + 60*60*24*30, '/', $_SERVER['SERVER_NAME']);
 
         // redirect home
         return $this->_redirector->gotoUrl($this->_redirectUri);
@@ -178,5 +215,11 @@ class AuthController extends App_Controller_Action
 
             return $data;
         }
+    }
+
+    private function _getFbLoginUrl()
+    {
+        $fbLoginParams = array('redirect_uri' => $this->getReturnPath('/auth/fb?redirect_uri=' . $this->_redirectUri));
+        return $this->_fb->getLoginUrl($fbLoginParams);
     }
 }

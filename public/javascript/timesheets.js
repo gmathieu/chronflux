@@ -118,10 +118,16 @@ Chronflux.Timesheets = function(opts)
 
     function saveJobsHelper(action)
     {
+        var url = getJobsUrl(action);
+
         $.ajax({
             type: 'POST',
-            url: getJobsUrl(action),
-            dataType: 'json'
+            url: url,
+            dataType: 'json',
+            error: function() {
+                // session timed out
+                window.location.href = url;
+            }
         });
     }
 
