@@ -51,6 +51,7 @@ class User_JobsController extends App_User_Controller_Action
         $data = $form->getValues();
 
         // assign job details
+        $jobs->setDate($data['date']);
         $jobs->setUserId($data['user_id']);
         $jobs->setProjectId($data['project_id']);
 
