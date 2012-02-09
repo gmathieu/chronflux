@@ -71,9 +71,9 @@ Chronflux.Timesheets = function(opts)
 
         // create date object from displayed date
         var explodedDate = self.formattedDate.split('-');
-        self.date        = new Date(parseInt(explodedDate[0]),
-                                      parseInt(explodedDate[1] - 1),
-                                      parseInt(explodedDate[2]));
+        self.date        = new Date(Number(explodedDate[0]),
+                                      Number(explodedDate[1]) - 1,
+                                      Number(explodedDate[2]));
 
         // create calendar tooltip
         var calendarTooltip = new Chronflux.Tooltip({
