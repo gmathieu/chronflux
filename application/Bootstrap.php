@@ -34,6 +34,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $view = $this->getResource('view');
 
+        // favicons
+        $view->headLink()->headLink(array('rel' => 'icon', 'href' => $view->baseUrl('favicon.ico')));
+        $view->headLink()->headLink(array('rel' => 'icon', 'href' => $view->baseUrl('images/favicon.png'), 'sizes' => 'any', 'type' => 'image/png'));
+        $view->headLink()->headLink(array('rel' => 'apple-touch-icon', 'href' => $view->baseUrl('images/favicon.png')));
+
         // CSS
         $view->headLink()->appendStylesheet($view->baseUrl('css/yui-reset-fonts-3.3.0.css'));
         $view->headLink()->appendStylesheet($view->baseUrl('fonts/play-fontfacekit/stylesheet.css'));
